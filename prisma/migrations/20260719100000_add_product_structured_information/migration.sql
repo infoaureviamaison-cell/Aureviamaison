@@ -1,0 +1,7 @@
+ALTER TABLE "Product"
+ADD COLUMN "packagingSizes" JSONB NOT NULL DEFAULT '[]',
+ADD COLUMN "netWeight" TEXT,
+ADD COLUMN "origin" TEXT,
+ADD COLUMN "shelfLife" TEXT,
+ADD COLUMN "faqs" JSONB NOT NULL DEFAULT '[]',
+ADD COLUMN "wholesaleQuoteEnabled" BOOLEAN NOT NULL DEFAULT false;

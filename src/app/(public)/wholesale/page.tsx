@@ -1,0 +1,38 @@
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, CheckCircle2, MessageCircle, PackageCheck, ShieldCheck } from "@esmate/shadcn/pkgs/lucide-react";
+import { StoreProductCard } from "@/components/features/products/store-product-card-wrapper";
+import { normalizeWholesaleDiscounts } from "@/lib/product-discounts";
+import { prisma } from "@/lib/prisma";
+import { createSeoMetadata } from "@/lib/seo";
+import { defaultWholesalePage, getYouTubeEmbedUrl, parseWholesalePage, WHOLESALE_PAGE_KEY } from "@/lib/wholesale-page";
+
+export const revalidate = 900;
+export const metadata = createSeoMetadata({ title: "Wholesale & Bulk Supply | Auerviamaison", description: "Explore Auerviamaison wholesale beauty essentials, business supply options, and partner pricing.", path: "/wholesale", keywords: ["Auerviamaison wholesale", "beauty wholesale Pakistan", "cosmetics bulk supply"] });
+
+export default async function WholesalePage() {
+  const [setting, products] = await Promise.all([
+    prisma.siteSetting.findUnique({ where: { key: WHOLESALE_PAGE_KEY } }).catch(() => null),
+    prisma.product.findMany({
+      where: { status: "ACTIVE", availableForSale: true },
+      orderBy: [{ displayOrder: "asc" }, { updatedAt: "desc" }],
+      select: { id: true, handle: true, title: true, price: true, compareAtPrice: true, featuredImage: true, images: true, tags: true, wholesaleQuoteEnabled: true, wholesaleDiscounts: true },
+    }).catch(() => []),
+  ]);
+  const content = setting ? parseWholesalePage(setting.value) : defaultWholesalePage;
+  const wholesaleProducts = products.filter((product) => product.wholesaleQuoteEnabled || normalizeWholesaleDiscounts(product.wholesaleDiscounts).length > 0);
+  const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "923171707418";
+  const whatsappHref = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent("Assalamualaikum, I would like information about Auerviamaison wholesale beauty products and pricing.")}`;
+
+  return <main className="overflow-x-hidden bg-gray-50 text-gray-900">
+    <section className="relative isolate min-h-[520px] overflow-hidden border-b border-[#C6A24A]/35 bg-[#fcf5e8]"><div className="absolute inset-0">{content.heroImage ? <Image src={content.heroImage} alt="OrganoCity wholesale" fill priority className="object-cover opacity-15" sizes="100vw" /> : <div className="h-full bg-[radial-gradient(circle_at_80%_20%,rgba(198,162,74,0.28),transparent_34%),radial-gradient(circle_at_10%_90%,rgba(246,164,93,0.18),transparent_30%)]" />}<div className="absolute inset-0 bg-gradient-to-r from-[#fcf5e8] via-[#fcf5e8]/90 to-[#fcf5e8]/45" /></div><div className="relative mx-auto flex min-h-[520px] max-w-7xl items-center px-5 py-20 sm:px-8"><div className="max-w-3xl"><span className="inline-flex items-center gap-2 rounded-full border border-[#C6A24A]/50 bg-[#C6A24A]/15 px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-[#b57910]"><PackageCheck className="h-4 w-4" /> Bulk &amp; business supply</span><h1 className="mt-6 font-serif text-4xl font-extrabold leading-tight text-gray-900 sm:text-5xl lg:text-6xl">{content.heroTitle}</h1><p className="mt-5 max-w-2xl text-base leading-7 text-gray-700 sm:text-lg">{content.heroDescription}</p><div className="mt-8 flex flex-wrap gap-3"><a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-lg bg-[#f6a45d] px-6 py-3 text-sm font-bold text-white hover:bg-[#d8861f]"><MessageCircle className="h-4 w-4" /> Request wholesale quote</a><a href="#wholesale-products" className="inline-flex items-center gap-2 rounded-lg border border-[#C6A24A]/45 bg-white px-6 py-3 text-sm font-bold text-gray-900">View products <ArrowRight className="h-4 w-4" /></a></div></div></div></section>
+
+    <section className="mx-auto max-w-6xl px-5 py-14 sm:px-8"><div className="grid gap-8 rounded-2xl bg-white p-6 sm:p-9 md:grid-cols-[auto_1fr]"><ShieldCheck className="h-10 w-10 text-[#b57910]" /><div><p className="text-xs font-bold uppercase tracking-[0.2em] text-[#9a6911]">Clear business terms</p><h2 className="mt-2 font-serif text-3xl font-extrabold">{content.policyTitle}</h2><div className="mt-5 whitespace-pre-line text-sm leading-7 text-[#5A5E55] sm:text-base">{content.policyContent}</div></div></div></section>
+
+    {content.sections.length ? <section className="mx-auto max-w-7xl space-y-7 px-5 pb-16 sm:px-8">{content.sections.map((section, index) => { const embedUrl = getYouTubeEmbedUrl(section.youtubeUrl); const mediaOnRight = index % 2 === 0; return <article key={section.id} className="grid overflow-hidden rounded-2xl bg-white md:grid-cols-2"><div className={`relative min-h-64 bg-[#f4f1e8] ${mediaOnRight ? "md:order-2" : "md:order-1"}`}>{embedUrl ? <iframe src={embedUrl} title={section.title} className="absolute inset-0 h-full w-full" allow="accelerometer; autoplay; encrypted-media; picture-in-picture" allowFullScreen /> : section.image ? <Image src={section.image} alt={section.title} fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" /> : null}</div><div className={`flex flex-col justify-center p-7 sm:p-10 ${mediaOnRight ? "md:order-1" : "md:order-2"}`}><span className="text-xs font-bold uppercase tracking-[0.18em] text-[#9a6911]">Wholesale insight</span><h2 className="mt-3 font-serif text-3xl font-extrabold">{section.title}</h2><p className="mt-4 whitespace-pre-line leading-7 text-[#5A5E55]">{section.description}</p></div></article>; })}</section> : null}
+
+    <section id="wholesale-products" className="bg-white px-5 py-16 sm:px-8"><div className="mx-auto max-w-7xl"><div className="mx-auto max-w-3xl text-center"><p className="text-xs font-bold uppercase tracking-[0.2em] text-[#9a6911]">Available for bulk orders</p><h2 className="mt-2 font-serif text-3xl font-extrabold sm:text-4xl">Wholesale Products</h2><p className="mt-3 text-[#5A5E55]">Products enabled for wholesale inquiries or configured with quantity-based pricing.</p></div>{wholesaleProducts.length ? <div className="mt-9 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">{wholesaleProducts.map((product) => { const images = Array.isArray(product.images) ? product.images.filter((image): image is string => typeof image === "string") : []; const tags = Array.isArray(product.tags) ? product.tags.filter((tag): tag is string => typeof tag === "string") : []; return <StoreProductCard key={product.id} handle={product.handle} title={product.title} featuredImageUrl={product.featuredImage || images[0] || "/logo/organocity.png"} imageUrls={images} price={{ amount: product.price.toFixed(2), currencyCode: "PKR" }} compareAtPrice={product.compareAtPrice ? { amount: product.compareAtPrice.toFixed(2), currencyCode: "PKR" } : null} tag={tags[0]} productId={product.id} />; })}</div> : <p className="mt-9 text-center text-[#5A5E55]">Wholesale products will appear here when enabled by the admin.</p>}</div></section>
+
+    <section className="bg-[#fcf5e8] px-5 py-16 text-center sm:px-8"><CheckCircle2 className="mx-auto h-10 w-10 text-[#f6a45d]" /><h2 className="mt-4 font-serif text-3xl font-extrabold text-gray-900">{content.finalCtaTitle}</h2><p className="mx-auto mt-3 max-w-2xl leading-7 text-gray-600">{content.finalCtaDescription}</p><div className="mt-7 flex flex-wrap justify-center gap-3"><a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="rounded-lg bg-[#f6a45d] px-6 py-3 text-sm font-bold text-white hover:bg-[#d8861f]">Contact on WhatsApp</a><Link href="/contact?subject=Wholesale%20inquiry" className="rounded-lg border border-[#C6A24A]/40 bg-white px-6 py-3 text-sm font-bold text-gray-900">Send an inquiry</Link></div></section>
+  </main>;
+}

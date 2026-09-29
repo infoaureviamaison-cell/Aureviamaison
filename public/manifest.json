@@ -1,0 +1,35 @@
+{
+  "name": "Auerviamaison",
+  "short_name": "Auerviamaison",
+  "description": "Premium beauty, skincare, makeup, fragrance, watches, and lifestyle essentials for modern living.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fffaf5",
+  "theme_color": "#EA580C",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable any"
+    }
+  ],
+  "categories": ["shopping", "beauty", "fashion"],
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "Shop Products",
+      "short_name": "Shop",
+      "description": "Browse our products",
+      "url": "/products"
+    },
+    {
+      "name": "My Cart",
+      "short_name": "Cart",
+      "description": "View your cart",
+      "url": "/cart"
+    }
+  ]
+}

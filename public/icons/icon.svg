@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 25.4.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 429.74 419.36" style="enable-background:new 0 0 429.74 419.36;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#FFFFFF;}
+	.st1{fill:url(#SVGID_1_);stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;}
+	
+		.st2{fill:url(#SVGID_00000099647914992179362380000015244510429580694969_);stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;}
+</style>
+<rect x="48.5" y="39.3" class="st0" width="343" height="345"/>
+<g>
+	
+		<radialGradient id="SVGID_1_" cx="150.3368" cy="266.6993" r="133.2528" gradientTransform="matrix(0.8751 0.484 -0.8243 1.4904 239.2171 -298.7095)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0.3425" style="stop-color:#876728"/>
+		<stop  offset="0.618" style="stop-color:#876728"/>
+		<stop  offset="1" style="stop-color:#876728"/>
+		<stop  offset="1" style="stop-color:#1E6332"/>
+	</radialGradient>
+	<path class="st1" d="M77.01,130.64c45.1-81.58,147.98-111,229.39-65.62c-56.13-30.93-153.52,38.16-183.28,94.09
+		c-29.91,56.17-34.44,169.79,20.49,200.25l-0.26,0.47C61.65,314.99,31.88,212.2,77.01,130.64z"/>
+	
+		<radialGradient id="SVGID_00000064333584930395496530000003147038992984581544_" cx="298.0828" cy="257.3423" r="133.2528" gradientTransform="matrix(0.8751 0.484 -0.955 1.7267 269.6695 -353.7724)" gradientUnits="userSpaceOnUse">
+		<stop  offset="0.3681" style="stop-color:#1E6332"/>
+		<stop  offset="1" style="stop-color:#000000"/>
+	</radialGradient>
+	
+		<path style="fill:url(#SVGID_00000064333584930395496530000003147038992984581544_);stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;" d="
+		M364.88,289.85c-45.1,81.58-147.98,111-229.39,65.62c56.13,30.93,153.52-38.16,183.28-94.09c29.91-56.17,34.44-169.79-20.49-200.25
+		l0.26-0.47C380.25,105.51,410.01,208.29,364.88,289.85z"/>
+</g>
+</svg>

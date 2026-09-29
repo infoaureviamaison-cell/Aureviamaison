@@ -1,0 +1,3 @@
+ALTER TABLE "Product"
+ADD COLUMN "generalDiscountPercent" DOUBLE PRECISION NOT NULL DEFAULT 0,
+ADD COLUMN "wholesaleDiscounts" JSONB NOT NULL DEFAULT '[]';

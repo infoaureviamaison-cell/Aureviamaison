@@ -1,0 +1,265 @@
+@import "tailwindcss";
+
+@source "../../node_modules/@esmate/shadcn";
+@import "@esmate/shadcn/styles/new-york.css";
+
+@theme {
+  --color-primary: hsl(24, 96%, 52%);
+  --color-primary-foreground: hsl(0, 0%, 100%);
+  --color-secondary: hsl(0, 0%, 96%);
+  --color-secondary-foreground: hsl(0, 0%, 4%);
+  --color-muted: hsl(30, 20%, 97%);
+  --color-muted-foreground: hsl(0, 0%, 29%);
+  --color-accent: hsl(24, 95%, 58%);
+  --color-accent-foreground: hsl(0, 0%, 4%);
+}
+
+:root {
+  --primary: 24 100% 50%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 0 0% 100%;
+  --secondary-foreground: 0 0% 0%;
+  --muted: 0 0% 98%;
+  --muted-foreground: 0 0% 15%;
+  --accent: 24 100% 50%;
+  --accent-foreground: 0 0% 0%;
+  --background: 0 0% 100%;
+  --foreground: 0 0% 4%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 4%;
+  --border: 0 0% 84%;
+  --input: 0 0% 100%;
+  --ring: 24 100% 50%;
+  --radius: 0.75rem;
+}
+
+@layer base {
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    filter: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  html {
+    background-color: #ffffff;
+    color: #111111;
+  }
+
+  body {
+    background-color: #ffffff;
+    color: #111111;
+  }
+
+  a {
+    color: #111111;
+  }
+
+  a:hover {
+    color: #f97316;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    background-color: #ffffff;
+    color: #111111;
+    border-color: rgba(17, 17, 17, 0.2);
+  }
+
+  button:hover,
+  button:focus-visible,
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+    border-color: #f97316;
+  }
+
+  [class*="bg-gradient-"],
+  [class*="from-"],
+  [class*="via-"],
+  [class*="to-"],
+  [class*="blur-"],
+  [class*="drop-shadow-"],
+  [class*="shadow-"],
+  [class*="backdrop-blur"] {
+    background-image: none !important;
+    box-shadow: none !important;
+    filter: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .bg-\[\#fcf5e8\],
+  .bg-\[\#f4f1e8\],
+  .bg-\[\#fff7df\],
+  .bg-\[\#fffaf5\],
+  .bg-\[\#ffedd5\],
+  .bg-\[\#f5f5f5\],
+  .bg-gray-50,
+  .bg-gray-100,
+  .bg-slate-50 {
+    background-color: #ffffff !important;
+  }
+
+  .text-\[\#0a0a0a\],
+  .text-\[\#1a1308\],
+  .text-\[\#5A5E55\],
+  .text-\[\#5a5e55\],
+  .text-gray-600,
+  .text-gray-700,
+  .text-gray-800,
+  .text-gray-900 {
+    color: #111111 !important;
+  }
+
+  .text-\[\#C6A24A\],
+  .text-\[\#f6a45d\],
+  .text-\[\#b57910\],
+  .text-\[\#EA580C\],
+  .text-\[\#ea580c\],
+  .text-orange-500,
+  .text-orange-600 {
+    color: #f97316 !important;
+  }
+
+  .bg-\[\#C6A24A\],
+  .bg-\[\#f6a45d\],
+  .bg-\[\#EA580C\],
+  .bg-\[\#ea580c\],
+  .bg-orange-500,
+  .bg-orange-600 {
+    background-color: #f97316 !important;
+    color: #ffffff !important;
+  }
+
+  .border-\[\#C6A24A\],
+  .border-\[\#C6A24A\]\/20,
+  .border-\[\#C6A24A\]\/25,
+  .border-\[\#C6A24A\]\/30,
+  .border-\[\#C6A24A\]\/35,
+  .border-\[\#C6A24A\]\/45,
+  .border-\[\#C6A24A\]\/50,
+  .border-orange-200,
+  .border-orange-300 {
+    border-color: rgba(17, 17, 17, 0.18) !important;
+  }
+}
+
+/* Keep storefront content comfortably wide on desktop while preserving the
+   narrower reading widths used for text-heavy sections. */
+@media (min-width: 1280px) {
+  .public-site .max-w-7xl {
+    max-width: 96rem;
+    width: calc(100% - 2rem);
+  }
+
+  .public-site .storefront-categories {
+    width: calc(100% - 0.5rem);
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  display: flex;
+  width: calc(200%);
+  animation: scroll-left 10s linear infinite;
+}
+
+@media (max-width: 768px) {
+  .animate-scroll {
+    animation-duration: 6s;
+  }
+}
+
+.animate-scroll:hover {
+  animation-play-state: paused;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Give storefront filters one consistent closed-select appearance on desktop
+   and mobile instead of relying on each phone's default select styling. */
+.storefront-filter-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='m6 8 4 4 4-4' stroke='%231E6332' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-position: right 0.45rem center;
+  background-repeat: no-repeat;
+  background-size: 0.75rem;
+}
+
+@keyframes kenburns {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.12);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes certificate-logo-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.certificate-logo-marquee {
+  animation: certificate-logo-marquee 28s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .certificate-logo-marquee {
+    animation-play-state: paused;
+  }
+}
+
+.animate-kenburns {
+  animation: kenburns 7s ease-out forwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

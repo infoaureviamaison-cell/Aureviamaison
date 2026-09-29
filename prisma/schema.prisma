@@ -1,0 +1,425 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id                     String             @id @default(cuid())
+  handle                 String             @unique
+  title                  String
+  description            String?
+  descriptionHtml        String?
+  price                  Float
+  compareAtPrice         Float?
+  generalDiscountPercent Float              @default(0)
+  wholesaleDiscounts     Json               @default("[]")
+  sku                    String?
+  inventory              Int                @default(0)
+  availableForSale       Boolean            @default(true)
+  status                 String             @default("ACTIVE")
+  seoTitle               String?
+  seoDescription         String?
+  canonicalUrl           String?
+  robots                 String             @default("index,follow")
+  openGraphImage         String?
+  imageAlt               String?
+  focusKeyword           String?
+  images                 Json               @default("[]")
+  featuredImage          String?
+  productType            String?
+  categoryId             String?
+  subcategoryId          String?
+  vendor                 String             @default("Auerviamaison")
+  tags                   Json               @default("[]")
+  collectionIds          Json               @default("[]")
+  isFeatured             Boolean            @default(false)
+  displayOrder           Int                @default(9999)
+  details                Json               @default("[]")
+  certificates           Json               @default("[]")
+  packagingSizes         Json               @default("[]")
+  netWeight              String?
+  origin                 String?
+  shelfLife              String?
+  faqs                   Json               @default("[]")
+  wholesaleQuoteEnabled  Boolean            @default(false)
+  color                  String?
+  size                   String?
+  storage                String?
+  ram                    String?
+  processor              String?
+  condition              String?
+  specifications         Json               @default("{}")
+  customAttributes       Json               @default("{}")
+  variations             ProductVariation[]
+  createdAt              DateTime           @default(now())
+  updatedAt              DateTime           @updatedAt
+
+  @@index([displayOrder])
+  @@index([status, displayOrder])
+  @@index([categoryId, status])
+  @@index([subcategoryId, status])
+  @@index([isFeatured, status])
+  @@index([updatedAt])
+}
+
+model ProductVariation {
+  id               String   @id @default(cuid())
+  name             String
+  value            String   @default("")
+  description      String?
+  price            Float
+  compareAtPrice   Float?
+  sku              String?
+  stock            Int      @default(0)
+  images           Json     @default("[]")
+  color            String?
+  size             String?
+  storage          String?
+  ram              String?
+  processor        String?
+  condition        String?
+  specifications   Json     @default("{}")
+  customAttributes Json     @default("{}")
+  active           Boolean  @default(true)
+  isDefault        Boolean  @default(false)
+  productId        String
+  product          Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([productId])
+}
+
+model Collection {
+  id              String   @id @default(cuid())
+  handle          String   @unique
+  title           String
+  description     String?
+  descriptionHtml String?
+  image           String?
+  seoTitle        String?
+  seoDescription  String?
+  canonicalUrl    String?
+  robots          String   @default("index,follow")
+  openGraphImage  String?
+  imageAlt        String?
+  focusKeyword    String?
+  productHandles  Json     @default("[]")
+  isFeatured      Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model AdminUser {
+  id                     String                  @id @default(cuid())
+  email                  String                  @unique
+  password               String
+  name                   String?
+  passwordChangedAt      DateTime?
+  passwordChangeRequests PasswordChangeRequest[]
+  adminAccountRequests   AdminAccountRequest[]
+  createdAt              DateTime                @default(now())
+}
+
+model AdminAccountRequest {
+  id            String    @id @default(cuid())
+  requestedById String
+  requestedBy   AdminUser @relation(fields: [requestedById], references: [id], onDelete: Cascade)
+  action        String
+  targetAdminId String?
+  newEmail      String
+  passwordHash  String?
+  otpHash       String
+  expiresAt     DateTime
+  attempts      Int       @default(0)
+  createdAt     DateTime  @default(now())
+
+  @@index([requestedById, createdAt])
+  @@index([expiresAt])
+}
+
+model PasswordChangeRequest {
+  id           String    @id @default(cuid())
+  adminId      String
+  admin        AdminUser @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  otpHash      String
+  passwordHash String
+  expiresAt    DateTime
+  attempts     Int       @default(0)
+  createdAt    DateTime  @default(now())
+
+  @@index([adminId, createdAt])
+  @@index([expiresAt])
+}
+
+model SiteSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     Json
+  updatedAt DateTime @updatedAt
+}
+
+model Order {
+  id                      String    @id @default(cuid())
+  orderNumber             String    @unique
+  customerName            String
+  customerEmail           String
+  customerPhone           String?
+  customerAddress         Json // { line1, line2, city, state, pincode, country }
+  items                   Json // array of { productId, title, price, quantity, image }
+  subtotal                Float
+  shippingCost            Float     @default(0)
+  tax                     Float     @default(0)
+  total                   Float
+  discount                Float     @default(0)
+  couponCode              String?
+  paymentMethod           String    @default("pending")
+  paymentStatus           String    @default("pending")
+  paymentProofUrl         String?
+  transactionReference    String?
+  confirmationEmailSentAt DateTime?
+  orderStatus             String    @default("pending")
+  notes                   String?
+  trackingNumber          String?
+  trackingUrl             String?
+  createdAt               DateTime  @default(now())
+  updatedAt               DateTime  @updatedAt
+}
+
+model Inquiry {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String
+  message   String
+  type      String   @default("contact")
+  status    String   @default("unread")
+  adminNote String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id             String   @id @default(cuid())
+  name           String   @unique
+  slug           String   @unique
+  description    String?
+  image          String?
+  parentId       String?
+  order          Int      @default(0)
+  featured       Boolean  @default(false)
+  seoTitle       String?
+  seoDescription String?
+  canonicalUrl   String?
+  robots         String   @default("index,follow")
+  openGraphImage String?
+  imageAlt       String?
+  focusKeyword   String?
+  productIds     Json     @default("[]")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([updatedAt])
+}
+
+model BlogPost {
+  id                    String    @id @default(cuid())
+  title                 String
+  slug                  String    @unique
+  excerpt               String?
+  content               String?
+  featuredImage         String?
+  featuredImageAlt      String?
+  openGraphImage        String?
+  categoryId            String?
+  author                String
+  authorId              String?
+  authorProfile         Author?   @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  authorRole            String?
+  authorBio             String?
+  authorImage           String?
+  status                String    @default("draft")
+  publishedAt           DateTime?
+  scheduledAt           DateTime?
+  contentRevisedAt      DateTime?
+  seoTitle              String?
+  seoDescription        String?
+  canonicalUrl          String?
+  focusKeyword          String?
+  relatedKeywords       Json      @default("[]")
+  relatedArticleIds     Json      @default("[]")
+  relatedProductHandles Json      @default("[]")
+  isIndexable           Boolean   @default(true)
+  tags                  Json      @default("[]")
+  views                 Int       @default(0)
+  isFeatured            Boolean   @default(false)
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([status, publishedAt])
+  @@index([categoryId, status])
+  @@index([author, status])
+  @@index([authorId, status])
+}
+
+model Author {
+  id        String     @id @default(cuid())
+  name      String
+  slug      String     @unique
+  role      String?
+  bio       String?
+  image     String?
+  posts     BlogPost[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Review {
+  id                 String   @id @default(cuid())
+  authorName         String
+  authorEmail        String?
+  authorImage        String?
+  rating             Int      @default(5)
+  content            String
+  productId          String?
+  productHandle      String?
+  isFeatured         Boolean  @default(false)
+  status             String   @default("pending") // pending, approved, rejected
+  isVerifiedPurchase Boolean  @default(false)
+  helpfulCount       Int      @default(0)
+  images             Json     @default("[]")
+  adminNote          String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@index([productId])
+  @@index([status])
+  @@index([isFeatured])
+}
+
+model Certificate {
+  id                String    @id @default(cuid())
+  title             String    @map("name")
+  certificateImage  String    @map("image")
+  shortDescription  String?   @map("description")
+  displayOrder      Int       @default(0) @map("order")
+  active            Boolean   @default(true) @map("isActive")
+  featured          Boolean   @default(false) @map("isVerifiedBy")
+  organizationName  String    @default("OrganoCity Verified Organization")
+  organizationLogo  String    @default("")
+  orientation       String    @default("LANDSCAPE")
+  issueDate         DateTime  @default(now())
+  expiryDate        DateTime?
+  certificateNumber String?
+  verificationUrl   String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@index([active, displayOrder])
+  @@index([featured])
+}
+
+model HeroSlide {
+  id                String   @id @default(cuid())
+  imageUrl          String
+  mobileImageUrl    String?
+  imageAlt          String
+  eyebrow           String
+  title             String
+  titleHighlight    String
+  description       String
+  ctaPrimaryLabel   String?
+  ctaPrimaryHref    String?
+  ctaSecondaryLabel String?
+  ctaSecondaryHref  String?
+  isActive          Boolean  @default(true)
+  order             Int      @default(0)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([isActive])
+  @@index([order])
+}
+
+model HomepageSection {
+  id         String   @id @default(cuid())
+  sectionKey String   @unique
+  title      String?
+  subtitle   String?
+  content    Json?
+  order      Int      @default(0)
+  isActive   Boolean  @default(true)
+  image      String?
+  updatedAt  DateTime @updatedAt
+}
+
+enum VideoPlatform {
+  YOUTUBE
+  TIKTOK
+  FACEBOOK
+  INSTAGRAM
+}
+
+enum VideoPlacement {
+  HOMEPAGE
+  ABOUT
+  VIDEOS_PAGE
+}
+
+enum VideoFormat {
+  LANDSCAPE
+  VERTICAL
+}
+
+model Video {
+  id             String         @id @default(cuid())
+  title          String
+  description    String?
+  thumbnail      String?
+  videoUrl       String
+  embedUrl       String?
+  platform       VideoPlatform
+  placement      VideoPlacement @default(VIDEOS_PAGE)
+  format         VideoFormat    @default(LANDSCAPE)
+  buttonText     String?
+  buttonUrl      String?
+  featured       Boolean        @default(false)
+  active         Boolean        @default(true)
+  displayOrder   Int            @default(0)
+  seoTitle       String?
+  seoDescription String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  @@index([platform])
+  @@index([placement])
+  @@index([featured])
+  @@index([active])
+  @@index([displayOrder])
+}
+
+model NavigationMenu {
+  id        String   @id @default(cuid())
+  location  String   @unique
+  items     Json
+  updatedAt DateTime @updatedAt
+}
+
+model MediaAsset {
+  id          String   @id @default(cuid())
+  filename    String
+  url         String
+  publicId    String   @unique
+  type        String
+  size        Int
+  alt         String?
+  uploadedBy  String?
+  usedIn      String?
+  referenceId String?
+  createdAt   DateTime @default(now())
+}
