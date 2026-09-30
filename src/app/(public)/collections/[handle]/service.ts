@@ -9,7 +9,7 @@ import type { Prisma } from "@prisma/client";
 
 const DEFAULT_CURRENCY = "PKR";
 const DEFAULT_PAGE_SIZE = 12;
-const FALLBACK_IMAGE = "/logo/auerviamaison.svg";
+const FALLBACK_IMAGE = "/logo/auerviamaison.png";
 
 const virtualCollections = {
   "best-sellers": {

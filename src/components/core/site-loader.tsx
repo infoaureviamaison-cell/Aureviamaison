@@ -21,7 +21,7 @@ export function SiteLoader() {
       <div className="flex flex-col items-center justify-center px-6 text-center">
      <div className="relative h-32 w-32 sm:h-36 sm:w-36 md:h-40 md:w-40">
           <Image
-            src="/logo/auerviamaison.svg"
+            src="/logo/icon.png"
             alt="Auerviamaison"
             fill
             priority

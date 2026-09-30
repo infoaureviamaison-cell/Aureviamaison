@@ -78,7 +78,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           datePublished: effectivePublishedAt?.toISOString(), dateModified: modified.toISOString(),
           articleSection: category?.name, keywords: [article.focusKeyword, ...(Array.isArray(article.tags) ? article.tags : [])].filter(Boolean).join(", "),
           author: { "@type": "Person", name: article.author, url: absoluteUrl(`/blog/author/${authorSlug(article.author)}`), description: article.authorBio || undefined },
-          publisher: { "@type": "Organization", "@id": `${absoluteUrl("/")}#organization`, name: "Auerviamaison", logo: { "@type": "ImageObject", url: absoluteUrl("/logo/auerviamaison.svg") } },
+          publisher: { "@type": "Organization", "@id": `${absoluteUrl("/")}#organization`, name: "Auerviamaison", logo: { "@type": "ImageObject", url: absoluteUrl("/logo/auerviamaison.png") } },
         },
       ]} />
 

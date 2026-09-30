@@ -13,7 +13,7 @@ const businessSchemas = [
     "@id": `${SITE_URL}/#organization`,
     name: "Auerviamaison",
     url: SITE_URL,
-    logo: `${SITE_URL}/logo/auerviamaison.svg`,
+    logo: `${SITE_URL}/logo/auerviamaison.png`,
     sameAs: ["https://www.instagram.com/auerviamaison", "https://www.facebook.com/auerviamaison"],
   },
   {
@@ -22,7 +22,7 @@ const businessSchemas = [
     "@id": `${SITE_URL}/#localbusiness`,
     name: "Auerviamaison",
     url: SITE_URL,
-    image: `${SITE_URL}/logo/auerviamaison.svg`,
+    image: `${SITE_URL}/logo/auerviamaison.png`,
     priceRange: "PKR",
     address: {
       "@type": "PostalAddress",

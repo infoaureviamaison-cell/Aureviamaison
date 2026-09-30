@@ -7,7 +7,7 @@ import { useRequest } from "@esmate/react/ahooks";
 import { titleize } from "@esmate/utils/string";
 import { StoreProductCard } from "@/components/features/products/store-product-card-wrapper";
 
-const FALLBACK_IMAGE = "/logo/auerviamaison.svg";
+const FALLBACK_IMAGE = "/logo/auerviamaison.png";
 
 interface Props {
   data: Awaited<ReturnType<typeof getProductList>>;

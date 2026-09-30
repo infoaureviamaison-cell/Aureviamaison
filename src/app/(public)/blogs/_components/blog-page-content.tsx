@@ -23,7 +23,7 @@ export function BlogPageContent({ articles, page = 1, pages = 1 }: BlogPageConte
     <div className="bg-[#fcf5e8]">
       <div className="relative h-80 w-full overflow-hidden sm:h-105">
         <Image
-          src="/logo/auerviamaison.svg"
+          src="/logo/auerviamaison.png"
           alt="Auerviamaison Blog"
           fill
           priority

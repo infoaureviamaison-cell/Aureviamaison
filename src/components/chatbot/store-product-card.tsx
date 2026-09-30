@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-const FALLBACK_IMAGE = "/logo/auerviamaison.svg";
+const FALLBACK_IMAGE = "/logo/auerviamaison.png";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 

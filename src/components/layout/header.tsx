@@ -59,7 +59,7 @@ const topBarRight = [
   { text: "FAQs", href: "/faqs" },
 ];
 
-const logoSrc = "/logo/auerviamaison.svg";
+const logoSrc = "/logo/auerviamaison.png";
 
 async function getShopCategories() {
   const res = await fetch("/api/categories", { next: { revalidate: 60 } });
@@ -199,7 +199,7 @@ export function Header() {
                     <div className="relative h-14 w-[130px]">
                       <Image
                         src={logoSrc}
-                        alt="Auerviamaison"
+                        alt="Aurevia Maison"
                         fill
                         className="object-contain"
                       />

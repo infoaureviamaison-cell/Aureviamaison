@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const SITE_NAME = "Auerviamaison";
 export const SITE_URL = "https://www.auerviamaison.com";
-export const DEFAULT_OG_IMAGE = "/logo/auerviamaison.svg";
+export const DEFAULT_OG_IMAGE = "/logo/auerviamaison.png";
 
 export const pakistanWellnessKeywords = [
   "Beauty store Pakistan",

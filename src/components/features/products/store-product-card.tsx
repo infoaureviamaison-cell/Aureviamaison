@@ -32,7 +32,7 @@ interface ReviewStats {
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
-const FALLBACK_IMAGE = "/logo/auerviamaison.svg";
+const FALLBACK_IMAGE = "/logo/auerviamaison.png";
 
 function discountPercent(compare: string, current: string): number | null {
   const c = parseFloat(compare);

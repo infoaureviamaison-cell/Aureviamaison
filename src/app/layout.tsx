@@ -26,11 +26,11 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/icons/icon.svg", type: "image/svg+xml" },
+      { url: "/logo/icon.png", type: "image/png" },
     ],
-    shortcut: [{ url: "/icons/icon.svg", type: "image/svg+xml" }],
+    shortcut: [{ url: "/logo/icon.png", type: "image/png" }],
     apple: [
-      { url: "/icons/icon.svg", type: "image/svg+xml" },
+      { url: "/logo/icon.png", type: "image/png" },
     ],
   },
   verification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION ? {
@@ -53,9 +53,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" type="image/svg+xml" href="/icons/icon.svg" />
-        <link rel="shortcut icon" type="image/svg+xml" href="/icons/icon.svg" />
-        <link rel="apple-touch-icon" href="/icons/icon.svg" />
+        <link rel="icon" type="image/png" href="/logo/icon.png" />
+        <link rel="shortcut icon" type="image/png" href="/logo/icon.png" />
+        <link rel="apple-touch-icon" href="/logo/icon.png" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Auerviamaison" />

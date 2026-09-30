@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { StoreProductCard } from "@/components/features/products/store-product-card-wrapper";
 
-const FALLBACK_IMAGE = "/logo/auerviamaison.svg";
+const FALLBACK_IMAGE = "/logo/auerviamaison.png";
 
 type Category = { id: string; name: string; slug: string; order: number; subcategories: Array<{ id: string; name: string; slug: string; parentId: string | null; order: number }> };
 type Product = { id: string; handle: string; title: string; price: number; compareAtPrice: number | null; featuredImage: string | null; images: unknown; tags: unknown };

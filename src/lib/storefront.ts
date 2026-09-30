@@ -6,7 +6,7 @@ import { effectiveUnitPrice, resolveProductPricing } from "@/lib/product-pricing
 
 const DEFAULT_CURRENCY = "PKR";
 const DEFAULT_PAGE_SIZE = 12;
-const PLACEHOLDER_IMAGE = "/logo/auerviamaison.svg";
+const PLACEHOLDER_IMAGE = "/logo/auerviamaison.png";
 
 type MoneyV2 = {
   amount: string;

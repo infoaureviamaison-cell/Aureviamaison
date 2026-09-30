@@ -6,7 +6,7 @@ import Image from "next/image";
 import { ArrowUpRight } from "@esmate/shadcn/pkgs/lucide-react";
 import { StoreProductCard } from "@/components/features/products/store-product-card-wrapper";
 
-const FALLBACK_IMAGE = "/logo/auerviamaison.svg";
+const FALLBACK_IMAGE = "/logo/auerviamaison.png";
 
 interface Category {
   id: string;

@@ -126,7 +126,7 @@ export function RelatedProductsSection({
               featuredImageUrl={
                 product.featuredImage?.url ||
                 galleryImages[0] ||
-                "/logo/auerviamaison.svg"
+                "/logo/auerviamaison.png"
               }
               imageUrls={galleryImages}
               price={product.priceRange.minVariantPrice}

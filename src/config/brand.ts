@@ -1,6 +1,6 @@
 export const brandConfig = {
-  name: "Auerviamaison",
-  tagline: "Beauty, everyday glow & style",
+  name: "Aurevia Maison",
+  tagline: "Beauty • Luxury • Lifestyle",
   website: "https://www.auerviamaison.com",
   phone: "+92 300 1234567",
   whatsapp: "923001234567",
@@ -9,6 +9,6 @@ export const brandConfig = {
   address: "Lahore, Pakistan",
   primaryColor: "#EA580C",
   saltPink: "#F7C7A7",
-  parentCompany: "Auerviamaison Studio",
-  logo: "/logo/auerviamaison.svg",
+  parentCompany: "Aurevia Maison Studio",
+  logo: "/logo/auerviamaison.png",
 } as const;
