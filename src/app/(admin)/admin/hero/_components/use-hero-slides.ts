@@ -44,8 +44,13 @@ export function useHeroSlides() {
     try {
       const url = editingSlide ? `/api/admin/hero/${editingSlide.id}` : "/api/admin/hero";
       const res = await fetch(url, { method: editingSlide ? "PATCH" : "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(formValues) });
-      if (!res.ok) throw new Error((await res.json()).error || "Failed to save slide");
-      await res.json();
+      const data = await res.json();
+      if (!res.ok) {
+        const details = Array.isArray(data.details)
+          ? data.details.map((issue: { path: (string | number)[]; message: string }) => `${issue.path.join(".")}: ${issue.message}`).join("; ")
+          : "";
+        throw new Error(details ? `${data.error}: ${details}` : data.error || "Failed to save slide");
+      }
       await fetchSlides();
       resetForm();
     } catch (error: any) {
