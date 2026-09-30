@@ -287,19 +287,50 @@ const collections = [
 ];
 
 async function main() {
-  const adminEmail = process.env.ADMIN_USER ?? "admin@dev.com";
+  const adminEmail = process.env.ADMIN_USER ?? "info.aureviamaison@gmail.com";
   const adminPassword = process.env.ADMIN_PASS ?? "admin123";
   const hashedPassword = await bcrypt.hash(adminPassword, 10);
 
-  await prisma.adminUser.upsert({
-    where: { email: adminEmail },
-    update: { password: hashedPassword },
-    create: {
-      email: adminEmail,
-      password: hashedPassword,
-      name: "Auerviamaison Admin",
-    },
+  const targetAdmin = await prisma.adminUser.findUnique({ where: { email: adminEmail } });
+  if (!targetAdmin) {
+    const existingAdmin = await prisma.adminUser.findFirst({ orderBy: { createdAt: "asc" } });
+    if (existingAdmin) {
+      await prisma.adminUser.update({
+        where: { id: existingAdmin.id },
+        data: { email: adminEmail, name: existingAdmin.name ?? "Auerviamaison Admin" },
+      });
+    } else {
+      await prisma.adminUser.create({
+        data: { email: adminEmail, password: hashedPassword, name: "Auerviamaison Admin" },
+      });
+    }
+  }
+
+  const heroSlide = {
+    id: "seed-beauty-luxury-lifestyle-hero",
+    imageUrl: "https://res.cloudinary.com/telsof1g/image/upload/v1790791332/hero/xy4guvbrpaty5rkszdv5.jpg",
+    mobileImageUrl: "https://res.cloudinary.com/telsof1g/image/upload/v1790791347/hero/g9gesaq3cq5xiqkpzgt4.jpg",
+    imageAlt: "Elevate Your Everyday Elegance",
+    eyebrow: "BEAUTY • LUXURY • LIFESTYLE",
+    title: "Elevate Your",
+    titleHighlight: "Everyday Elegance",
+    description: "Discover a world of beauty, cosmetics, jewelry, perfumes and smart watches — curated for the modern woman.",
+    ctaPrimaryLabel: "Shop Now",
+    ctaPrimaryHref: "/products",
+    isActive: true,
+    order: 1,
+  };
+
+  await prisma.heroSlide.upsert({
+    where: { id: heroSlide.id },
+    update: heroSlide,
+    create: heroSlide,
   });
+
+  if (process.env.SEED_ADMIN_AND_HERO_ONLY === "true") {
+    console.log(`Updated admin email and seeded hero slide for ${adminEmail}`);
+    return;
+  }
 
   await prisma.productVariation.deleteMany();
   await prisma.product.deleteMany();

@@ -6,7 +6,7 @@ import { requireAdmin } from "@/lib/admin-auth";
 const heroSlideSchema = z.object({
   imageUrl: z.string().min(1),
   mobileImageUrl: z.string().optional(),
-  imageAlt: z.string().min(1),
+  imageAlt: z.string().optional().default(""),
   eyebrow: z.string(),
   title: z.string().min(1),
   titleHighlight: z.string(),
@@ -17,7 +17,10 @@ const heroSlideSchema = z.object({
   ctaSecondaryHref: z.string().optional(),
   isActive: z.boolean().default(true),
   order: z.number().int().positive().optional(),
-});
+}).transform((slide) => ({
+  ...slide,
+  imageAlt: slide.imageAlt.trim() || [slide.title, slide.titleHighlight].filter(Boolean).join(" "),
+}));
 
 export async function GET(request: NextRequest) {
   try {
