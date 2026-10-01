@@ -7,7 +7,7 @@ export const brandConfig = {
   email: "hello@auerviamaison.com",
   inquiryEmail: "care@auerviamaison.com",
   address: "Lahore, Pakistan",
-  primaryColor: "#EA580C",
+  primaryColor: "#D34C65",
   saltPink: "#F7C7A7",
   parentCompany: "Aurevia Maison Studio",
   logo: "/logo/auerviamaison.png",

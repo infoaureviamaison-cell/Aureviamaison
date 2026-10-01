@@ -286,7 +286,7 @@ export function StoreProductCard({
           href={`/products/${handle}`}
           className="group/title block min-h-10"
         >
-          <h3 className="line-clamp-2 text-base font-medium leading-tight tracking-[-0.01em] text-black transition-colors group-hover/title:text-[#f97316] sm:text-lg">
+          <h3 className="line-clamp-2 text-base font-medium leading-tight tracking-[-0.01em] text-black transition-colors group-hover/title:text-[#d34c65] sm:text-lg">
             {title}
           </h3>
         </Link>
@@ -297,7 +297,7 @@ export function StoreProductCard({
             type="button"
             onClick={handleAddToCart}
             disabled={loading || !effectiveVariantId}
-            className="whitespace-nowrap rounded-md border border-[#f97316] bg-[#f97316] px-4 py-2.5 text-sm font-medium text-white transition-all hover:-translate-y-0.5 hover:bg-[#ea580c] active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
+            className="whitespace-nowrap rounded-md border border-[#d34c65] bg-[#d34c65] px-4 py-2.5 text-sm font-medium text-white transition-all hover:-translate-y-0.5 hover:bg-[#bd3f58] active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {loading ? "Adding…" : "Add to Cart"}
           </button>

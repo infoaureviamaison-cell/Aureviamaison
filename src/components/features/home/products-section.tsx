@@ -88,9 +88,9 @@ export function CategoriesSection({ categories }: { categories: Category[] }) {
   const mainCategories = categories.filter((category) => !category.parentId);
 
   return (
-    <section className="storefront-categories relative z-20 mt-6 bg-white lg:mx-auto lg:max-w-7xl">
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-5 lg:grid-cols-5 lg:gap-6">
-        {mainCategories.map((category) => {
+    <section className="storefront-categories relative z-20 mx-auto mt-6 w-full max-w-[1480px] overflow-hidden bg-white px-5 sm:px-8">
+      <div className="category-marquee-track gap-4 py-3 sm:gap-5">
+        {[...mainCategories, ...mainCategories].map((category, index) => {
           const normalizedName = category.name.toLowerCase();
           const CategoryIcon = normalizedName.includes("hair")
             ? Droplets
@@ -104,27 +104,32 @@ export function CategoriesSection({ categories }: { categories: Category[] }) {
 
           return (
             <Link
-              key={category.id}
+              key={`${category.id}-${index}`}
               href={`/category/${encodeURIComponent(category.slug)}`}
-              className="category-card group flex min-w-0 flex-col overflow-hidden rounded-[22px] border border-[#f2e4e5] bg-white transition duration-300 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#d34c65]/20"
+              aria-hidden={index >= mainCategories.length}
+              tabIndex={index >= mainCategories.length ? -1 : undefined}
+              className="category-card group relative block h-[224px] w-40 shrink-0 overflow-hidden rounded-2xl border border-[#f2e4e5] bg-[#fff8f5] transition duration-300 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#d34c65]/20 sm:h-[264px] sm:w-48 lg:h-[288px] lg:w-56"
             >
-              <div className="relative aspect-square overflow-hidden bg-[#fff8f5]">
-                <Image
-                  src={category.image || FALLBACK_IMAGE}
-                  alt={category.name}
-                  fill
-                  sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 20vw"
-                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                />
-              </div>
-              <span className="relative z-10 -mt-7 ml-5 flex h-16 w-16 items-center justify-center rounded-full border-4 border-white bg-[#d34c65] text-white">
+              <Image
+                src={category.image || FALLBACK_IMAGE}
+                alt={category.name}
+                fill
+                sizes="(max-width: 640px) 160px, (max-width: 1024px) 192px, 224px"
+                className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+              />
+              <span className="absolute left-3 top-3 flex h-11 w-11 items-center justify-center rounded-full bg-[#d34c65] text-white sm:left-4 sm:top-4 sm:h-12 sm:w-12">
                 <CategoryIcon aria-hidden="true" className="h-7 w-7" />
               </span>
-              <div className="flex min-h-20 items-center justify-between gap-2 px-5 pb-5 pt-1">
-                <span className="font-sans text-sm font-bold uppercase text-[#242126] sm:text-base">
+              <div
+                aria-hidden="true"
+                className="absolute inset-0"
+                style={{ background: "linear-gradient(180deg, transparent 42%, rgba(14, 12, 14, 0.68) 100%)" }}
+              />
+              <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-4 sm:p-5">
+                <span className="font-sans text-sm font-bold uppercase leading-tight text-white sm:text-base">
                   {category.name}
                 </span>
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#d34c65] text-white transition-colors group-hover:bg-[#bd3f58]">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#d34c65] text-white transition-colors group-hover:bg-[#bd3f58]">
                   <ArrowRight aria-hidden="true" className="h-4 w-4" />
                 </span>
               </div>

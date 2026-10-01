@@ -5,24 +5,24 @@
 
 @theme {
   --font-serif: var(--font-sans);
-  --color-primary: hsl(24, 96%, 52%);
+  --color-primary: hsl(349, 59%, 56%);
   --color-primary-foreground: hsl(0, 0%, 100%);
   --color-secondary: hsl(0, 0%, 96%);
   --color-secondary-foreground: hsl(0, 0%, 4%);
   --color-muted: hsl(30, 20%, 97%);
   --color-muted-foreground: hsl(0, 0%, 29%);
-  --color-accent: hsl(24, 95%, 58%);
+  --color-accent: hsl(349, 59%, 56%);
   --color-accent-foreground: hsl(0, 0%, 4%);
 }
 
 :root {
-  --primary: 24 100% 50%;
+  --primary: 349 59% 56%;
   --primary-foreground: 0 0% 100%;
   --secondary: 0 0% 100%;
   --secondary-foreground: 0 0% 0%;
   --muted: 0 0% 98%;
   --muted-foreground: 0 0% 15%;
-  --accent: 24 100% 50%;
+  --accent: 349 59% 56%;
   --accent-foreground: 0 0% 0%;
   --background: 0 0% 100%;
   --foreground: 0 0% 4%;
@@ -30,7 +30,7 @@
   --card-foreground: 0 0% 4%;
   --border: 0 0% 84%;
   --input: 0 0% 100%;
-  --ring: 24 100% 50%;
+  --ring: 349 59% 56%;
   --radius: 0.75rem;
 }
 
@@ -58,7 +58,7 @@
   }
 
   a:hover {
-    color: #f97316;
+    color: #d34c65;
   }
 
   button,
@@ -76,7 +76,7 @@
   textarea:focus,
   select:focus {
     outline: none;
-    border-color: #f97316;
+    border-color: #d34c65;
   }
 
   [class*="bg-gradient-"],
@@ -120,21 +120,41 @@
   .text-\[\#C6A24A\],
   .text-\[\#f6a45d\],
   .text-\[\#b57910\],
+  .text-\[\#f97316\],
+  .text-\[\#d8861f\],
   .text-\[\#EA580C\],
   .text-\[\#ea580c\],
   .text-orange-500,
   .text-orange-600 {
-    color: #f97316 !important;
+    color: #d34c65 !important;
   }
 
   .bg-\[\#C6A24A\],
   .bg-\[\#f6a45d\],
+  .bg-\[\#f97316\],
+  .bg-\[\#d8861f\],
+  .bg-\[\#c2410c\],
   .bg-\[\#EA580C\],
   .bg-\[\#ea580c\],
   .bg-orange-500,
   .bg-orange-600 {
-    background-color: #f97316 !important;
+    background-color: #d34c65 !important;
     color: #ffffff !important;
+  }
+
+  .hover\:bg-\[\#b8923f\]:hover,
+  .hover\:bg-\[\#d8861f\]:hover,
+  .hover\:bg-\[\#c2410c\]:hover,
+  .hover\:bg-\[\#ea580c\]:hover,
+  .hover\:bg-orange-600:hover {
+    background-color: #bd3f58 !important;
+    color: #ffffff !important;
+  }
+
+  .hover\:text-\[\#f97316\]:hover,
+  .hover\:text-\[\#ea580c\]:hover,
+  .hover\:text-orange-600:hover {
+    color: #bd3f58 !important;
   }
 
   .border-\[\#C6A24A\],
@@ -186,19 +206,19 @@
   }
 }
 
-.animate-scroll {
+.category-marquee-track {
   display: flex;
-  width: calc(200%);
-  animation: scroll-left 10s linear infinite;
+  width: max-content;
+  animation: scroll-left 38s linear infinite;
 }
 
-@media (max-width: 768px) {
-  .animate-scroll {
-    animation-duration: 6s;
+@media (prefers-reduced-motion: reduce) {
+  .category-marquee-track {
+    animation: none;
   }
 }
 
-.animate-scroll:hover {
+.category-marquee-track:hover {
   animation-play-state: paused;
 }
 
