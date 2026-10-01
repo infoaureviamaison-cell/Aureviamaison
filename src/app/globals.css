@@ -4,6 +4,7 @@
 @import "@esmate/shadcn/styles/new-york.css";
 
 @theme {
+  --font-serif: var(--font-sans);
   --color-primary: hsl(24, 96%, 52%);
   --color-primary-foreground: hsl(0, 0%, 100%);
   --color-secondary: hsl(0, 0%, 96%);
@@ -147,6 +148,11 @@
   .border-orange-300 {
     border-color: rgba(17, 17, 17, 0.18) !important;
   }
+}
+
+/* Keep the image-led category cards lifted above the white page surface. */
+.storefront-categories .category-card {
+  box-shadow: 0 10px 24px rgba(34, 18, 22, 0.1) !important;
 }
 
 /* Keep storefront content comfortably wide on desktop while preserving the
