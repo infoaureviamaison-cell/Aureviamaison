@@ -358,7 +358,7 @@ export function Header() {
         </div>
 
         {/* ───────── logo — emblem and wordmark ───────── */}
-        <Link href="/" aria-label="Aurevia Maison home" className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+        <Link href="/" aria-label="Aurevia Maison home" className="flex shrink-0 items-center gap-1 sm:gap-1.5">
           <div className="relative h-10 w-10 shrink-0 sm:h-11 sm:w-11 lg:h-12 lg:w-12 xl:h-13 xl:w-13">
             <Image
               src={logoIconSrc}
@@ -368,7 +368,7 @@ export function Header() {
               priority
             />
           </div>
-          <div className="relative h-10 w-[min(9rem,36vw)] sm:h-11 sm:w-40 lg:h-12 lg:w-44 xl:h-13 xl:w-48">
+          <div className="relative h-10 w-30 sm:h-11 sm:w-33 lg:h-12 lg:w-36 xl:h-14 xl:w-42">
             <Image
               src={logoTextSrc}
               alt=""

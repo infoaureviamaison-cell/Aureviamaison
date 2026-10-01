@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FaWhatsapp } from "react-icons/fa";
+import { ShoppingCart } from "@esmate/shadcn/pkgs/lucide-react";
 import { useCart } from "@/lib/commerce";
 import { toast } from "sonner";
 import { useState, useEffect, useMemo } from "react";
@@ -43,7 +44,7 @@ function discountPercent(compare: string, current: string): number | null {
 
 function formatPrice(amount: string) {
   const n = parseFloat(amount);
-  return `Rs.${n.toLocaleString("en-PK")}`;
+  return `Rs. ${n.toLocaleString("en-PK")}`;
 }
 
 // ─── Main Component ───────────────────────────────────────────────────────────
@@ -204,105 +205,94 @@ export function StoreProductCard({
   };
 
   return (
-    <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-black/10 bg-white transition-all duration-300 hover:-translate-y-0.5 hover:border-black/20 hover:shadow-sm">
-      {discount !== null && (
-        <span className="absolute right-3 top-3 z-20 rounded-full border border-[#fed7aa] bg-[#fff7ed] px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.08em] text-[#f97316]">
-          {discount}% OFF
-        </span>
-      )}
-
-      <div className="absolute left-3 top-3 z-20 rounded-xl border border-black/5 bg-white/95 px-2.5 py-1.5 shadow-sm backdrop-blur-sm">
-        <div className="text-sm font-medium leading-none text-black">
-          {formatPrice(price.amount)}
-        </div>
-        {discount !== null &&
-          compareAtPrice &&
-          parseFloat(compareAtPrice.amount) > parseFloat(price.amount) && (
-            <div className="mt-1 flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-[10px] font-normal leading-tight text-black/55">
-              <span className="line-through">
-                {formatPrice(compareAtPrice.amount)}
-              </span>
-            </div>
-          )}
-      </div>
-
-      {/* ── Product image ──────────────────────────────────── */}
-      <Link
-        href={`/products/${handle}`}
-        className="group/image relative block aspect-square w-full overflow-hidden border-b border-black/10 bg-[#f9f9f9]"
-      >
-        <div className="absolute inset-0 bg-[#f5f5f5]" />
-        <Image
-          src={firstImage}
-          alt={title}
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-          className="relative z-10 h-full w-full scale-100 object-cover opacity-100 transition-all duration-500 ease-out group-hover:scale-[1.05] md:group-hover/image:opacity-0"
-          onError={() =>
-            setFailedImages((current) =>
-              current.includes(firstImage) ? current : [...current, firstImage],
-            )
-          }
-        />
-        {hoverImage ? (
+    <article className="group flex min-w-0 flex-col overflow-hidden rounded-[22px] border border-[#e4e6e9] bg-white transition duration-300 hover:-translate-y-0.5 hover:border-[#d7d9de]">
+      <div className="relative aspect-[0.94] overflow-hidden bg-[#f1f2f4]">
+        <Link
+          href={productPath}
+          aria-label={`View ${title}`}
+          className="group/image absolute inset-0 block"
+        >
           <Image
-            src={hoverImage}
-            alt={`${title} alternate view`}
+            src={firstImage}
+            alt={title}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-            className="relative z-10 h-full w-full scale-100 object-cover opacity-0 transition-all duration-500 ease-out group-hover:scale-[1.05] md:group-hover/image:opacity-100"
+            className="z-10 object-contain p-3 transition-transform duration-500 ease-out group-hover/image:scale-[1.03] md:group-hover/image:opacity-0"
             onError={() =>
               setFailedImages((current) =>
-                current.includes(hoverImage) ? current : [...current, hoverImage],
+                current.includes(firstImage) ? current : [...current, firstImage],
               )
             }
           />
-        ) : null}
-
-        <button
-          type="button"
-          className="absolute bottom-3 right-3 z-20 inline-flex items-center gap-1.5 rounded-full bg-[#25D366] px-2.5 py-1.5 text-[11px] font-medium text-white shadow-md transition hover:scale-[1.02]"
-          aria-label={`Order ${title} on WhatsApp`}
-          onClick={() => {
-            window.open(whatsappUrl, "_blank", "noopener,noreferrer");
-            trackContact("WhatsApp product order");
-          }}
-        >
-          <FaWhatsapp className="h-3.5 w-3.5" />
-          WhatsApp
-        </button>
-      </Link>
-
-      {/* ── Card body ─────────────────────────────────────── */}
-      <div className="flex flex-col gap-1.5 px-4 pb-4 pt-2">
-        <div className="flex items-center justify-between">
-          <ProductRating
-            rating={visibleReviewStats.averageRating}
-            totalReviews={visibleReviewStats.totalReviews}
-          />
-        </div>
-
-        <Link
-          href={`/products/${handle}`}
-          className="group/title block min-h-10"
-        >
-          <h3 className="line-clamp-2 text-base font-medium leading-tight tracking-[-0.01em] text-black transition-colors group-hover/title:text-[#d34c65] sm:text-lg">
-            {title}
-          </h3>
+          {hoverImage ? (
+            <Image
+              src={hoverImage}
+              alt={`${title} alternate view`}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+              className="z-10 object-contain p-3 opacity-0 transition-transform duration-500 ease-out group-hover/image:scale-[1.03] md:group-hover/image:opacity-100"
+              onError={() =>
+                setFailedImages((current) =>
+                  current.includes(hoverImage) ? current : [...current, hoverImage],
+                )
+              }
+            />
+          ) : null}
         </Link>
 
-        {/* Purchase actions */}
-        <div className="mt-2 grid grid-cols-1 gap-2">
+        <div className="absolute left-3 top-3 z-20 flex max-w-[calc(100%-4rem)] items-center gap-2 rounded-2xl border border-white/80 bg-white/95 px-3 py-2.5 sm:left-5 sm:top-5 sm:gap-3 sm:px-4 sm:py-3">
+          <div className="min-w-0">
+            <div className="whitespace-nowrap text-sm font-bold leading-tight text-[#781b31] sm:text-lg">
+              {formatPrice(price.amount)}
+            </div>
+            {discount !== null && compareAtPrice ? (
+              <div className="mt-1 whitespace-nowrap text-[10px] font-medium leading-tight text-[#8b8f98] line-through sm:text-xs">
+                {formatPrice(compareAtPrice.amount)}
+              </div>
+            ) : null}
+          </div>
+          {discount !== null ? (
+            <span className="shrink-0 rounded-full bg-[#ffe8ed] px-2.5 py-1.5 text-[10px] font-bold text-[#d34c65] sm:px-3 sm:text-xs">
+              {discount}% OFF
+            </span>
+          ) : null}
+        </div>
+
+        <div className="absolute right-3 top-3 z-20 flex flex-col gap-3 sm:right-5 sm:top-5">
+          <button
+            type="button"
+            className="flex h-11 w-11 items-center justify-center rounded-full border-4 border-white bg-[#25D366] text-white transition-transform hover:scale-105 sm:h-14 sm:w-14"
+            aria-label={`Order ${title} on WhatsApp`}
+            onClick={() => {
+              window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+              trackContact("WhatsApp product order");
+            }}
+          >
+            <FaWhatsapp className="h-5 w-5 sm:h-6 sm:w-6" />
+          </button>
           <button
             type="button"
             onClick={handleAddToCart}
             disabled={loading || !effectiveVariantId}
-            className="whitespace-nowrap rounded-md border border-[#d34c65] bg-[#d34c65] px-4 py-2.5 text-sm font-medium text-white transition-all hover:-translate-y-0.5 hover:bg-[#bd3f58] active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
+            aria-label={loading ? `Adding ${title} to cart` : `Add ${title} to cart`}
+            className="flex h-11 w-11 items-center justify-center rounded-full border-4 border-white bg-white text-[#d34c65] transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:opacity-60 sm:h-14 sm:w-14"
           >
-            {loading ? "Adding…" : "Add to Cart"}
+            <ShoppingCart aria-hidden="true" className="h-5 w-5 sm:h-6 sm:w-6" />
           </button>
         </div>
       </div>
-    </div>
+
+      <div className="flex flex-col gap-2 px-4 pb-5 pt-4 sm:px-5">
+        <ProductRating
+          rating={visibleReviewStats.averageRating}
+          totalReviews={visibleReviewStats.totalReviews}
+        />
+        <Link href={productPath} className="group/title block">
+          <h3 className="line-clamp-2 text-lg font-bold leading-tight text-[#111827] transition-colors group-hover/title:text-[#d34c65] sm:text-xl">
+            {title}
+          </h3>
+        </Link>
+      </div>
+    </article>
   );
 }
