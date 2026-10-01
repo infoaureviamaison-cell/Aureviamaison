@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight } from "@esmate/shadcn/pkgs/lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "@esmate/shadcn/pkgs/lucide-react";
 import { HeroSlide } from "@/types/hero";
 
 interface HeroCarouselProps {
@@ -52,7 +52,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
     <section
       aria-label="Featured collections"
       aria-roledescription="carousel"
-      className="relative h-[clamp(428px,calc(100dvh-120px),568px)] w-full overflow-hidden bg-[#f4f1e8]"
+      className="relative h-[clamp(460px,58vw,580px)] w-full overflow-hidden bg-[#fff8f5] max-md:h-[min(760px,calc(100svh-72px))] max-md:min-h-150"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onFocusCapture={() => setIsPaused(true)}
@@ -76,7 +76,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
               fill
               priority={index === 0}
               sizes="100vw"
-              className={`hero-desktop-image scale-[1.08] object-contain object-right md:-translate-x-[4%] ${
+              className={`hero-desktop-image object-cover object-[65%_center] ${
                 hasMobileImage ? "has-mobile-hero-image" : ""
               }`}
             />
@@ -87,12 +87,14 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                 fill
                 priority={index === 0}
                 sizes="100vw"
-                className="hero-mobile-image scale-[1.08] object-contain object-right"
+                className="hero-mobile-image object-cover object-[70%_center]"
               />
             )}
           </div>
         );
       })}
+
+      <div aria-hidden="true" className="hero-copy-scrim absolute inset-0 z-1" />
 
       <div className="absolute inset-0 z-10">
         {slides.map((slide, index) => {
@@ -102,49 +104,51 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
             <div
               key={slide.id}
               aria-hidden={!isActive}
-              className={`absolute inset-0 flex items-center px-5 py-10 transition-all duration-700 ease-out sm:px-8 sm:py-12 md:px-12 lg:px-16 xl:px-20 ${
+              className={`absolute inset-0 flex items-center px-5 py-10 transition-all duration-700 ease-out sm:px-8 sm:py-12 md:px-12 lg:px-16 xl:px-20 max-md:items-end max-md:pb-20 ${
                 isActive
                   ? "translate-y-0 opacity-100"
                   : "pointer-events-none translate-y-5 opacity-0"
               }`}
             >
-              <div className="relative isolate w-full max-w-xl -translate-y-5 before:absolute before:-inset-x-5 before:-inset-y-4 before:-z-10 before:bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.34)_0%,rgba(255,255,255,0.2)_45%,rgba(255,255,255,0.08)_65%,transparent_82%)] before:blur-sm sm:translate-y-0 sm:before:-inset-x-8 sm:before:-inset-y-6">
+              <div className="w-full max-w-162.5 md:-translate-y-1">
                 {slide.eyebrow && (
-                  <span className="mb-4 inline-flex items-center rounded-full border border-[#1E6332]/40 bg-white/70 px-4 py-1.5 text-xs font-bold uppercase tracking-normal text-[#1E6332] shadow-sm backdrop-blur-sm">
-                    {slide.eyebrow}
-                  </span>
+                  <div className="mb-5 flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#34343a] sm:text-[11px]">
+                    <span aria-hidden="true" className="h-px w-8 shrink-0 bg-[#c97a42] sm:w-9" />
+                    <span>{slide.eyebrow}</span>
+                    <span aria-hidden="true" className="h-px w-8 shrink-0 bg-[#c97a42] sm:w-9" />
+                  </div>
                 )}
 
-                <h1 className="max-w-xl font-serif text-4xl font-extrabold leading-tight tracking-normal text-gray-950 sm:text-5xl lg:text-6xl">
+                <h1 className="max-w-162.5 font-serif text-[2.75rem] font-semibold leading-[0.98] text-[#101014] sm:text-6xl lg:text-7xl">
                   <span>{slide.title}</span>
                   {slide.titleHighlight && (
-                    <span className="block text-[#e86f0c]">
+                    <span
+                      className="block bg-clip-text text-transparent"
+                      style={{
+                        backgroundImage: "linear-gradient(100deg, #c94560 0%, #d85852 55%, #cf812f 100%)",
+                      }}
+                    >
                       {slide.titleHighlight}
                     </span>
                   )}
                 </h1>
 
                 {slide.description && (
-                  <p className="relative isolate mt-5 max-w-lg text-base font-medium leading-7 text-black before:absolute before:-inset-x-3 before:-inset-y-2 before:-z-10 before:bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.3)_0%,rgba(255,255,255,0.14)_58%,transparent_82%)] before:blur-[2px] sm:text-lg">
+                  <p className="mt-4 max-w-127.5 text-[15px] font-normal leading-6 text-[#414047] sm:mt-4 sm:text-lg sm:leading-[1.55]">
                     {slide.description}
                   </p>
                 )}
 
                 {(slide.ctaPrimaryLabel || slide.ctaSecondaryLabel) && (
-                  <div className="mt-7 flex flex-nowrap items-center gap-2 sm:gap-3">
+                  <div className="mt-6 flex flex-wrap items-center gap-3 sm:mt-7">
                     {slide.ctaPrimaryLabel && (
                       <Link
                         href={slide.ctaPrimaryHref || "#"}
                         tabIndex={isActive ? 0 : -1}
-                        className="group inline-flex min-h-10 items-center justify-center gap-1.5 whitespace-nowrap rounded-md bg-[#f28a32] px-3 text-xs font-bold text-white shadow-[0_14px_30px_rgba(232,111,12,0.34)] transition-all duration-300 hover:-translate-y-1 hover:bg-[#df650d] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#f6a45d]/45 sm:min-h-12 sm:gap-2 sm:px-6 sm:text-sm"
+                        className="group inline-flex min-h-12 items-center justify-center gap-3 whitespace-nowrap rounded-full bg-[#d34c65] px-8 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#bd3f58] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#d34c65]/30 sm:min-h-13 sm:min-w-52 sm:text-base"
                       >
                         {slide.ctaPrimaryLabel}
-                        <span
-                          aria-hidden="true"
-                          className="text-base leading-none transition-transform duration-300 group-hover:translate-x-1 sm:text-xl"
-                        >
-                          -&gt;
-                        </span>
+                        <ArrowRight aria-hidden="true" className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
                       </Link>
                     )}
 
@@ -152,7 +156,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                       <Link
                         href={slide.ctaSecondaryHref || "#"}
                         tabIndex={isActive ? 0 : -1}
-                        className="inline-flex min-h-10 items-center justify-center whitespace-nowrap rounded-md border border-[#1E6332]/35 bg-white/75 px-3 text-xs font-bold text-[#1E6332] shadow-sm backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#1E6332]/30 sm:min-h-12 sm:px-6 sm:text-sm"
+                        className="inline-flex min-h-12 items-center justify-center whitespace-nowrap rounded-full border border-[#c85868]/50 bg-white/80 px-6 text-sm font-semibold text-[#a83f55] transition-colors duration-200 hover:bg-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#d34c65]/25 sm:min-h-13 sm:px-7 sm:text-base"
                       >
                         {slide.ctaSecondaryLabel}
                       </Link>
@@ -171,18 +175,18 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
             type="button"
             onClick={prev}
             aria-label="Previous slide"
-            className="group absolute left-0 top-1/2 z-30 flex h-16 w-10 -translate-y-1/2 items-center justify-center rounded-r-xl bg-black/10 text-white transition-all duration-300 hover:bg-black/20 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#1E6332]/30 sm:h-20 sm:w-12 lg:h-24 lg:w-14"
+            className="group absolute left-4 top-1/2 z-30 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/70 bg-white/75 text-[#a83f55] transition-colors duration-200 hover:bg-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#d34c65]/25 sm:left-6"
           >
-            <ChevronLeft className="h-6 w-6 transition-transform duration-300 group-hover:-translate-x-1 sm:h-7 sm:w-7 lg:h-8 lg:w-8" />
+            <ChevronLeft className="h-5 w-5 transition-transform duration-200 group-hover:-translate-x-0.5" />
           </button>
 
           <button
             type="button"
             onClick={next}
             aria-label="Next slide"
-            className="group absolute right-0 top-1/2 z-30 flex h-16 w-10 -translate-y-1/2 items-center justify-center rounded-l-xl bg-black/10 text-white transition-all duration-300 hover:bg-black/20 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#1E6332]/30 sm:h-20 sm:w-12 lg:h-24 lg:w-14"
+            className="group absolute right-4 top-1/2 z-30 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/70 bg-white/75 text-[#a83f55] transition-colors duration-200 hover:bg-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#d34c65]/25 sm:right-6"
           >
-            <ChevronRight className="h-6 w-6 transition-transform duration-300 group-hover:translate-x-1 sm:h-7 sm:w-7 lg:h-8 lg:w-8" />
+            <ChevronRight className="h-5 w-5 transition-transform duration-200 group-hover:translate-x-0.5" />
           </button>
         </>
       )}
@@ -191,7 +195,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
         <div
           role="tablist"
           aria-label="Hero slides"
-          className="absolute bottom-5 left-1/2 z-30 flex -translate-x-1/2 items-center gap-2 sm:bottom-7 sm:gap-3"
+          className="absolute bottom-5 left-1/2 z-30 flex -translate-x-1/2 items-center gap-2 sm:bottom-6 sm:gap-2.5"
         >
           {slides.map((slide, index) => {
             const isActive = index === currentActive;
@@ -204,10 +208,10 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                 aria-label={`Go to slide ${index + 1}`}
                 aria-selected={isActive}
                 onClick={() => goTo(index)}
-                className={`h-2 rounded-full shadow-sm transition-all duration-300 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#1E6332]/30 sm:h-2.5 ${
+                className={`h-2 rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#d34c65]/25 ${
                   isActive
-                    ? "w-12 bg-[#1E6332] sm:w-16"
-                    : "w-8 bg-white/70 hover:bg-white sm:w-11"
+                    ? "w-8 bg-[#d34c65]"
+                    : "w-2 bg-white/80 hover:bg-white"
                 }`}
               />
             );
@@ -216,6 +220,10 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
       )}
 
       <style jsx global>{`
+        .hero-copy-scrim {
+          background: linear-gradient(90deg, rgba(255, 250, 248, 0.97) 0%, rgba(255, 250, 248, 0.88) 34%, rgba(255, 250, 248, 0.48) 52%, rgba(255, 250, 248, 0) 72%);
+        }
+
         .hero-mobile-image {
           display: none;
         }
@@ -227,6 +235,10 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
 
           .hero-mobile-image {
             display: block;
+          }
+
+          .hero-copy-scrim {
+            background: linear-gradient(0deg, rgba(255, 250, 248, 0.98) 0%, rgba(255, 250, 248, 0.94) 35%, rgba(255, 250, 248, 0.52) 62%, rgba(255, 250, 248, 0.04) 100%);
           }
         }
       `}</style>
