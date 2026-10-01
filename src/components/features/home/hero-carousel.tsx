@@ -52,7 +52,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
     <section
       aria-label="Featured collections"
       aria-roledescription="carousel"
-      className="relative h-[clamp(460px,58vw,580px)] w-full overflow-hidden bg-[#fff8f5] max-md:h-[min(760px,calc(100svh-72px))] max-md:min-h-150"
+      className="relative h-[min(560px,calc(100svh-72px))] w-full overflow-hidden bg-[#fff8f5]"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onFocusCapture={() => setIsPaused(true)}
@@ -76,7 +76,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
               fill
               priority={index === 0}
               sizes="100vw"
-              className={`hero-desktop-image object-cover object-[65%_center] ${
+              className={`hero-desktop-image object-contain ${
                 hasMobileImage ? "has-mobile-hero-image" : ""
               }`}
             />
@@ -87,7 +87,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                 fill
                 priority={index === 0}
                 sizes="100vw"
-                className="hero-mobile-image object-cover object-[70%_center]"
+                className="hero-mobile-image object-contain"
               />
             )}
           </div>
