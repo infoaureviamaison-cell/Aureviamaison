@@ -357,7 +357,7 @@ export function Header() {
 
         {/* ───────── logo — kept tight to the left edge ───────── */}
         <Link href="/" className="flex shrink-0 items-center">
-          <div className="relative h-10 w-[120px] lg:h-12 lg:w-[140px]">
+          <div className="relative h-12 w-36 lg:h-14 lg:w-42">
             <Image
               src={logoSrc}
               alt="Auerviamaison"
