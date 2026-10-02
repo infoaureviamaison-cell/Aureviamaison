@@ -205,17 +205,15 @@ export function StoreProductCard({
   };
 
   return (
-    <article className="group flex min-w-0 max-w-[550px] flex-col overflow-hidden rounded-[30px] border border-[#efe3d0] bg-[#f7f0eb] shadow-[0_18px_40px_rgba(87,63,43,0.12)] transition duration-300 hover:-translate-y-0.5">
-      <div className="relative h-[520px] overflow-hidden bg-[radial-gradient(circle_at_top,_rgba(240,200,170,0.7),_rgba(246,222,207,0.3)_38%,_rgba(221,185,154,0.3)_60%,_rgba(248,241,231,0.75)_100%)] px-4 pb-2 pt-4 sm:px-5">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.9),transparent_18%),radial-gradient(circle_at_78%_22%,rgba(239,178,182,0.35),transparent_15%),radial-gradient(circle_at_52%_82%,rgba(204,171,152,0.4),transparent_25%)]" />
-
-        <div className="absolute left-4 top-4 z-20 flex items-center gap-2 rounded-[18px] border border-[#f3ecd7] bg-[#f6efe7]/90 px-3 py-2 shadow-[0_8px_18px_rgba(90,58,40,0.12)] backdrop-blur-sm sm:left-5 sm:top-5 sm:gap-3 sm:px-4 sm:py-3">
-          <div className="min-w-0">
-            <div className="whitespace-nowrap text-lg font-bold leading-none text-[#1d1a1a] sm:text-[2.05rem]">
+    <article className="group flex w-full max-w-[360px] flex-col overflow-hidden rounded-[30px] bg-[#f5f1f2] shadow-[0_22px_28px_rgba(0,0,0,0.08)] transition duration-300 hover:-translate-y-0.5">
+      <div className="relative overflow-hidden rounded-[30px] bg-[#cec3f8] px-4 pb-0 pt-4">
+        <div className="absolute left-4 top-4 z-20 flex items-start gap-2 rounded-[18px] bg-[#f1ece6]/90 px-4 py-2.5 shadow-[0_8px_16px_rgba(62,43,34,0.12)]">
+          <div>
+            <div className="text-[1.85rem] font-black leading-none tracking-[-0.04em] text-[#1a1a1a]">
               {formatPrice(price.amount)}
             </div>
             {discount !== null && compareAtPrice ? (
-              <div className="mt-1 whitespace-nowrap text-[10px] font-medium leading-tight text-[#8c7c6d] line-through sm:text-xs">
+              <div className="mt-1 text-[0.68rem] font-medium text-[#7b7a7e] line-through">
                 {formatPrice(compareAtPrice.amount)}
               </div>
             ) : null}
@@ -223,91 +221,99 @@ export function StoreProductCard({
         </div>
 
         {discount !== null ? (
-          <div className="absolute right-4 top-4 z-20 inline-flex items-center rounded-[18px] bg-[#ff4b6d] px-4 py-2.5 text-sm font-bold text-white shadow-[0_10px_22px_rgba(255,75,109,0.35)] sm:right-5 sm:top-5 sm:text-xl">
+          <div className="absolute right-4 top-4 z-20 rounded-[16px] bg-[#ff4a65] px-3 py-2 text-base font-bold text-white shadow-[0_10px_18px_rgba(255,74,101,0.35)]">
             -{discount}% OFF
           </div>
         ) : null}
 
-        <Link
-          href={productPath}
-          aria-label={`View ${title}`}
-          className="group/image absolute inset-0 z-10 block"
-        >
-          <Image
-            src={firstImage}
-            alt={title}
-            fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-            className="z-10 object-contain p-5 drop-shadow-[0_26px_35px_rgba(143,82,84,0.36)] transition-transform duration-500 ease-out group-hover/image:scale-[1.02]"
-            onError={() =>
-              setFailedImages((current) =>
-                current.includes(firstImage) ? current : [...current, firstImage],
-              )
-            }
-          />
-          {hoverImage ? (
-            <Image
-              src={hoverImage}
-              alt={`${title} alternate view`}
-              fill
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-              className="z-10 object-contain p-5 opacity-0 drop-shadow-[0_26px_35px_rgba(143,82,84,0.36)] transition-transform duration-500 ease-out group-hover/image:scale-[1.02] group-hover/image:opacity-100"
-              onError={() =>
-                setFailedImages((current) =>
-                  current.includes(hoverImage) ? current : [...current, hoverImage],
-                )
-              }
-            />
-          ) : null}
-        </Link>
-
-        <div className="absolute right-4 top-1/2 z-20 flex -translate-y-1/2 flex-col gap-4 sm:right-5">
+        <div className="absolute right-4 top-[52%] z-30 flex -translate-y-1/2 flex-col gap-3">
           <button
             type="button"
-            className="flex h-14 w-14 items-center justify-center rounded-full border-[5px] border-white bg-[#3ccf7a] text-white shadow-[0_8px_18px_rgba(60,207,122,0.22)] transition-transform hover:scale-105"
+            className="flex h-12 w-12 items-center justify-center rounded-full border-[4px] border-white bg-[#3dcf73] text-white shadow-[0_8px_14px_rgba(61,207,115,0.2)] transition-transform hover:scale-105"
             aria-label={`Order ${title} on WhatsApp`}
             onClick={() => {
               window.open(whatsappUrl, "_blank", "noopener,noreferrer");
               trackContact("WhatsApp product order");
             }}
           >
-            <FaWhatsapp className="h-6 w-6" />
+            <FaWhatsapp className="h-5 w-5" />
           </button>
           <button
             type="button"
             onClick={handleAddToCart}
             disabled={loading || !effectiveVariantId}
             aria-label={loading ? `Adding ${title} to cart` : `Add ${title} to cart`}
-            className="flex h-14 w-14 items-center justify-center rounded-full border-[5px] border-white bg-white text-[#ff4b6d] shadow-[0_8px_18px_rgba(0,0,0,0.08)] transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:opacity-60"
+            className="flex h-12 w-12 items-center justify-center rounded-full border-[4px] border-white bg-white text-[#ff4a65] shadow-[0_8px_14px_rgba(0,0,0,0.08)] transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            <ShoppingCart aria-hidden="true" className="h-6 w-6" />
+            <ShoppingCart aria-hidden="true" className="h-5 w-5" />
           </button>
           <button
             type="button"
-            className="flex h-14 w-14 items-center justify-center rounded-full border-[5px] border-white bg-white text-[#ff4b6d] shadow-[0_8px_18px_rgba(0,0,0,0.08)] transition-transform hover:scale-105"
+            className="flex h-12 w-12 items-center justify-center rounded-full border-[4px] border-white bg-white text-[#ff4a65] shadow-[0_8px_14px_rgba(0,0,0,0.08)] transition-transform hover:scale-105"
             aria-label={`Save ${title}`}
           >
-            <span className="text-2xl leading-none">♡</span>
+            <span className="text-xl leading-none">♡</span>
           </button>
+        </div>
+
+        <div className="relative mx-auto mt-16 h-[245px] w-[82%]">
+          <div className="absolute bottom-0 left-1/2 h-16 w-[220px] -translate-x-1/2 rounded-[18px] bg-[#d7b89a] shadow-[0_8px_18px_rgba(101,83,66,0.18)]" />
+
+          <div className="absolute bottom-12 left-1/2 h-24 w-16 -translate-x-[70%] rounded-[10px] border border-[#d0b085] bg-[#f4f1f1] shadow-[0_10px_18px_rgba(69,52,40,0.12)]">
+            <div className="mx-auto mt-[-10px] h-6 w-10 rounded-t-[8px] bg-[#d4af7a]" />
+            <div className="mt-2 px-2 text-center text-[6px] font-semibold uppercase tracking-[0.18em] text-[#7c4c2d]">
+              Curality
+            </div>
+            <div className="mx-auto mt-2 h-10 w-10 rounded-md bg-[#f7eecf]" />
+          </div>
+
+          <div className="absolute bottom-12 left-1/2 h-[116px] w-[64px] -translate-x-1/2 rounded-[10px] border border-[#d0b085] bg-[#d0a57d] shadow-[0_12px_18px_rgba(69,52,40,0.12)]">
+            <div className="mx-auto mt-[-12px] h-7 w-12 rounded-t-[8px] bg-[#b9915f]" />
+            <div className="mt-3 text-center text-[7px] font-bold uppercase tracking-[0.14em] text-[#fff8ef]">
+              Curality
+            </div>
+            <div className="mx-auto mt-3 h-10 w-10 rounded-md bg-[#f6e9d0]" />
+          </div>
+
+          <div className="absolute bottom-12 left-1/2 h-24 w-16 translate-x-[40%] rounded-[10px] border border-[#d0b085] bg-[#f4f1f1] shadow-[0_10px_18px_rgba(69,52,40,0.12)]">
+            <div className="mx-auto mt-[-10px] h-6 w-10 rounded-t-[8px] bg-[#d4af7a]" />
+            <div className="mt-2 px-2 text-center text-[6px] font-semibold uppercase tracking-[0.18em] text-[#7c4c2d]">
+              Curality
+            </div>
+            <div className="mx-auto mt-2 h-10 w-10 rounded-md bg-[#f7eecf]" />
+          </div>
         </div>
       </div>
 
-      <div className="flex items-end justify-between gap-4 px-5 pb-5 pt-4 sm:px-6">
+      <div className="flex items-end justify-between gap-3 px-4 pb-5 pt-4">
         <div className="min-w-0 flex-1">
           <Link href={productPath} className="group/title block">
-            <h3 className="line-clamp-2 text-[2.2rem] font-black leading-[1.05] tracking-[-0.04em] text-[#0f0f0f] transition-colors group-hover/title:text-[#d34c65]">
+            <h3 className="line-clamp-2 text-[2.3rem] font-black leading-[0.9] tracking-[-0.05em] text-[#171717] transition-colors group-hover/title:text-[#d34c65]">
               {title}
             </h3>
           </Link>
 
-          <div className="mt-3">
-            <ProductRating
-              rating={visibleReviewStats.averageRating}
-              totalReviews={visibleReviewStats.totalReviews}
-            />
+          <div className="mt-3 flex items-center gap-2">
+            <div className="flex items-center gap-1 text-[1.15rem] leading-none">
+              {Array.from({ length: 5 }).map((_, index) => (
+                <span
+                  key={index}
+                  className={index < Math.round(visibleReviewStats.averageRating) ? "text-[#d7b254]" : "text-[#d7d7d7]"}
+                  aria-hidden="true"
+                >
+                  ★
+                </span>
+              ))}
+            </div>
+            <span className="text-[1.1rem] font-bold text-[#0f0f0f]">
+              {visibleReviewStats.averageRating.toFixed(1)}
+            </span>
+            <span className="text-sm font-medium text-[#5a5a5a]">
+              ({visibleReviewStats.totalReviews} reviews)
+            </span>
           </div>
 
-          <div className="mt-3 text-xl font-medium text-[#2c2c2c]">
+          <div className="mt-3 text-[1.05rem] font-medium text-[#333333]">
             Eau de Parfum • 100 ml
           </div>
         </div>
@@ -315,7 +321,7 @@ export function StoreProductCard({
         <Link
           href={productPath}
           aria-label={`View ${title}`}
-          className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#f7dfe4] text-3xl font-medium text-[#ff4b6d] shadow-[0_8px_20px_rgba(255,75,109,0.16)] transition-transform hover:scale-105"
+          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#f9dfe6] text-3xl font-medium text-[#ff4a65] shadow-[0_10px_18px_rgba(255,74,101,0.18)] transition-transform hover:scale-105"
         >
           <span aria-hidden="true">›</span>
         </Link>
