@@ -17,8 +17,8 @@ import {
 type ProductCardProps = {
   handle: string;
   title: string;
-  featuredImageUrl: string;
-  imageUrls?: string[];
+  featuredImageUrl?: string | { url?: string } | null;
+  imageUrls?: Array<string | { url?: string } | null>;
   price: { amount: string; currencyCode: string };
   compareAtPrice?: { amount: string; currencyCode: string } | null;
   tag?: string;
@@ -45,6 +45,22 @@ function discountPercent(compare: string, current: string): number | null {
 function formatPrice(amount: string) {
   const n = parseFloat(amount);
   return `Rs. ${n.toLocaleString("en-PK")}`;
+}
+
+function normalizeImageUrl(value: unknown): string | null {
+  if (typeof value === "string") {
+    return value.trim() || null;
+  }
+
+  if (value && typeof value === "object") {
+    const candidate = value as { url?: unknown; src?: unknown; image?: unknown };
+    const resolved = candidate.url ?? candidate.src ?? candidate.image;
+    if (typeof resolved === "string") {
+      return resolved.trim() || null;
+    }
+  }
+
+  return null;
 }
 
 function getProductMeta(title: string, tag?: string) {
@@ -131,17 +147,19 @@ export function StoreProductCard({
   const [reviewStats, setReviewStats] = useState<ReviewStats | null>(null);
   const { linesAdd } = useCart();
 
+  const normalizedFeaturedImage = normalizeImageUrl(featuredImageUrl);
+  const normalizedProductImages = useMemo(
+    () => [normalizedFeaturedImage, ...(imageUrls || []).map(normalizeImageUrl)].filter((value): value is string => Boolean(value)),
+    [featuredImageUrl, imageUrls],
+  );
+
   const productImages = useMemo(() => {
-    const urls = [featuredImageUrl, ...(imageUrls || [])]
-      .filter(
-        (url): url is string =>
-          typeof url === "string" && url.trim().length > 0,
-      )
+    const urls = normalizedProductImages
       .filter((url, index, all) => all.indexOf(url) === index)
       .filter((url) => !failedImages.includes(url));
 
     return urls.length > 0 ? urls : [FALLBACK_IMAGE];
-  }, [featuredImageUrl, imageUrls, failedImages]);
+  }, [normalizedProductImages, failedImages]);
 
   const firstImage = productImages[0] || FALLBACK_IMAGE;
   const hoverImage = productImages[1] || null;
@@ -195,7 +213,7 @@ export function StoreProductCard({
           quantity: 1,
           title,
           price,
-          imageUrl: featuredImageUrl,
+          imageUrl: normalizedFeaturedImage || FALLBACK_IMAGE,
         },
       ]);
       toast.success("Added to cart", { description: title });
@@ -275,33 +293,38 @@ export function StoreProductCard({
           </button>
         </div>
 
-        <div className="relative mx-auto mt-16 h-[245px] w-[82%]">
-          <div className="absolute bottom-0 left-1/2 h-16 w-[220px] -translate-x-1/2 rounded-[18px] bg-[#d7b89a] shadow-[0_8px_18px_rgba(101,83,66,0.18)]" />
-
-          <div className="absolute bottom-12 left-1/2 h-24 w-16 -translate-x-[70%] rounded-[10px] border border-[#d0b085] bg-[#f4f1f1] shadow-[0_10px_18px_rgba(69,52,40,0.12)]">
-            <div className="mx-auto mt-[-10px] h-6 w-10 rounded-t-[8px] bg-[#d4af7a]" />
-            <div className="mt-2 px-2 text-center text-[6px] font-semibold uppercase tracking-[0.18em] text-[#7c4c2d]">
-              Curality
-            </div>
-            <div className="mx-auto mt-2 h-10 w-10 rounded-md bg-[#f7eecf]" />
-          </div>
-
-          <div className="absolute bottom-12 left-1/2 h-[116px] w-[64px] -translate-x-1/2 rounded-[10px] border border-[#d0b085] bg-[#d0a57d] shadow-[0_12px_18px_rgba(69,52,40,0.12)]">
-            <div className="mx-auto mt-[-12px] h-7 w-12 rounded-t-[8px] bg-[#b9915f]" />
-            <div className="mt-3 text-center text-[7px] font-bold uppercase tracking-[0.14em] text-[#fff8ef]">
-              Curality
-            </div>
-            <div className="mx-auto mt-3 h-10 w-10 rounded-md bg-[#f6e9d0]" />
-          </div>
-
-          <div className="absolute bottom-12 left-1/2 h-24 w-16 translate-x-[40%] rounded-[10px] border border-[#d0b085] bg-[#f4f1f1] shadow-[0_10px_18px_rgba(69,52,40,0.12)]">
-            <div className="mx-auto mt-[-10px] h-6 w-10 rounded-t-[8px] bg-[#d4af7a]" />
-            <div className="mt-2 px-2 text-center text-[6px] font-semibold uppercase tracking-[0.18em] text-[#7c4c2d]">
-              Curality
-            </div>
-            <div className="mx-auto mt-2 h-10 w-10 rounded-md bg-[#f7eecf]" />
-          </div>
-        </div>
+        <Link
+          href={productPath}
+          aria-label={`View ${title}`}
+          className="group/image relative mx-auto mt-16 block h-[245px] w-[82%]"
+        >
+          <Image
+            src={firstImage}
+            alt={title}
+            fill
+            sizes="(max-width: 640px) 85vw, 320px"
+            className="z-10 object-contain drop-shadow-[0_26px_35px_rgba(143,82,84,0.36)] transition-transform duration-500 ease-out group-hover/image:scale-[1.02]"
+            onError={() =>
+              setFailedImages((current) =>
+                current.includes(firstImage) ? current : [...current, firstImage],
+              )
+            }
+          />
+          {hoverImage ? (
+            <Image
+              src={hoverImage}
+              alt={`${title} alternate view`}
+              fill
+              sizes="(max-width: 640px) 85vw, 320px"
+              className="z-10 object-contain opacity-0 drop-shadow-[0_26px_35px_rgba(143,82,84,0.36)] transition-transform duration-500 ease-out group-hover/image:scale-[1.02] group-hover/image:opacity-100"
+              onError={() =>
+                setFailedImages((current) =>
+                  current.includes(hoverImage) ? current : [...current, hoverImage],
+                )
+              }
+            />
+          ) : null}
+        </Link>
       </div>
 
       <div className="flex items-end justify-between gap-3 px-4 pb-5 pt-4">
