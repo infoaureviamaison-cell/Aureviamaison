@@ -242,8 +242,8 @@ export function StoreProductCard({
   };
 
   return (
-    <article className="group flex w-full max-w-[280px] flex-col overflow-hidden rounded-[20px] bg-[#f5f1f2] shadow-[0_12px_20px_rgba(0,0,0,0.08)] transition duration-300 hover:-translate-y-0.5">
-      <div className="relative overflow-hidden rounded-[20px] bg-[#cec3f8] px-3 pb-0 pt-3">
+    <article className="group flex w-full max-w-[420px] flex-col overflow-hidden rounded-[24px] bg-white shadow-[0_12px_28px_rgba(0,0,0,0.09)] transition duration-300 hover:-translate-y-0.5">
+      <div className="relative aspect-[4/3] overflow-hidden rounded-t-[24px] bg-[#f5f1ed]">
         <div className="absolute left-3 top-3 z-20 flex items-start gap-2 rounded-[14px] bg-[#f1ece6]/90 px-3 py-2 shadow-[0_6px_12px_rgba(62,43,34,0.12)]">
           <div>
             <div className="text-[1.4rem] font-black leading-none tracking-[-0.04em] text-[#1a1a1a]">
@@ -263,10 +263,10 @@ export function StoreProductCard({
           </div>
         ) : null}
 
-        <div className="absolute right-3 top-[52%] z-30 flex -translate-y-1/2 flex-col gap-2">
+        <div className="absolute right-3 top-1/2 z-30 flex -translate-y-1/2 flex-col gap-2 sm:right-4 sm:gap-3">
           <button
             type="button"
-            className="flex h-10 w-10 items-center justify-center rounded-full border-[3px] border-white bg-[#3dcf73] text-white shadow-[0_6px_10px_rgba(61,207,115,0.2)] transition-transform hover:scale-105"
+            className="flex h-10 w-10 items-center justify-center rounded-full border-[3px] border-white bg-[#3dcf73] text-white shadow-[0_6px_10px_rgba(61,207,115,0.2)] transition-transform hover:scale-105 sm:h-12 sm:w-12"
             aria-label={`Order ${title} on WhatsApp`}
             onClick={() => {
               window.open(whatsappUrl, "_blank", "noopener,noreferrer");
@@ -280,13 +280,13 @@ export function StoreProductCard({
             onClick={handleAddToCart}
             disabled={loading || !effectiveVariantId}
             aria-label={loading ? `Adding ${title} to cart` : `Add ${title} to cart`}
-            className="flex h-10 w-10 items-center justify-center rounded-full border-[3px] border-white bg-[#e5e5e5] text-black shadow-[0_6px_10px_rgba(0,0,0,0.08)] transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:opacity-60"
+            className="flex h-10 w-10 items-center justify-center rounded-full border-[3px] border-white bg-[#e5e5e5] text-black shadow-[0_6px_10px_rgba(0,0,0,0.08)] transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:opacity-60 sm:h-12 sm:w-12"
           >
             <ShoppingCart aria-hidden="true" className="h-4 w-4" />
           </button>
           <button
             type="button"
-            className="flex h-10 w-10 items-center justify-center rounded-full border-[3px] border-white bg-white text-[#ff4a65] shadow-[0_6px_10px_rgba(0,0,0,0.08)] transition-transform hover:scale-105"
+            className="flex h-10 w-10 items-center justify-center rounded-full border-[3px] border-white bg-white text-[#ff4a65] shadow-[0_6px_10px_rgba(0,0,0,0.08)] transition-transform hover:scale-105 sm:h-12 sm:w-12"
             aria-label={`Save ${title}`}
           >
             <span className="text-lg leading-none">♥</span>
@@ -296,14 +296,14 @@ export function StoreProductCard({
         <Link
           href={productPath}
           aria-label={`View ${title}`}
-          className="group/image relative mx-auto mt-12 block h-[180px] w-[82%]"
+          className="group/image absolute inset-0 block"
         >
           <Image
             src={firstImage}
             alt={title}
             fill
             sizes="(max-width: 640px) 85vw, 260px"
-            className="z-10 object-contain drop-shadow-[0_18px_25px_rgba(143,82,84,0.36)] transition-transform duration-500 ease-out group-hover/image:scale-[1.02]"
+            className="z-10 object-contain p-3 transition-transform duration-500 ease-out group-hover/image:scale-[1.02] sm:p-5"
             onError={() =>
               setFailedImages((current) =>
                 current.includes(firstImage) ? current : [...current, firstImage],
@@ -316,7 +316,7 @@ export function StoreProductCard({
               alt={`${title} alternate view`}
               fill
               sizes="(max-width: 640px) 85vw, 260px"
-              className="z-10 object-contain opacity-0 drop-shadow-[0_18px_25px_rgba(143,82,84,0.36)] transition-transform duration-500 ease-out group-hover/image:scale-[1.02] group-hover/image:opacity-100"
+              className="z-10 object-contain p-3 opacity-0 transition-transform duration-500 ease-out group-hover/image:scale-[1.02] group-hover/image:opacity-100 sm:p-5"
               onError={() =>
                 setFailedImages((current) =>
                   current.includes(hoverImage) ? current : [...current, hoverImage],
@@ -327,16 +327,16 @@ export function StoreProductCard({
         </Link>
       </div>
 
-      <div className="flex items-end justify-between gap-2 px-3 pb-4 pt-3">
+      <div className="flex items-center justify-between gap-3 px-5 pb-5 pt-4 sm:px-6 sm:pb-6">
         <div className="min-w-0 flex-1">
           <Link href={productPath} className="group/title block">
-            <h3 className="line-clamp-2 text-[1.35rem] font-semibold leading-[0.95] tracking-[-0.05em] text-[#171717] transition-colors group-hover/title:text-[#d34c65]">
+            <h3 className="line-clamp-2 font-serif text-xl font-bold leading-tight tracking-[-0.025em] text-[#111827] transition-colors group-hover/title:text-[#d34c65] sm:text-2xl">
               {title}
             </h3>
           </Link>
 
-          <div className="mt-2 flex items-center gap-1.5">
-            <div className="flex items-center gap-0.5 text-[0.9rem] leading-none">
+          <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1">
+            <div className="flex items-center gap-0.5 text-lg leading-none sm:text-xl">
               {Array.from({ length: 5 }).map((_, index) => (
                 <span
                   key={index}
@@ -347,15 +347,15 @@ export function StoreProductCard({
                 </span>
               ))}
             </div>
-            <span className="text-[0.9rem] font-semibold text-[#0f0f0f]">
+            <span className="text-base font-semibold text-[#0f0f0f] sm:text-lg">
               {visibleReviewStats.averageRating.toFixed(1)}
             </span>
-            <span className="text-xs font-medium text-[#5a5a5a]">
+            <span className="text-sm font-medium text-[#85878c] sm:text-base">
               ({visibleReviewStats.totalReviews} reviews)
             </span>
           </div>
 
-          <div className="mt-2 text-[0.85rem] font-medium text-[#333333]">
+          <div className="mt-3 text-sm font-medium text-[#85878c] sm:text-base">
             {productMeta}
           </div>
         </div>
@@ -363,7 +363,7 @@ export function StoreProductCard({
         <Link
           href={productPath}
           aria-label={`View ${title}`}
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#f9dfe6] text-2xl font-medium text-[#ff4a65] shadow-[0_6px_12px_rgba(255,74,101,0.18)] transition-transform hover:scale-105"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#fce4e7] text-3xl font-medium text-[#ff3154] transition-transform hover:scale-105 sm:h-14 sm:w-14"
         >
           <span aria-hidden="true">›</span>
         </Link>

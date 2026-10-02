@@ -60,8 +60,6 @@ const topBarRight = [
 ];
 
 const logoSrc = "/logo/auerviamaison.png";
-const logoIconSrc = "/logo/icon.png";
-const logoTextSrc = "/logo/logotext.png";
 
 async function getShopCategories() {
   const res = await fetch("/api/categories", { next: { revalidate: 60 } });
@@ -357,21 +355,12 @@ export function Header() {
           </Sheet>
         </div>
 
-        {/* ───────── logo — emblem and wordmark ───────── */}
-        <Link href="/" aria-label="Aurevia Maison home" className="flex shrink-0 items-center gap-1 sm:gap-1.5">
-          <div className="relative h-10 w-10 shrink-0 sm:h-11 sm:w-11 lg:h-12 lg:w-12 xl:h-13 xl:w-13">
+        {/* ───────── logo — kept tight to the left edge ───────── */}
+        <Link href="/" className="flex shrink-0 items-center">
+          <div className="relative h-10 w-[120px] lg:h-12 lg:w-[140px]">
             <Image
-              src={logoIconSrc}
-              alt=""
-              fill
-              className="object-contain"
-              priority
-            />
-          </div>
-          <div className="relative h-10 w-30 sm:h-11 sm:w-33 lg:h-12 lg:w-36 xl:h-14 xl:w-42">
-            <Image
-              src={logoTextSrc}
-              alt=""
+              src={logoSrc}
+              alt="Auerviamaison"
               fill
               className="object-contain"
               priority

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, ArrowUpRight, Droplets, FlaskConical, ShoppingBag, Sparkles, Watch } from "@esmate/shadcn/pkgs/lucide-react";
+import { ArrowUpRight } from "@esmate/shadcn/pkgs/lucide-react";
 import { StoreProductCard } from "@/components/features/products/store-product-card-wrapper";
 
 const FALLBACK_IMAGE = "/logo/auerviamaison.png";
@@ -88,55 +88,29 @@ export function CategoriesSection({ categories }: { categories: Category[] }) {
   const mainCategories = categories.filter((category) => !category.parentId);
 
   return (
-    <section className="storefront-categories relative z-20 mx-auto mt-6 w-full max-w-[1480px] overflow-hidden bg-white px-5 sm:px-8">
-      <div className="category-marquee-track gap-4 py-3 sm:gap-5">
-        {[...mainCategories, ...mainCategories].map((category, index) => {
-          const normalizedName = category.name.toLowerCase();
-          const CategoryIcon = normalizedName.includes("hair")
-            ? Droplets
-            : normalizedName.includes("fragrance") || normalizedName.includes("perfume")
-              ? FlaskConical
-              : normalizedName.includes("watch")
-                ? Watch
-                : normalizedName.includes("accessor")
-                  ? ShoppingBag
-                  : Sparkles;
-
-          return (
-            <Link
-              key={`${category.id}-${index}`}
-              href={`/category/${encodeURIComponent(category.slug)}`}
-              aria-hidden={index >= mainCategories.length}
-              tabIndex={index >= mainCategories.length ? -1 : undefined}
-              className="category-card group relative block h-[224px] w-40 shrink-0 overflow-hidden rounded-2xl border border-[#f2e4e5] bg-[#fff8f5] transition duration-300 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#d34c65]/20 sm:h-[264px] sm:w-48 lg:h-[288px] lg:w-56"
-            >
-              <Image
-                src={category.image || FALLBACK_IMAGE}
-                alt={category.name}
-                fill
-                sizes="(max-width: 640px) 160px, (max-width: 1024px) 192px, 224px"
-                className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
-              />
-              <span className="absolute left-3 top-3 flex h-11 w-11 items-center justify-center rounded-full bg-[#d34c65] text-white sm:left-4 sm:top-4 sm:h-12 sm:w-12">
-                <CategoryIcon aria-hidden="true" className="h-7 w-7" />
-              </span>
-              <div
-                aria-hidden="true"
-                className="absolute inset-0"
-                style={{ background: "linear-gradient(180deg, transparent 42%, rgba(14, 12, 14, 0.68) 100%)" }}
-              />
-              <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-4 sm:p-5">
-                <span className="font-sans text-sm font-bold uppercase leading-tight text-white sm:text-base">
-                  {category.name}
-                </span>
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#d34c65] text-white transition-colors group-hover:bg-[#bd3f58]">
-                  <ArrowRight aria-hidden="true" className="h-4 w-4" />
-                </span>
+    <section className="storefront-categories relative z-20 mt-6 bg-white lg:mx-auto lg:max-w-7xl">
+         
+      <div className="relative flex gap-8 overflow-hidden">
+        <div className="animate-scroll scrollbar-hide flex gap-8 px-2 sm:gap-9 sm:px-3 lg:gap-10 lg:px-4">
+           {[...mainCategories, ...mainCategories].map((category, idx) => (
+             <Link
+               key={`${category.id}-${idx}`}
+               href={`/category/${encodeURIComponent(category.slug)}`}
+               className="group flex flex-col items-center flex-shrink-0"
+             >
+              <div className="relative h-32 w-32 overflow-hidden rounded-2xl sm:h-40 sm:w-40 lg:h-48 lg:w-48">
+                <Image
+                  src={category.image || FALLBACK_IMAGE}
+                  alt={category.name}
+                  fill
+                  className="object-contain transition-transform duration-700 ease-out group-hover:scale-150"
+                />
               </div>
-            </Link>
-          );
-        })}
-      </div>
+               <span className="mt-3 text-center text-sm font-bold uppercase text-gray-800">{category.name}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
     </section>
   );
 }
@@ -190,7 +164,7 @@ function FeaturedProductRow({
         )}
         <Link
           href={`/category/${encodeURIComponent(category.slug)}`}
-          className="group mt-4 inline-flex items-center gap-1.5 rounded-full bg-[#d34c65] px-5 py-2.5 text-xs font-bold uppercase tracking-wide text-white transition hover:-translate-y-0.5 hover:bg-[#bd3f58] sm:text-sm"
+          className="group mt-4 inline-flex items-center gap-1.5 rounded-full bg-[#ea580c] px-5 py-2.5 text-xs font-bold uppercase tracking-wide text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-[#c2410c] hover:shadow-md sm:text-sm"
         >
           Shop Now
           <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

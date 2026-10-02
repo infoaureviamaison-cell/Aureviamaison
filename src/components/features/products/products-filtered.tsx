@@ -30,15 +30,15 @@ export function ProductsFiltered({
             defaultValue={query.q}
             placeholder="Search products"
             aria-label="Search products"
-            className="h-12 w-full rounded-full border border-black/10 bg-[#f9f9f9] px-4 text-sm text-black outline-none transition focus:border-[#d34c65] focus:bg-white"
+            className="h-12 w-full rounded-full border border-black/10 bg-[#f9f9f9] px-4 text-sm text-black outline-none transition focus:border-[#f97316] focus:bg-white"
           />
         </div>
 
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-end">
-          <select name="category" defaultValue={query.category || ""} aria-label="Category" className="h-12 min-w-[150px] rounded-full border border-black/10 bg-[#f9f9f9] px-4 text-sm text-black outline-none transition focus:border-[#d34c65] focus:bg-white"><option value="">All categories</option>{categories.map((category) => <option key={category.id} value={category.slug}>{category.name}</option>)}</select>
-          <input name="min" type="number" min="0" defaultValue={query.min} placeholder="Min" aria-label="Minimum price" className="h-12 w-full min-w-[110px] rounded-full border border-black/10 bg-[#f9f9f9] px-4 text-sm text-black outline-none transition focus:border-[#d34c65] focus:bg-white sm:w-[110px]" />
-          <input name="max" type="number" min="0" defaultValue={query.max} placeholder="Max" aria-label="Maximum price" className="h-12 w-full min-w-[110px] rounded-full border border-black/10 bg-[#f9f9f9] px-4 text-sm text-black outline-none transition focus:border-[#d34c65] focus:bg-white sm:w-[110px]" />
-          <select name="sort" defaultValue={query.sort || "featured"} aria-label="Sort products" className="h-12 min-w-[150px] rounded-full border border-black/10 bg-[#f9f9f9] px-4 text-sm text-black outline-none transition focus:border-[#d34c65] focus:bg-white"><option value="featured">Featured</option><option value="newest">Newest</option><option value="price-asc">Price: low to high</option><option value="price-desc">Price: high to low</option><option value="name">Name</option></select>
+          <select name="category" defaultValue={query.category || ""} aria-label="Category" className="h-12 min-w-[150px] rounded-full border border-black/10 bg-[#f9f9f9] px-4 text-sm text-black outline-none transition focus:border-[#f97316] focus:bg-white"><option value="">All categories</option>{categories.map((category) => <option key={category.id} value={category.slug}>{category.name}</option>)}</select>
+          <input name="min" type="number" min="0" defaultValue={query.min} placeholder="Min" aria-label="Minimum price" className="h-12 w-full min-w-[110px] rounded-full border border-black/10 bg-[#f9f9f9] px-4 text-sm text-black outline-none transition focus:border-[#f97316] focus:bg-white sm:w-[110px]" />
+          <input name="max" type="number" min="0" defaultValue={query.max} placeholder="Max" aria-label="Maximum price" className="h-12 w-full min-w-[110px] rounded-full border border-black/10 bg-[#f9f9f9] px-4 text-sm text-black outline-none transition focus:border-[#f97316] focus:bg-white sm:w-[110px]" />
+          <select name="sort" defaultValue={query.sort || "featured"} aria-label="Sort products" className="h-12 min-w-[150px] rounded-full border border-black/10 bg-[#f9f9f9] px-4 text-sm text-black outline-none transition focus:border-[#f97316] focus:bg-white"><option value="featured">Featured</option><option value="newest">Newest</option><option value="price-asc">Price: low to high</option><option value="price-desc">Price: high to low</option><option value="name">Name</option></select>
           <button type="submit" className="h-12 rounded-full bg-[#1a1308] px-5 text-sm font-semibold text-white transition hover:bg-[#2a1d10]">Apply</button>
         </div>
       </form>
