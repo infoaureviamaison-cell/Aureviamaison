@@ -47,6 +47,24 @@ function formatPrice(amount: string) {
   return `Rs. ${n.toLocaleString("en-PK")}`;
 }
 
+function getProductMeta(title: string, tag?: string) {
+  const normalizedTag = tag?.trim();
+  if (normalizedTag && normalizedTag.length > 0) {
+    return `${normalizedTag} • 100 ml`;
+  }
+
+  const lowerTitle = title.toLowerCase();
+  if (lowerTitle.includes("eau de parfum") || lowerTitle.includes("perfume")) {
+    return "Eau de Parfum • 100 ml";
+  }
+
+  if (lowerTitle.includes("serum") || lowerTitle.includes("oil")) {
+    return "Luxury Care • 100 ml";
+  }
+
+  return "Premium Beauty • 100 ml";
+}
+
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 function getDefaultReviewStats(seedText: string): ReviewStats {
@@ -143,6 +161,7 @@ export function StoreProductCard({
       : defaultReviewStats;
 
   const productPath = `/products/${handle}`;
+  const productMeta = getProductMeta(title, tag);
   const whatsappUrl = `https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "923171707418"}?text=${encodeURIComponent(
     `Hi, I want to order this product:\n\nProduct: ${title}\nPrice: ${formatPrice(price.amount)}\nLink: ${productPath}`,
   )}`;
@@ -288,13 +307,13 @@ export function StoreProductCard({
       <div className="flex items-end justify-between gap-3 px-4 pb-5 pt-4">
         <div className="min-w-0 flex-1">
           <Link href={productPath} className="group/title block">
-            <h3 className="line-clamp-2 text-[2.3rem] font-black leading-[0.9] tracking-[-0.05em] text-[#171717] transition-colors group-hover/title:text-[#d34c65]">
+            <h3 className="line-clamp-2 text-[2rem] font-semibold leading-[0.95] tracking-[-0.05em] text-[#171717] transition-colors group-hover/title:text-[#d34c65]">
               {title}
             </h3>
           </Link>
 
           <div className="mt-3 flex items-center gap-2">
-            <div className="flex items-center gap-1 text-[1.15rem] leading-none">
+            <div className="flex items-center gap-1 text-[1.1rem] leading-none">
               {Array.from({ length: 5 }).map((_, index) => (
                 <span
                   key={index}
@@ -305,7 +324,7 @@ export function StoreProductCard({
                 </span>
               ))}
             </div>
-            <span className="text-[1.1rem] font-bold text-[#0f0f0f]">
+            <span className="text-[1.08rem] font-semibold text-[#0f0f0f]">
               {visibleReviewStats.averageRating.toFixed(1)}
             </span>
             <span className="text-sm font-medium text-[#5a5a5a]">
@@ -314,7 +333,7 @@ export function StoreProductCard({
           </div>
 
           <div className="mt-3 text-[1.05rem] font-medium text-[#333333]">
-            Eau de Parfum • 100 ml
+            {productMeta}
           </div>
         </div>
 
