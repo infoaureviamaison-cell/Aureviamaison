@@ -280,7 +280,7 @@ export function StoreProductCard({
             onClick={handleAddToCart}
             disabled={loading || !effectiveVariantId}
             aria-label={loading ? `Adding ${title} to cart` : `Add ${title} to cart`}
-            className="flex h-12 w-12 items-center justify-center rounded-full border-[4px] border-white bg-white text-[#ff4a65] shadow-[0_8px_14px_rgba(0,0,0,0.08)] transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:opacity-60"
+            className="flex h-12 w-12 items-center justify-center rounded-full border-[4px] border-white bg-[#e5e5e5] text-black shadow-[0_8px_14px_rgba(0,0,0,0.08)] transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:opacity-60"
           >
             <ShoppingCart aria-hidden="true" className="h-5 w-5" />
           </button>
@@ -289,7 +289,7 @@ export function StoreProductCard({
             className="flex h-12 w-12 items-center justify-center rounded-full border-[4px] border-white bg-white text-[#ff4a65] shadow-[0_8px_14px_rgba(0,0,0,0.08)] transition-transform hover:scale-105"
             aria-label={`Save ${title}`}
           >
-            <span className="text-xl leading-none">♡</span>
+            <span className="text-xl leading-none">♥</span>
           </button>
         </div>
 
