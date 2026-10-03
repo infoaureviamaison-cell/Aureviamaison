@@ -242,15 +242,15 @@ export function StoreProductCard({
   };
 
   return (
-    <article className="group flex w-full max-w-[360px] flex-col overflow-hidden rounded-[24px] bg-white">
-      <div className="relative aspect-[4/4.1] overflow-hidden rounded-[24px] bg-[#f5f1ed]">
-        <div className="absolute left-3 top-3 z-20 flex min-w-[min(72%,15rem)] items-start gap-2 rounded-[20px] bg-white/95 px-4 py-3">
+    <article className="group flex w-full max-w-[360px] flex-col overflow-hidden rounded-[20px] bg-white">
+      <div className="relative aspect-[3/4] overflow-hidden rounded-[20px] bg-[#f5f1ed]">
+        <div className="absolute left-3 top-3 z-20 flex min-w-0 items-start gap-2 rounded-[16px] bg-white/95 px-3 py-2">
           <div>
-            <div className="font-serif text-2xl font-bold leading-none tracking-[-0.035em] text-[#85420b] sm:text-[1.8rem]">
+            <div className="font-serif text-lg font-bold leading-none tracking-[-0.035em] text-[#85420b] sm:text-xl">
               {formatPrice(price.amount)}
             </div>
             {discount !== null && compareAtPrice ? (
-              <div className="mt-1.5 text-sm font-medium text-[#77716e] line-through sm:text-base">
+              <div className="mt-1 text-xs font-medium text-[#77716e] line-through sm:text-sm">
                 {formatPrice(compareAtPrice.amount)}
               </div>
             ) : null}
@@ -258,38 +258,38 @@ export function StoreProductCard({
         </div>
 
         {discount !== null ? (
-          <div className="absolute right-3 top-3 z-20 rounded-[20px] bg-[#f7194f] px-4 py-2.5 text-base font-bold text-white sm:px-5 sm:text-lg">
+          <div className="absolute right-3 top-3 z-20 rounded-[16px] bg-[#f7194f] px-3 py-2 text-sm font-bold text-white sm:px-4 sm:text-base">
             -{discount}% OFF
           </div>
         ) : null}
 
-        <div className="absolute right-3 top-1/2 z-30 flex -translate-y-1/2 flex-col gap-2.5 sm:right-4 sm:gap-3">
+        <div className="absolute right-3 top-1/2 z-30 flex -translate-y-1/2 flex-col gap-2 sm:right-4 sm:gap-2.5">
           <button
             type="button"
-            className="flex h-11 w-11 items-center justify-center rounded-full border-0 bg-white text-[#14b85a] transition-transform hover:scale-105 sm:h-12 sm:w-12"
+            className="flex h-9 w-9 items-center justify-center rounded-full border-0 bg-white text-[#14b85a] transition-transform hover:scale-105 sm:h-10 sm:w-10"
             aria-label={`Order ${title} on WhatsApp`}
             onClick={() => {
               window.open(whatsappUrl, "_blank", "noopener,noreferrer");
               trackContact("WhatsApp product order");
             }}
           >
-            <FaWhatsapp className="h-6 w-6" />
+            <FaWhatsapp className="h-5 w-5" />
           </button>
           <button
             type="button"
             onClick={handleAddToCart}
             disabled={loading || !effectiveVariantId}
             aria-label={loading ? `Adding ${title} to cart` : `Add ${title} to cart`}
-            className="flex h-11 w-11 items-center justify-center rounded-full border-0 bg-white text-black transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:opacity-60 sm:h-12 sm:w-12"
+            className="flex h-9 w-9 items-center justify-center rounded-full border-0 bg-white text-black transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:opacity-60 sm:h-10 sm:w-10"
           >
-            <ShoppingCart aria-hidden="true" className="h-6 w-6" />
+            <ShoppingCart aria-hidden="true" className="h-5 w-5" />
           </button>
           <button
             type="button"
-            className="flex h-11 w-11 items-center justify-center rounded-full border-0 bg-white text-[#f7194f] transition-transform hover:scale-105 sm:h-12 sm:w-12"
+            className="flex h-9 w-9 items-center justify-center rounded-full border-0 bg-white text-[#f7194f] transition-transform hover:scale-105 sm:h-10 sm:w-10"
             aria-label={`Save ${title}`}
           >
-            <Heart aria-hidden="true" className="h-6 w-6" />
+            <Heart aria-hidden="true" className="h-5 w-5" />
           </button>
         </div>
 
@@ -327,16 +327,16 @@ export function StoreProductCard({
         </Link>
       </div>
 
-      <div className="flex items-start justify-between gap-3 px-4 pb-5 pt-4 sm:px-5 sm:pb-6 sm:pt-5">
+      <div className="flex items-start justify-between gap-2 px-4 pb-4 pt-3 sm:px-5 sm:pb-5 sm:pt-4">
         <div className="min-w-0 flex-1">
           <Link href={productPath} className="group/title block">
-            <h3 className="line-clamp-2 font-serif text-xl font-bold leading-tight tracking-[-0.025em] text-[#10131a] transition-colors group-hover/title:text-[#d34c65] sm:text-2xl">
+            <h3 className="truncate font-serif text-base font-bold leading-tight tracking-[-0.025em] text-[#10131a] transition-colors group-hover/title:text-[#d34c65] sm:text-lg">
               {title}
             </h3>
           </Link>
 
-          <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1">
-            <div className="flex items-center gap-0.5 text-xl leading-none sm:text-2xl">
+          <div className="mt-2 flex flex-nowrap items-center gap-x-1.5 whitespace-nowrap">
+            <div className="flex shrink-0 items-center gap-0 text-base leading-none sm:text-lg">
               {Array.from({ length: 5 }).map((_, index) => (
                 <span
                   key={index}
@@ -347,15 +347,15 @@ export function StoreProductCard({
                 </span>
               ))}
             </div>
-            <span className="text-base font-semibold text-[#0f0f0f] sm:text-lg">
+            <span className="shrink-0 text-sm font-semibold text-[#0f0f0f] sm:text-base">
               {visibleReviewStats.averageRating.toFixed(1)}
             </span>
-            <span className="text-sm font-medium text-[#85878c] sm:text-base">
+            <span className="truncate text-xs font-medium text-[#85878c] sm:text-sm">
               ({visibleReviewStats.totalReviews} reviews)
             </span>
           </div>
 
-          <div className="mt-3 text-sm font-medium text-[#85878c] sm:text-base">
+          <div className="mt-2 truncate text-xs font-medium text-[#85878c] sm:text-sm">
             {productMeta}
           </div>
         </div>
@@ -363,9 +363,9 @@ export function StoreProductCard({
         <Link
           href={productPath}
           aria-label={`View ${title}`}
-          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#ffe1e4] text-[#f7194f] transition-transform hover:scale-105 sm:h-12 sm:w-12"
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#ffe1e4] text-[#f7194f] transition-transform hover:scale-105 sm:h-10 sm:w-10"
         >
-          <ArrowRight aria-hidden="true" className="h-6 w-6 stroke-[3]" />
+          <ArrowRight aria-hidden="true" className="h-5 w-5 stroke-[3]" />
         </Link>
       </div>
     </article>
