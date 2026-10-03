@@ -15,6 +15,8 @@ import {
   Menu,
   Phone,
   Search,
+  Heart,
+  UserRound,
   ShieldCheck,
   ShoppingCart,
   Truck,
@@ -73,8 +75,8 @@ export function Header() {
   const { installApp, isInstalled } = usePWAInstall();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileLegalOpen, setMobileLegalOpen] = useState(false);
-  const [desktopLegalOpen, setDesktopLegalOpen] = useState(false);
-  const desktopLegalRef = useRef<HTMLDivElement>(null);
+  const [desktopMoreOpen, setDesktopMoreOpen] = useState(false);
+  const desktopMoreRef = useRef<HTMLDivElement>(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<Awaited<ReturnType<typeof searchProducts>>>([]);
@@ -91,23 +93,24 @@ export function Header() {
 
   const isActive = (href: string) => pathname.startsWith(href);
   const legalPageActive = legalMenuItems.some((item) => pathname === item.href);
+  const mainCategories = shopCategories.slice(0, 4);
 
   useEffect(() => {
-    function closeLegalMenu(event: MouseEvent) {
-      if (!desktopLegalRef.current?.contains(event.target as Node)) {
-        setDesktopLegalOpen(false);
+    function closeMoreMenu(event: MouseEvent) {
+      if (!desktopMoreRef.current?.contains(event.target as Node)) {
+        setDesktopMoreOpen(false);
       }
     }
     function closeOnEscape(event: KeyboardEvent) {
       if (event.key === "Escape") {
-        setDesktopLegalOpen(false);
+        setDesktopMoreOpen(false);
         setMobileLegalOpen(false);
       }
     }
-    document.addEventListener("mousedown", closeLegalMenu);
+    document.addEventListener("mousedown", closeMoreMenu);
     document.addEventListener("keydown", closeOnEscape);
     return () => {
-      document.removeEventListener("mousedown", closeLegalMenu);
+      document.removeEventListener("mousedown", closeMoreMenu);
       document.removeEventListener("keydown", closeOnEscape);
     };
   }, []);
@@ -403,206 +406,66 @@ export function Header() {
         </div>
 
         {/* ───────── nav links ───────── */}
-        <div className="hidden items-center gap-4 lg:flex xl:gap-5">
-          <Link
-            href="/"
-            className={`flex items-center gap-1.5 text-[13px] font-semibold transition-colors hover:text-[#f97316] ${
-              pathname === "/" ? "text-[#f97316]" : "text-black"
-            }`}
-          >
-            Home
+        <div className="hidden min-w-0 flex-1 items-center justify-center gap-3 lg:flex xl:gap-5">
+          <Link href="/products" className={`shrink-0 text-[13px] font-semibold transition-colors hover:text-[#f97316] ${isActive("/products") ? "text-[#f97316]" : "text-black"}`}>
+            Shop
           </Link>
-
-          <div className="relative">
-            <div className="group">
-              <div className="flex cursor-pointer items-center gap-1">
-                <Link
-                  href="/products"
-                  className={`text-[13px] font-semibold transition-colors hover:text-[#f97316] ${
-                    isActive("/products") || isActive("/category")
-                      ? "text-[#f97316]"
-                      : "text-black"
-                  }`}
-                >
-                  All Products
-                </Link>
-                <ChevronDown className="h-4 w-4 text-black/60 transition-transform duration-200 group-hover:rotate-180" />
-              </div>
-
-              <div className="absolute left-1/2 top-full h-4 w-32 -translate-x-1/2" />
-
-              <div className="pointer-events-none absolute left-1/2 top-full z-50 mt-4 w-[560px] -translate-x-1/2 scale-95 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:scale-100 group-hover:opacity-100">
-                <div className="overflow-hidden rounded-xl border border-black/10 bg-white p-2 shadow-none">
-                  <div className="grid grid-cols-4 gap-0.5 p-0.5">
-                    {shopCategories.slice(0, 8).map((item) => (
-                      <Link
-                        key={item.id}
-                        href={`/category/${item.slug}`}
-                        className={`group relative m-1 flex flex-col items-center rounded-lg p-3 transition-all hover:bg-[#fff7ed] ${
-                          isActive(`/category/${item.slug}`)
-                            ? "bg-[#fff7ed]"
-                            : ""
-                        }`}
-                      >
-                        <div className="relative mb-2 h-14 w-14 overflow-hidden rounded-lg">
-                          <Image
-                            src={item.image || logoSrc}
-                            alt={item.name}
-                            fill
-                            className="object-cover transition-transform duration-300 group-hover:scale-110"
-                            sizes="56px"
-                          />
-                        </div>
-
-                        <p
-                          className={`text-center text-xs font-semibold leading-tight ${
-                            isActive(`/category/${item.slug}`)
-                              ? "text-[#f97316]"
-                              : "text-black"
-                          }`}
-                        >
-                          {item.name}
-                        </p>
-
-                        <div className="absolute inset-0 rounded-lg ring-1 ring-inset ring-transparent transition-all group-hover:ring-[#f6a45d]/20" />
-                      </Link>
-                    ))}
-                  </div>
-
-                  <div className="border-t border-gray-200 bg-white p-3">
-                    <Link
-                      href="/products"
-                      className="flex items-center justify-center gap-1.5 text-xs font-semibold text-black/70 transition-colors hover:text-[#f97316]"
-                    >
-                      View all products
-                      <ChevronDown className="h-3 w-3 rotate-[-90deg]" />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="relative">
+          {mainCategories.map((item) => (
             <Link
-              href="/about-us"
-              className={`text-[13px] font-semibold transition-colors hover:text-[#f97316] ${
-                isActive("/about-us") ? "text-[#f97316]" : "text-black"
-              }`}
+              key={item.id}
+              href={`/category/${item.slug}`}
+              title={item.name}
+              className={`max-w-[76px] truncate text-[13px] font-medium transition-colors hover:text-[#f97316] xl:max-w-[92px] ${isActive(`/category/${item.slug}`) ? "text-[#f97316]" : "text-black"}`}
             >
-              About
+              {item.name}
             </Link>
-          </div>
-
-          <div
-            ref={desktopLegalRef}
-            className="relative"
-            onMouseEnter={() => setDesktopLegalOpen(true)}
-            onMouseLeave={() => setDesktopLegalOpen(false)}
-            onBlur={(event) => {
-              if (!event.currentTarget.contains(event.relatedTarget)) setDesktopLegalOpen(false);
-            }}
-          >
+          ))}
+          <div ref={desktopMoreRef} className="relative shrink-0" onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setDesktopMoreOpen(false); }}>
             <button
               type="button"
               aria-haspopup="menu"
-              aria-expanded={desktopLegalOpen}
-              aria-controls="desktop-legal-menu"
-              onClick={() => setDesktopLegalOpen((open) => !open)}
-              className={`flex items-center gap-1 text-[13px] font-semibold transition-colors hover:text-[#f97316] ${
-                legalPageActive ? "text-[#f97316]" : "text-black"
-              }`}
+              aria-expanded={desktopMoreOpen}
+              aria-controls="desktop-more-menu"
+              onClick={() => setDesktopMoreOpen((open) => !open)}
+              onMouseEnter={() => setDesktopMoreOpen(true)}
+              className={`flex items-center gap-1 text-[13px] font-medium transition-colors hover:text-[#f97316] ${desktopMoreOpen ? "text-[#f97316]" : "text-black"}`}
             >
-              Legal Pages
-              <ChevronDown aria-hidden="true" className={`h-4 w-4 transition-transform ${desktopLegalOpen ? "rotate-180" : ""}`} />
+              More <ChevronDown aria-hidden="true" className={`h-3.5 w-3.5 transition-transform ${desktopMoreOpen ? "rotate-180" : ""}`} />
             </button>
-            {desktopLegalOpen ? (
-              <div className="absolute left-1/2 top-full z-50 w-64 -translate-x-1/2 pt-3">
-                <div id="desktop-legal-menu" role="menu" className="rounded-xl border border-black/10 bg-white p-2 shadow-none">
-                  {legalMenuItems.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      role="menuitem"
-                      aria-current={pathname === item.href ? "page" : undefined}
-                      onClick={() => setDesktopLegalOpen(false)}
-                      className={`block rounded-lg px-4 py-2.5 text-sm transition-colors ${
-                        pathname === item.href ? "bg-[#fff7ed] font-semibold text-[#f97316]" : "text-black hover:bg-black/5 hover:text-[#f97316]"
-                      }`}
-                    >
+            {desktopMoreOpen ? (
+              <div className="absolute right-0 top-full z-50 w-52 pt-3" onMouseLeave={() => setDesktopMoreOpen(false)}>
+                <div id="desktop-more-menu" role="menu" className="rounded-lg border border-black/10 bg-white p-2">
+                  {[
+                    ...mainMenuItems.filter((item) => !["Home", "Products", "Skincare", "Fragrance"].includes(item.text)),
+                    { text: "Wholesale", href: "/wholesale" },
+                    { text: "Videos", href: "/videos" },
+                    ...legalMenuItems,
+                  ].map((item) => (
+                    <Link key={item.href} href={item.href} role="menuitem" onClick={() => setDesktopMoreOpen(false)} className={`block rounded-md px-3 py-2 text-xs transition-colors hover:bg-black/5 hover:text-[#f97316] ${isActive(item.href) ? "font-semibold text-[#f97316]" : "text-black"}`}>
                       {item.text}
                     </Link>
                   ))}
+                  {!isInstalled ? <button type="button" onClick={() => { void installApp(); setDesktopMoreOpen(false); }} className="mt-1 flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-xs text-black hover:bg-black/5"><Download className="h-3.5 w-3.5" />Install App</button> : null}
                 </div>
               </div>
             ) : null}
           </div>
-
-          <div className="relative">
-            <Link
-              href="/wholesale"
-              className={`text-[13px] font-semibold transition-colors hover:text-[#f97316] ${
-                isActive("/wholesale") ? "text-[#f97316]" : "text-black"
-              }`}
-            >
-              Wholesale
-            </Link>
-          </div>
-
-          <div className="relative">
-            <Link
-              href="/contact"
-              className={`text-[13px] font-semibold transition-colors hover:text-[#f97316] ${
-                isActive("/contact") ? "text-[#f97316]" : "text-black"
-              }`}
-            >
-              Contact
-            </Link>
-          </div>
-
-          <div className="relative">
-            <Link
-              href="/videos"
-              className={`text-[13px] font-semibold transition-colors hover:text-[#f97316] ${
-                isActive("/videos") ? "text-[#f97316]" : "text-black"
-              }`}
-            >
-              Videos
-            </Link>
-          </div>
-
-          {!isInstalled ? (
-            <button
-              type="button"
-              onClick={() => void installApp()}
-              className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-[#f97316] px-3 py-2 text-xs font-bold text-white transition hover:bg-[#ea580c] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f97316] focus-visible:ring-offset-2"
-            >
-              <Download aria-hidden="true" className="h-4 w-4" />
-              Install App
-            </button>
-          ) : null}
         </div>
 
         {/* ───────── search + icons ───────── */}
-        <div className="hidden flex-1 items-center justify-end gap-3 lg:flex">
-          <div className="relative w-full max-w-xs">
-            <div className="flex items-center overflow-hidden rounded-full border border-black/10 bg-white">
-              <Search className="ml-4 h-4 w-4 shrink-0 text-black/60" />
+        <div className="hidden shrink-0 items-center justify-end gap-1.5 lg:flex xl:gap-2">
+          <div className="relative w-[150px] xl:w-[180px]">
+            <div className="flex h-9 items-center overflow-hidden rounded-full border border-black/15 bg-white">
+              <Search className="ml-3 h-4 w-4 shrink-0 text-black/70" />
               <input
                 type="search"
-                placeholder="Search for products..."
+                placeholder="Search products"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={() => setSearchOpen(true)}
                 onBlur={() => setTimeout(() => setSearchOpen(false), 150)}
-                className="flex-1 bg-transparent px-3 py-2.5 text-sm text-black outline-none placeholder:text-black/50"
+                className="min-w-0 flex-1 bg-transparent px-2 py-2 text-xs text-black outline-none placeholder:text-black/50"
               />
-              <button
-                onClick={() => setSearchOpen(true)}
-                className="m-1 shrink-0 rounded-full bg-[#f97316] px-4 py-2 text-xs font-bold text-white transition-opacity hover:opacity-90"
-              >
-                Search
-              </button>
             </div>
 
             {searchOpen && searchQuery && (
@@ -653,13 +516,19 @@ export function Header() {
             )}
           </div>
 
+          <Button variant="ghost" size="icon" aria-label="Wishlist" className="h-9 w-9 text-black hover:text-[#f97316]">
+            <Heart className="h-[18px] w-[18px]" />
+          </Button>
+          <Button variant="ghost" size="icon" aria-label="Profile" className="h-9 w-9 text-black hover:text-[#f97316]">
+            <UserRound className="h-[18px] w-[18px]" />
+          </Button>
           <Button
             variant="ghost"
             size="icon"
-            className="relative h-10 w-10 text-[#1a1308] hover:text-[#b57910]"
+            className="relative h-9 w-9 text-[#1a1308] hover:text-[#b57910]"
             onClick={() => setCartOpen(true)}
           >
-            <ShoppingCart className="h-5 w-5" />
+            <ShoppingCart className="h-[18px] w-[18px]" />
             {!!totalQuantity && (
               <Badge className="absolute -right-1 -top-1 h-5 min-w-5 rounded-full border-2 border-white bg-[#b57910] p-0 text-xs text-white">
                 {totalQuantity > 99 ? "99+" : totalQuantity}
