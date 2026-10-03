@@ -59,7 +59,7 @@ const topBarRight = [
   { text: "FAQs", href: "/faqs" },
 ];
 
-const logoSrc = "/logo/auerviamaison.png";
+const logoSrc = "/logo/icon.png";
 
 async function getShopCategories() {
   const res = await fetch("/api/categories", { next: { revalidate: 60 } });
