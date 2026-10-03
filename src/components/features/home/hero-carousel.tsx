@@ -76,7 +76,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
               fill
               priority={index === 0}
               sizes="100vw"
-              className={`hero-desktop-image object-contain ${
+              className={`hero-desktop-image object-cover ${
                 hasMobileImage ? "has-mobile-hero-image" : ""
               }`}
             />
@@ -87,7 +87,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                 fill
                 priority={index === 0}
                 sizes="100vw"
-                className="hero-mobile-image object-contain"
+                className="hero-mobile-image object-cover"
               />
             )}
           </div>
@@ -228,7 +228,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
           display: none;
         }
 
-        @media (max-width: 767px) and (orientation: portrait) {
+        @media (max-width: 767px) {
           .hero-desktop-image.has-mobile-hero-image {
             display: none;
           }
