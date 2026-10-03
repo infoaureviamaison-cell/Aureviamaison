@@ -263,47 +263,47 @@ export function StoreProductCard({
           </div>
         ) : null}
 
-        <div className="absolute right-2.5 top-1/2 z-30 flex -translate-y-1/2 flex-col gap-1.5 sm:right-3 sm:gap-2">
+        <div className="absolute right-3 top-1/2 z-30 flex -translate-y-1/2 flex-col gap-2.5 sm:right-4 sm:gap-3 sm:opacity-0 sm:transition-opacity sm:duration-200 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100">
           <button
             type="button"
-            className="flex h-8 w-8 items-center justify-center rounded-full border-0 bg-white text-[#14b85a] transition-transform hover:scale-105 sm:h-9 sm:w-9"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/80 bg-white text-[#14b85a] shadow-[0_4px_14px_rgba(0,0,0,0.2)] transition duration-200 hover:scale-110 hover:bg-[#14b85a] hover:text-white hover:shadow-[0_6px_18px_rgba(20,184,90,0.4)]"
             aria-label={`Order ${title} on WhatsApp`}
             onClick={() => {
               window.open(whatsappUrl, "_blank", "noopener,noreferrer");
               trackContact("WhatsApp product order");
             }}
           >
-            <FaWhatsapp className="h-4 w-4" />
+            <FaWhatsapp className="h-5 w-5" />
           </button>
           <button
             type="button"
             onClick={handleAddToCart}
             disabled={loading || !effectiveVariantId}
             aria-label={loading ? `Adding ${title} to cart` : `Add ${title} to cart`}
-            className="flex h-8 w-8 items-center justify-center rounded-full border-0 bg-white text-black transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:opacity-60 sm:h-9 sm:w-9"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/80 bg-white text-black shadow-[0_4px_14px_rgba(0,0,0,0.2)] transition duration-200 hover:scale-110 hover:bg-black hover:text-white hover:shadow-[0_6px_18px_rgba(0,0,0,0.35)] disabled:cursor-not-allowed disabled:opacity-60"
           >
-            <ShoppingCart aria-hidden="true" className="h-4 w-4" />
+            <ShoppingCart aria-hidden="true" className="h-5 w-5" />
           </button>
           <button
             type="button"
-            className="flex h-8 w-8 items-center justify-center rounded-full border-0 bg-white text-[#f7194f] transition-transform hover:scale-105 sm:h-9 sm:w-9"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/80 bg-white text-[#f7194f] shadow-[0_4px_14px_rgba(0,0,0,0.2)] transition duration-200 hover:scale-110 hover:bg-[#f7194f] hover:text-white hover:shadow-[0_6px_18px_rgba(247,25,79,0.4)]"
             aria-label={`Save ${title}`}
           >
-            <Heart aria-hidden="true" className="h-4 w-4" />
+            <Heart aria-hidden="true" className="h-5 w-5" />
           </button>
         </div>
 
         <Link
           href={productPath}
           aria-label={`View ${title}`}
-          className="group/image absolute inset-0 block"
+          className="group/image absolute inset-0 z-10 block"
         >
           <Image
             src={firstImage}
             alt={title}
             fill
             sizes="(max-width: 640px) 85vw, 260px"
-            className="z-10 object-cover transition-transform duration-500 ease-out group-hover/image:scale-[1.02]"
+            className="object-cover transition-transform duration-500 ease-out group-hover/image:scale-[1.02]"
             onError={() =>
               setFailedImages((current) =>
                 current.includes(firstImage) ? current : [...current, firstImage],
@@ -316,7 +316,7 @@ export function StoreProductCard({
               alt={`${title} alternate view`}
               fill
               sizes="(max-width: 640px) 85vw, 260px"
-              className="z-10 object-cover opacity-0 transition-transform duration-500 ease-out group-hover/image:scale-[1.02] group-hover/image:opacity-100"
+              className="object-cover opacity-0 transition-transform duration-500 ease-out group-hover/image:scale-[1.02] group-hover/image:opacity-100"
               onError={() =>
                 setFailedImages((current) =>
                   current.includes(hoverImage) ? current : [...current, hoverImage],
