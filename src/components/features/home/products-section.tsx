@@ -293,10 +293,13 @@ function CollectionSlider({ collections }: { collections: Collection[] }) {
                 src={collection.image || FALLBACK_IMAGE}
                 alt={collection.title}
                 fill
-                className="object-contain transition-transform duration-500 group-hover:scale-105"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 p-4 text-lg font-semibold text-white">
+                {collection.title}
+              </div>
             </div>
-            <div className="p-4 text-lg font-semibold text-[#0a0a0a]">{collection.title}</div>
           </Link>
         ))}
       </div>
