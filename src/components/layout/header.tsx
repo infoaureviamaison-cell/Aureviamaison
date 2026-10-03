@@ -178,8 +178,8 @@ export function Header() {
       </div>
 
       {/* ───────── main nav ───────── */}
-      <nav className="flex h-16 w-full items-center gap-4 px-3 sm:px-4 lg:h-20 lg:gap-6 lg:px-6">
-        <div className="lg:hidden">
+      <nav className="flex min-h-16 w-full items-center gap-2 px-2 sm:px-4 lg:min-h-20 lg:gap-3 lg:px-5 xl:gap-4 xl:px-6">
+        <div className="xl:hidden">
           <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
             <SheetTrigger asChild>
               <Button
@@ -359,8 +359,8 @@ export function Header() {
         </div>
 
         {/* ───────── logo — kept tight to the left edge ───────── */}
-        <Link href="/" className="flex shrink-0 items-center gap-2.5">
-          <div className="relative h-12 w-12 sm:h-14 sm:w-14 lg:h-16 lg:w-16">
+        <Link href="/" className="flex min-w-0 shrink-0 items-center gap-1.5 sm:gap-2">
+          <div className="relative h-10 w-10 sm:h-12 sm:w-12 lg:h-14 lg:w-14">
             <Image
               src="/logo/icon.png"
               alt=""
@@ -369,7 +369,7 @@ export function Header() {
               priority
             />
           </div>
-          <div className="relative h-10 w-[132px] sm:h-12 sm:w-[154px] lg:h-14 lg:w-[176px]">
+          <div className="relative h-8 w-[102px] min-[400px]:w-[118px] sm:h-10 sm:w-[140px] lg:h-12 lg:w-[156px]">
             <Image
               src="/logo/logotext.png"
               alt="Auerviamaison"
@@ -380,7 +380,7 @@ export function Header() {
           </div>
         </Link>
 
-        <div className="flex items-center gap-2 lg:hidden ml-auto">
+        <div className="ml-auto flex shrink-0 items-center gap-1 sm:gap-2 xl:hidden">
           <Button
             variant="ghost"
             size="icon"
@@ -406,7 +406,7 @@ export function Header() {
         </div>
 
         {/* ───────── nav links ───────── */}
-        <div className="hidden min-w-0 flex-1 items-center justify-center gap-3 lg:flex xl:gap-5">
+        <div className="hidden min-w-0 flex-1 items-center justify-center gap-2 xl:flex 2xl:gap-4">
           <Link href="/products" className={`shrink-0 text-[13px] font-semibold transition-colors hover:text-[#f97316] ${isActive("/products") ? "text-[#f97316]" : "text-black"}`}>
             Shop
           </Link>
@@ -415,7 +415,7 @@ export function Header() {
               key={item.id}
               href={`/category/${item.slug}`}
               title={item.name}
-              className={`max-w-[76px] truncate text-[13px] font-medium transition-colors hover:text-[#f97316] xl:max-w-[92px] ${isActive(`/category/${item.slug}`) ? "text-[#f97316]" : "text-black"}`}
+              className={`max-w-[64px] truncate text-xs font-medium transition-colors hover:text-[#f97316] 2xl:max-w-[90px] 2xl:text-[13px] ${isActive(`/category/${item.slug}`) ? "text-[#f97316]" : "text-black"}`}
             >
               {item.name}
             </Link>
@@ -428,7 +428,7 @@ export function Header() {
               aria-controls="desktop-more-menu"
               onClick={() => setDesktopMoreOpen((open) => !open)}
               onMouseEnter={() => setDesktopMoreOpen(true)}
-              className={`flex items-center gap-1 text-[13px] font-medium transition-colors hover:text-[#f97316] ${desktopMoreOpen ? "text-[#f97316]" : "text-black"}`}
+              className={`flex items-center gap-1 text-xs font-medium transition-colors hover:text-[#f97316] 2xl:text-[13px] ${desktopMoreOpen ? "text-[#f97316]" : "text-black"}`}
             >
               More <ChevronDown aria-hidden="true" className={`h-3.5 w-3.5 transition-transform ${desktopMoreOpen ? "rotate-180" : ""}`} />
             </button>
@@ -453,8 +453,8 @@ export function Header() {
         </div>
 
         {/* ───────── search + icons ───────── */}
-        <div className="hidden shrink-0 items-center justify-end gap-1.5 lg:flex xl:gap-2">
-          <div className="relative w-[150px] xl:w-[180px]">
+        <div className="hidden shrink-0 items-center justify-end gap-1 xl:flex 2xl:gap-2">
+          <div className="relative w-[128px] 2xl:w-[160px]">
             <div className="flex h-9 items-center overflow-hidden rounded-full border border-black/15 bg-white">
               <Search className="ml-3 h-4 w-4 shrink-0 text-black/70" />
               <input
@@ -516,16 +516,16 @@ export function Header() {
             )}
           </div>
 
-          <Button variant="ghost" size="icon" aria-label="Wishlist" className="h-9 w-9 text-black hover:text-[#f97316]">
+          <Button variant="ghost" size="icon" aria-label="Wishlist" className="h-8 w-8 text-black hover:text-[#f97316] 2xl:h-9 2xl:w-9">
             <Heart className="h-[18px] w-[18px]" />
           </Button>
-          <Button variant="ghost" size="icon" aria-label="Profile" className="h-9 w-9 text-black hover:text-[#f97316]">
+          <Button variant="ghost" size="icon" aria-label="Profile" className="h-8 w-8 text-black hover:text-[#f97316] 2xl:h-9 2xl:w-9">
             <UserRound className="h-[18px] w-[18px]" />
           </Button>
           <Button
             variant="ghost"
             size="icon"
-            className="relative h-9 w-9 text-[#1a1308] hover:text-[#b57910]"
+            className="relative h-8 w-8 text-[#1a1308] hover:text-[#b57910] 2xl:h-9 2xl:w-9"
             onClick={() => setCartOpen(true)}
           >
             <ShoppingCart className="h-[18px] w-[18px]" />
