@@ -190,7 +190,7 @@
 .category-marquee-track {
   display: flex;
   width: max-content;
-  animation: scroll-left 38s linear infinite;
+  animation: scroll-left 52s linear infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -199,9 +199,15 @@
   }
 }
 
-.category-marquee-track:hover {
+.storefront-categories > div.is-dragging .category-marquee-track {
   animation-play-state: paused;
 }
+
+.storefront-categories > div.is-dragging {
+  cursor: grabbing;
+  user-select: none;
+}
+
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;

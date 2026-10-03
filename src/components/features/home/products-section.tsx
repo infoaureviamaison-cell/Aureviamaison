@@ -86,12 +86,58 @@ function ProductGrid({ products, title, bgColor = "white" }: { products: Product
 
 export function CategoriesSection({ categories }: { categories: Category[] }) {
   const mainCategories = categories.filter((category) => !category.parentId);
+  const categoriesViewportRef = useRef<HTMLDivElement | null>(null);
+  const categoryDrag = useRef({ active: false, startX: 0, scrollLeft: 0, moved: false });
+
+  const handleCategoryPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === "mouse" && event.button !== 0) return;
+    const viewport = categoriesViewportRef.current;
+    if (!viewport) return;
+    categoryDrag.current = {
+      active: true,
+      startX: event.clientX,
+      scrollLeft: viewport.scrollLeft,
+      moved: false,
+    };
+    viewport.setPointerCapture(event.pointerId);
+    viewport.classList.add("is-dragging");
+  };
+
+  const handleCategoryPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    const viewport = categoriesViewportRef.current;
+    if (!viewport || !categoryDrag.current.active) return;
+    const distance = event.clientX - categoryDrag.current.startX;
+    if (Math.abs(distance) > 4) categoryDrag.current.moved = true;
+    viewport.scrollLeft = categoryDrag.current.scrollLeft - distance;
+  };
+
+  const handleCategoryPointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
+    const viewport = categoriesViewportRef.current;
+    if (!viewport || !categoryDrag.current.active) return;
+    categoryDrag.current.active = false;
+    if (viewport.hasPointerCapture(event.pointerId)) viewport.releasePointerCapture(event.pointerId);
+    viewport.classList.remove("is-dragging");
+  };
 
   return (
     <section className="storefront-categories relative z-20 mt-6 bg-white lg:mx-auto lg:max-w-7xl">
          
-      <div className="relative flex gap-8 overflow-hidden">
-        <div className="animate-scroll scrollbar-hide flex gap-8 px-2 sm:gap-9 sm:px-3 lg:gap-10 lg:px-4">
+      <div
+        ref={categoriesViewportRef}
+        className="relative flex gap-8 overflow-x-auto overflow-y-hidden scrollbar-hide cursor-grab"
+        onPointerDown={handleCategoryPointerDown}
+        onPointerMove={handleCategoryPointerMove}
+        onPointerUp={handleCategoryPointerUp}
+        onPointerCancel={handleCategoryPointerUp}
+        onClickCapture={(event) => {
+          if (categoryDrag.current.moved) {
+            event.preventDefault();
+            event.stopPropagation();
+            categoryDrag.current.moved = false;
+          }
+        }}
+      >
+        <div className="category-marquee-track scrollbar-hide gap-8 px-2 sm:gap-9 sm:px-3 lg:gap-10 lg:px-4">
            {[...mainCategories, ...mainCategories].map((category, idx) => (
              <Link
                key={`${category.id}-${idx}`}
