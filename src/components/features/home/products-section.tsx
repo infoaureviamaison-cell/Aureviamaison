@@ -244,7 +244,7 @@ function FeaturedProductRow({
           <div
             key={product.handle}
             data-product-card
-            className="w-[15rem] shrink-0 sm:w-[16rem] lg:w-[17rem]"
+            className="w-[14rem] shrink-0 sm:w-[15rem] lg:w-[16rem]"
           >
             {productCard(product)}
           </div>
@@ -280,15 +280,15 @@ function CollectionSlider({ collections }: { collections: Collection[] }) {
   return (
     <div className="relative">
       <div
-        className="grid grid-cols-1 gap-6 sm:grid-cols-3 transition-opacity duration-1000 ease-in-out"
+        className="grid grid-cols-1 justify-items-center gap-5 sm:grid-cols-3 sm:justify-items-center transition-opacity duration-1000 ease-in-out"
       >
         {displayCollections.map((collection, i) => (
           <Link
             key={`${collection.id}-${i}-${currentSlide}`}
             href="/products"
-            className="group overflow-hidden rounded-2xl border border-[#C6A24A]/20 bg-white"
+            className="group w-full max-w-[220px] overflow-hidden rounded-xl border border-[#C6A24A]/20 bg-white sm:max-w-[240px]"
           >
-            <div className="relative aspect-[16/10]">
+            <div className="relative aspect-square">
               <Image
                 src={collection.image || FALLBACK_IMAGE}
                 alt={collection.title}
@@ -296,7 +296,7 @@ function CollectionSlider({ collections }: { collections: Collection[] }) {
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-4 text-lg font-semibold text-white">
+              <div className="absolute inset-x-0 bottom-0 p-3 text-base font-semibold text-white">
                 {collection.title}
               </div>
             </div>
