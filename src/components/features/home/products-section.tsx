@@ -150,7 +150,7 @@ export function CategoriesSection({ categories }: { categories: Category[] }) {
                   alt={category.name}
                   fill
                   sizes="(max-width: 640px) 192px, 216px"
-                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  className="object-contain transition-transform duration-700 ease-out"
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/65" />
               </div>
