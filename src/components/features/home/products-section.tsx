@@ -96,17 +96,23 @@ export function CategoriesSection({ categories }: { categories: Category[] }) {
              <Link
                key={`${category.id}-${idx}`}
                href={`/category/${encodeURIComponent(category.slug)}`}
-               className="group flex flex-col items-center flex-shrink-0"
+              className="category-card group relative h-[20rem] w-[15rem] flex-shrink-0 overflow-hidden rounded-[22px] bg-[#29292c] text-white sm:h-[22rem] sm:w-[16.5rem]"
              >
-              <div className="relative h-32 w-32 overflow-hidden rounded-2xl sm:h-40 sm:w-40 lg:h-48 lg:w-48">
+              <div className="absolute inset-0">
                 <Image
                   src={category.image || FALLBACK_IMAGE}
                   alt={category.name}
                   fill
-                  className="object-contain transition-transform duration-700 ease-out group-hover:scale-150"
+                  sizes="(max-width: 640px) 288px, 336px"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/75" />
               </div>
-               <span className="mt-3 text-center text-sm font-bold uppercase text-gray-800">{category.name}</span>
+              <div className="absolute left-5 top-5 flex h-14 w-14 items-center justify-center rounded-full bg-[#d84967] text-xl font-semibold text-white shadow-lg" aria-hidden="true">
+                {category.name.trim().slice(0, 1).toUpperCase()}
+              </div>
+              <span className="absolute bottom-6 left-6 right-16 line-clamp-2 text-left text-lg font-extrabold uppercase leading-tight text-white sm:text-xl">{category.name}</span>
+              <span className="absolute bottom-5 right-5 flex h-10 w-10 items-center justify-center rounded-full bg-[#d84967] text-xl text-white" aria-hidden="true">→</span>
               </Link>
             ))}
           </div>

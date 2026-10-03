@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FaWhatsapp } from "react-icons/fa";
-import { ShoppingCart } from "@esmate/shadcn/pkgs/lucide-react";
+import { ArrowRight, Heart, ShoppingCart } from "@esmate/shadcn/pkgs/lucide-react";
 import { useCart } from "@/lib/commerce";
 import { toast } from "sonner";
 import { useState, useEffect, useMemo } from "react";
@@ -242,15 +242,15 @@ export function StoreProductCard({
   };
 
   return (
-    <article className="group flex w-full max-w-[420px] flex-col overflow-hidden rounded-[24px] bg-white shadow-[0_12px_28px_rgba(0,0,0,0.09)] transition duration-300 hover:-translate-y-0.5">
-      <div className="relative aspect-[4/3] overflow-hidden rounded-t-[24px] bg-[#f5f1ed]">
-        <div className="absolute left-3 top-3 z-20 flex items-start gap-2 rounded-[14px] bg-[#f1ece6]/90 px-3 py-2 shadow-[0_6px_12px_rgba(62,43,34,0.12)]">
+    <article className="group flex w-full max-w-[360px] flex-col overflow-hidden rounded-[24px] bg-white">
+      <div className="relative aspect-[4/4.1] overflow-hidden rounded-[24px] bg-[#f5f1ed]">
+        <div className="absolute left-3 top-3 z-20 flex min-w-[min(72%,15rem)] items-start gap-2 rounded-[20px] bg-white/95 px-4 py-3">
           <div>
-            <div className="text-[1.4rem] font-black leading-none tracking-[-0.04em] text-[#1a1a1a]">
+            <div className="font-serif text-2xl font-bold leading-none tracking-[-0.035em] text-[#85420b] sm:text-[1.8rem]">
               {formatPrice(price.amount)}
             </div>
             {discount !== null && compareAtPrice ? (
-              <div className="mt-0.5 text-[0.6rem] font-medium text-[#7b7a7e] line-through">
+              <div className="mt-1.5 text-sm font-medium text-[#77716e] line-through sm:text-base">
                 {formatPrice(compareAtPrice.amount)}
               </div>
             ) : null}
@@ -258,38 +258,38 @@ export function StoreProductCard({
         </div>
 
         {discount !== null ? (
-          <div className="absolute right-3 top-3 z-20 rounded-[12px] bg-[#ff4a65] px-2.5 py-1.5 text-sm font-bold text-white shadow-[0_6px_12px_rgba(255,74,101,0.35)]">
+          <div className="absolute right-3 top-3 z-20 rounded-[20px] bg-[#f7194f] px-4 py-2.5 text-base font-bold text-white sm:px-5 sm:text-lg">
             -{discount}% OFF
           </div>
         ) : null}
 
-        <div className="absolute right-3 top-1/2 z-30 flex -translate-y-1/2 flex-col gap-2 sm:right-4 sm:gap-3">
+        <div className="absolute right-3 top-1/2 z-30 flex -translate-y-1/2 flex-col gap-2.5 sm:right-4 sm:gap-3">
           <button
             type="button"
-            className="flex h-10 w-10 items-center justify-center rounded-full border-[3px] border-white bg-[#3dcf73] text-white shadow-[0_6px_10px_rgba(61,207,115,0.2)] transition-transform hover:scale-105 sm:h-12 sm:w-12"
+            className="flex h-11 w-11 items-center justify-center rounded-full border-0 bg-white text-[#14b85a] transition-transform hover:scale-105 sm:h-12 sm:w-12"
             aria-label={`Order ${title} on WhatsApp`}
             onClick={() => {
               window.open(whatsappUrl, "_blank", "noopener,noreferrer");
               trackContact("WhatsApp product order");
             }}
           >
-            <FaWhatsapp className="h-4 w-4" />
+            <FaWhatsapp className="h-6 w-6" />
           </button>
           <button
             type="button"
             onClick={handleAddToCart}
             disabled={loading || !effectiveVariantId}
             aria-label={loading ? `Adding ${title} to cart` : `Add ${title} to cart`}
-            className="flex h-10 w-10 items-center justify-center rounded-full border-[3px] border-white bg-[#e5e5e5] text-black shadow-[0_6px_10px_rgba(0,0,0,0.08)] transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:opacity-60 sm:h-12 sm:w-12"
+            className="flex h-11 w-11 items-center justify-center rounded-full border-0 bg-white text-black transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:opacity-60 sm:h-12 sm:w-12"
           >
-            <ShoppingCart aria-hidden="true" className="h-4 w-4" />
+            <ShoppingCart aria-hidden="true" className="h-6 w-6" />
           </button>
           <button
             type="button"
-            className="flex h-10 w-10 items-center justify-center rounded-full border-[3px] border-white bg-white text-[#ff4a65] shadow-[0_6px_10px_rgba(0,0,0,0.08)] transition-transform hover:scale-105 sm:h-12 sm:w-12"
+            className="flex h-11 w-11 items-center justify-center rounded-full border-0 bg-white text-[#f7194f] transition-transform hover:scale-105 sm:h-12 sm:w-12"
             aria-label={`Save ${title}`}
           >
-            <span className="text-lg leading-none">♥</span>
+            <Heart aria-hidden="true" className="h-6 w-6" />
           </button>
         </div>
 
@@ -303,7 +303,7 @@ export function StoreProductCard({
             alt={title}
             fill
             sizes="(max-width: 640px) 85vw, 260px"
-            className="z-10 object-contain p-3 transition-transform duration-500 ease-out group-hover/image:scale-[1.02] sm:p-5"
+            className="z-10 object-cover transition-transform duration-500 ease-out group-hover/image:scale-[1.02]"
             onError={() =>
               setFailedImages((current) =>
                 current.includes(firstImage) ? current : [...current, firstImage],
@@ -316,7 +316,7 @@ export function StoreProductCard({
               alt={`${title} alternate view`}
               fill
               sizes="(max-width: 640px) 85vw, 260px"
-              className="z-10 object-contain p-3 opacity-0 transition-transform duration-500 ease-out group-hover/image:scale-[1.02] group-hover/image:opacity-100 sm:p-5"
+              className="z-10 object-cover opacity-0 transition-transform duration-500 ease-out group-hover/image:scale-[1.02] group-hover/image:opacity-100"
               onError={() =>
                 setFailedImages((current) =>
                   current.includes(hoverImage) ? current : [...current, hoverImage],
@@ -327,20 +327,20 @@ export function StoreProductCard({
         </Link>
       </div>
 
-      <div className="flex items-center justify-between gap-3 px-5 pb-5 pt-4 sm:px-6 sm:pb-6">
+      <div className="flex items-start justify-between gap-3 px-4 pb-5 pt-4 sm:px-5 sm:pb-6 sm:pt-5">
         <div className="min-w-0 flex-1">
           <Link href={productPath} className="group/title block">
-            <h3 className="line-clamp-2 font-serif text-xl font-bold leading-tight tracking-[-0.025em] text-[#111827] transition-colors group-hover/title:text-[#d34c65] sm:text-2xl">
+            <h3 className="line-clamp-2 font-serif text-xl font-bold leading-tight tracking-[-0.025em] text-[#10131a] transition-colors group-hover/title:text-[#d34c65] sm:text-2xl">
               {title}
             </h3>
           </Link>
 
           <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1">
-            <div className="flex items-center gap-0.5 text-lg leading-none sm:text-xl">
+            <div className="flex items-center gap-0.5 text-xl leading-none sm:text-2xl">
               {Array.from({ length: 5 }).map((_, index) => (
                 <span
                   key={index}
-                  className={index < Math.round(visibleReviewStats.averageRating) ? "text-[#d7b254]" : "text-[#d7d7d7]"}
+                  className={index < Math.floor(visibleReviewStats.averageRating) ? "text-[#ffa916]" : index < Math.ceil(visibleReviewStats.averageRating) ? "text-[#ffa916]/70" : "text-[#d7d7d7]"}
                   aria-hidden="true"
                 >
                   ★
@@ -363,9 +363,9 @@ export function StoreProductCard({
         <Link
           href={productPath}
           aria-label={`View ${title}`}
-          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#fce4e7] text-3xl font-medium text-[#ff3154] transition-transform hover:scale-105 sm:h-14 sm:w-14"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#ffe1e4] text-[#f7194f] transition-transform hover:scale-105 sm:h-12 sm:w-12"
         >
-          <span aria-hidden="true">›</span>
+          <ArrowRight aria-hidden="true" className="h-6 w-6 stroke-[3]" />
         </Link>
       </div>
     </article>
