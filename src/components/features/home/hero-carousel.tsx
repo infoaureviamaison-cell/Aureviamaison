@@ -52,7 +52,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
     <section
       aria-label="Featured collections"
       aria-roledescription="carousel"
-      className="relative h-[min(480px,calc(100svh-88px))] w-full overflow-hidden bg-[#fff8f5]"
+      className="relative h-[min(480px,calc(100svh-88px))] w-full overflow-hidden bg-[#fffdf8]"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onFocusCapture={() => setIsPaused(true)}

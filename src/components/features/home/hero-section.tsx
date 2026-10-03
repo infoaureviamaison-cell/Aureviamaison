@@ -11,7 +11,7 @@ export default async function HeroSection() {
   }
 
   return (
-    <div className="relative w-full overflow-hidden bg-[#f4f1e8]">
+    <div className="relative w-full overflow-hidden bg-[#fffdf8]">
       <HeroCarousel slides={slides} />
     </div>
   );

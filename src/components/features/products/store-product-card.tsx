@@ -242,15 +242,15 @@ export function StoreProductCard({
   };
 
   return (
-    <article className="group flex w-full max-w-[360px] flex-col overflow-hidden rounded-[20px] bg-white">
-      <div className="relative aspect-[3/4] overflow-hidden rounded-[20px] bg-[#f5f1ed]">
-        <div className="absolute left-3 top-3 z-20 flex min-w-0 items-start gap-2 rounded-[16px] bg-white/95 px-3 py-2">
+    <article className="group flex w-full max-w-[320px] flex-col overflow-hidden rounded-[18px] bg-white">
+      <div className="relative aspect-[3/4] overflow-hidden rounded-[18px] bg-[#fffdf8]">
+        <div className="absolute left-2.5 top-2.5 z-20 flex min-w-0 items-start gap-2 rounded-[14px] bg-white/95 px-2.5 py-1.5">
           <div>
-            <div className="font-serif text-lg font-bold leading-none tracking-[-0.035em] text-[#85420b] sm:text-xl">
+            <div className="font-serif text-base font-bold leading-none tracking-[-0.035em] text-[#85420b] sm:text-lg">
               {formatPrice(price.amount)}
             </div>
             {discount !== null && compareAtPrice ? (
-              <div className="mt-1 text-xs font-medium text-[#77716e] line-through sm:text-sm">
+              <div className="mt-1 text-[0.65rem] font-medium text-[#77716e] line-through sm:text-xs">
                 {formatPrice(compareAtPrice.amount)}
               </div>
             ) : null}
@@ -258,38 +258,38 @@ export function StoreProductCard({
         </div>
 
         {discount !== null ? (
-          <div className="absolute right-3 top-3 z-20 rounded-[16px] bg-[#f7194f] px-3 py-2 text-sm font-bold text-white sm:px-4 sm:text-base">
+          <div className="absolute right-2.5 top-2.5 z-20 rounded-[14px] bg-[#f7194f] px-2.5 py-1.5 text-xs font-bold text-white sm:px-3 sm:text-sm">
             -{discount}% OFF
           </div>
         ) : null}
 
-        <div className="absolute right-3 top-1/2 z-30 flex -translate-y-1/2 flex-col gap-2 sm:right-4 sm:gap-2.5">
+        <div className="absolute right-2.5 top-1/2 z-30 flex -translate-y-1/2 flex-col gap-1.5 sm:right-3 sm:gap-2">
           <button
             type="button"
-            className="flex h-9 w-9 items-center justify-center rounded-full border-0 bg-white text-[#14b85a] transition-transform hover:scale-105 sm:h-10 sm:w-10"
+            className="flex h-8 w-8 items-center justify-center rounded-full border-0 bg-white text-[#14b85a] transition-transform hover:scale-105 sm:h-9 sm:w-9"
             aria-label={`Order ${title} on WhatsApp`}
             onClick={() => {
               window.open(whatsappUrl, "_blank", "noopener,noreferrer");
               trackContact("WhatsApp product order");
             }}
           >
-            <FaWhatsapp className="h-5 w-5" />
+            <FaWhatsapp className="h-4 w-4" />
           </button>
           <button
             type="button"
             onClick={handleAddToCart}
             disabled={loading || !effectiveVariantId}
             aria-label={loading ? `Adding ${title} to cart` : `Add ${title} to cart`}
-            className="flex h-9 w-9 items-center justify-center rounded-full border-0 bg-white text-black transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:opacity-60 sm:h-10 sm:w-10"
+            className="flex h-8 w-8 items-center justify-center rounded-full border-0 bg-white text-black transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:opacity-60 sm:h-9 sm:w-9"
           >
-            <ShoppingCart aria-hidden="true" className="h-5 w-5" />
+            <ShoppingCart aria-hidden="true" className="h-4 w-4" />
           </button>
           <button
             type="button"
-            className="flex h-9 w-9 items-center justify-center rounded-full border-0 bg-white text-[#f7194f] transition-transform hover:scale-105 sm:h-10 sm:w-10"
+            className="flex h-8 w-8 items-center justify-center rounded-full border-0 bg-white text-[#f7194f] transition-transform hover:scale-105 sm:h-9 sm:w-9"
             aria-label={`Save ${title}`}
           >
-            <Heart aria-hidden="true" className="h-5 w-5" />
+            <Heart aria-hidden="true" className="h-4 w-4" />
           </button>
         </div>
 
@@ -335,8 +335,8 @@ export function StoreProductCard({
             </h3>
           </Link>
 
-          <div className="mt-2 flex flex-nowrap items-center gap-x-1.5 whitespace-nowrap">
-            <div className="flex shrink-0 items-center gap-0 text-base leading-none sm:text-lg">
+          <div className="mt-1.5 flex flex-nowrap items-center gap-x-1 whitespace-nowrap">
+            <div className="flex shrink-0 items-center gap-0 text-sm leading-none sm:text-base">
               {Array.from({ length: 5 }).map((_, index) => (
                 <span
                   key={index}
@@ -347,10 +347,10 @@ export function StoreProductCard({
                 </span>
               ))}
             </div>
-            <span className="shrink-0 text-sm font-semibold text-[#0f0f0f] sm:text-base">
+            <span className="shrink-0 text-xs font-semibold text-[#0f0f0f] sm:text-sm">
               {visibleReviewStats.averageRating.toFixed(1)}
             </span>
-            <span className="truncate text-xs font-medium text-[#85878c] sm:text-sm">
+            <span className="truncate text-[0.65rem] font-medium text-[#85878c] sm:text-xs">
               ({visibleReviewStats.totalReviews} reviews)
             </span>
           </div>
@@ -363,9 +363,9 @@ export function StoreProductCard({
         <Link
           href={productPath}
           aria-label={`View ${title}`}
-          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#ffe1e4] text-[#f7194f] transition-transform hover:scale-105 sm:h-10 sm:w-10"
+          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#ffe1e4] text-[#f7194f] transition-transform hover:scale-105 sm:h-9 sm:w-9"
         >
-          <ArrowRight aria-hidden="true" className="h-5 w-5 stroke-[3]" />
+          <ArrowRight aria-hidden="true" className="h-4 w-4 stroke-[3]" />
         </Link>
       </div>
     </article>

@@ -356,13 +356,22 @@ export function Header() {
         </div>
 
         {/* ───────── logo — kept tight to the left edge ───────── */}
-        <Link href="/" className="flex shrink-0 items-center">
-          <div className="relative h-10 w-[120px] lg:h-12 lg:w-[140px]">
+        <Link href="/" className="flex shrink-0 items-center gap-2.5">
+          <div className="relative h-12 w-12 sm:h-14 sm:w-14 lg:h-16 lg:w-16">
             <Image
-              src={logoSrc}
-              alt="Auerviamaison"
+              src="/logo/icon.png"
+              alt=""
               fill
               className="object-contain"
+              priority
+            />
+          </div>
+          <div className="relative h-10 w-[132px] sm:h-12 sm:w-[154px] lg:h-14 lg:w-[176px]">
+            <Image
+              src="/logo/logotext.png"
+              alt="Auerviamaison"
+              fill
+              className="object-contain object-left"
               priority
             />
           </div>
@@ -394,10 +403,10 @@ export function Header() {
         </div>
 
         {/* ───────── nav links ───────── */}
-        <div className="hidden items-center gap-5 lg:flex">
+        <div className="hidden items-center gap-4 lg:flex xl:gap-5">
           <Link
             href="/"
-            className={`flex items-center gap-1.5 text-sm font-semibold transition-colors hover:text-[#f97316] ${
+            className={`flex items-center gap-1.5 text-[13px] font-semibold transition-colors hover:text-[#f97316] ${
               pathname === "/" ? "text-[#f97316]" : "text-black"
             }`}
           >
@@ -409,7 +418,7 @@ export function Header() {
               <div className="flex cursor-pointer items-center gap-1">
                 <Link
                   href="/products"
-                  className={`text-sm font-semibold transition-colors hover:text-[#f97316] ${
+                  className={`text-[13px] font-semibold transition-colors hover:text-[#f97316] ${
                     isActive("/products") || isActive("/category")
                       ? "text-[#f97316]"
                       : "text-black"
@@ -477,7 +486,7 @@ export function Header() {
           <div className="relative">
             <Link
               href="/about-us"
-              className={`text-sm font-semibold transition-colors hover:text-[#f97316] ${
+              className={`text-[13px] font-semibold transition-colors hover:text-[#f97316] ${
                 isActive("/about-us") ? "text-[#f97316]" : "text-black"
               }`}
             >
@@ -500,7 +509,7 @@ export function Header() {
               aria-expanded={desktopLegalOpen}
               aria-controls="desktop-legal-menu"
               onClick={() => setDesktopLegalOpen((open) => !open)}
-              className={`flex items-center gap-1 text-sm font-semibold transition-colors hover:text-[#f97316] ${
+              className={`flex items-center gap-1 text-[13px] font-semibold transition-colors hover:text-[#f97316] ${
                 legalPageActive ? "text-[#f97316]" : "text-black"
               }`}
             >
@@ -532,7 +541,7 @@ export function Header() {
           <div className="relative">
             <Link
               href="/wholesale"
-              className={`text-sm font-semibold transition-colors hover:text-[#f97316] ${
+              className={`text-[13px] font-semibold transition-colors hover:text-[#f97316] ${
                 isActive("/wholesale") ? "text-[#f97316]" : "text-black"
               }`}
             >
@@ -543,7 +552,7 @@ export function Header() {
           <div className="relative">
             <Link
               href="/contact"
-              className={`text-sm font-semibold transition-colors hover:text-[#f97316] ${
+              className={`text-[13px] font-semibold transition-colors hover:text-[#f97316] ${
                 isActive("/contact") ? "text-[#f97316]" : "text-black"
               }`}
             >
@@ -554,7 +563,7 @@ export function Header() {
           <div className="relative">
             <Link
               href="/videos"
-              className={`text-sm font-semibold transition-colors hover:text-[#f97316] ${
+              className={`text-[13px] font-semibold transition-colors hover:text-[#f97316] ${
                 isActive("/videos") ? "text-[#f97316]" : "text-black"
               }`}
             >

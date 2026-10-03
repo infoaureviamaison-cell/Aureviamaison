@@ -5,7 +5,6 @@ import type { Metadata, Viewport } from "next";
 import ServiceWorkerRegistration from "@/components/core/service-worker-registration";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
-import Script from "next/script";
 import { MetaPixel } from "@/components/integrations/meta-pixel";
 import { GoogleMarketing } from "@/components/integrations/google-marketing";
 import { SITE_NAME, SITE_URL } from "@/lib/seo";
@@ -60,13 +59,9 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Auerviamaison" />
         <meta name="mobile-web-app-capable" content="yes" />
+        <script src="/performance-measure-guard.js" />
       </head>
       <body suppressHydrationWarning>
-        <Script
-          id="performance-measure-guard"
-          strategy="beforeInteractive"
-          src="/performance-measure-guard.js"
-        />
         <Suspense fallback={null}>
           <MetaPixel />
         </Suspense>

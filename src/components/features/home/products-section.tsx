@@ -96,17 +96,17 @@ export function CategoriesSection({ categories }: { categories: Category[] }) {
              <Link
                key={`${category.id}-${idx}`}
                href={`/category/${encodeURIComponent(category.slug)}`}
-              className="category-card group relative h-[17rem] w-[12.75rem] flex-shrink-0 overflow-hidden rounded-[20px] bg-[#29292c] text-white sm:h-[19rem] sm:w-[14.25rem]"
+              className="category-card group relative h-[16rem] w-[12rem] flex-shrink-0 overflow-hidden rounded-[20px] bg-[#fffdf8] text-white sm:h-[18rem] sm:w-[13.5rem]"
              >
               <div className="absolute inset-0">
                 <Image
                   src={category.image || FALLBACK_IMAGE}
                   alt={category.name}
                   fill
-                  sizes="(max-width: 640px) 204px, 228px"
+                  sizes="(max-width: 640px) 192px, 216px"
                   className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/75" />
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/65" />
               </div>
               <div className="absolute left-4 top-4 flex h-11 w-11 items-center justify-center rounded-full bg-[#d84967] text-lg font-semibold text-white shadow-lg" aria-hidden="true">
                 {category.name.trim().slice(0, 1).toUpperCase()}
@@ -198,7 +198,7 @@ function FeaturedProductRow({
           <div
             key={product.handle}
             data-product-card
-            className="w-[17.5rem] shrink-0 sm:w-[18.5rem] lg:w-[19rem]"
+            className="w-[15rem] shrink-0 sm:w-[16rem] lg:w-[17rem]"
           >
             {productCard(product)}
           </div>
