@@ -117,9 +117,12 @@ export default function PromoBannersAdminPage() {
                 <Field label="CTA label" value={banner.ctaLabel} onChange={(value) => updateBanner(banner.id, { ctaLabel: value })} />
                 <Field label="CTA link" value={banner.ctaHref} onChange={(value) => updateBanner(banner.id, { ctaHref: value })} />
                 <Field label="Image alt text" value={banner.imageAlt} onChange={(value) => updateBanner(banner.id, { imageAlt: value })} />
-                <div className="grid grid-cols-2 gap-3">
-                  <ColorField label="Start color" value={banner.backgroundStart} onChange={(value) => updateBanner(banner.id, { backgroundStart: value })} />
-                  <ColorField label="End color" value={banner.backgroundEnd} onChange={(value) => updateBanner(banner.id, { backgroundEnd: value })} />
+                <div>
+                  <p className="mb-1 text-sm font-medium text-[#0a0a0a]">Banner colors</p>
+                  <div className="grid grid-cols-2 gap-3">
+                    <ColorField label="Start color" value={banner.backgroundStart} onChange={(value) => updateBanner(banner.id, { backgroundStart: value })} />
+                    <ColorField label="End color" value={banner.backgroundEnd} onChange={(value) => updateBanner(banner.id, { backgroundEnd: value })} />
+                  </div>
                 </div>
               </div>
               <AdminImageUpload label="Product image (transparent PNG/WebP recommended)" folder="auerviamaison/homepage/banners" usedIn="homepage promo banner" value={banner.image} onChange={(image) => updateBanner(banner.id, { image })} />

@@ -12,7 +12,7 @@ export function PromoBannerCard({ banner }: { banner: PromoBanner }) {
       <div className="pointer-events-none absolute -left-12 -top-16 h-40 w-40 rounded-full bg-white/15 blur-2xl" />
       <div className="pointer-events-none absolute bottom-[-45%] right-[18%] h-40 w-40 rounded-full border-[20px] border-white/10" />
 
-      <div className="relative z-10 flex h-full min-h-[132px] w-[62%] flex-col items-start justify-center px-3 py-4 text-white sm:min-h-[170px] sm:px-5 lg:min-h-[190px] lg:px-7">
+      <div className="relative z-10 flex h-full min-h-[132px] w-[56%] flex-col items-start justify-center px-3 py-4 text-white sm:min-h-[170px] sm:w-[57%] sm:px-5 lg:min-h-[190px] lg:w-[62%] lg:px-7">
         <p className="line-clamp-1 text-[0.45rem] font-bold uppercase tracking-[0.12em] text-white/85 sm:text-[0.6rem] lg:text-[0.68rem]">
           {banner.eyebrow}
         </p>
@@ -41,13 +41,13 @@ export function PromoBannerCard({ banner }: { banner: PromoBanner }) {
         </Link>
       </div>
 
-      <div className="absolute bottom-0 right-0 top-0 w-[46%]">
+      <div className="absolute bottom-2 right-2 top-2 aspect-square overflow-hidden rounded-2xl border border-white/30 bg-white/15 shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_8px_20px_rgba(91,19,48,0.16)] backdrop-blur-[2px] sm:bottom-3 sm:right-3 sm:top-3 lg:bottom-4 lg:right-4 lg:top-4">
         <Image
           src={banner.image}
           alt={banner.imageAlt || banner.title}
           fill
-          sizes="(max-width: 640px) 46vw, (max-width: 1280px) 23vw, 290px"
-          className="object-contain object-bottom transition-transform duration-1000 ease-out group-hover:scale-[1.06]"
+          sizes="(max-width: 640px) 64px, (max-width: 1024px) 128px, 160px"
+          className="object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.06]"
         />
       </div>
     </article>

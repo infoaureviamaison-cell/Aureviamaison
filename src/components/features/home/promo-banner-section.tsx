@@ -18,10 +18,11 @@ export function PromoBannerSection({ banners }: { banners: PromoBanner[] }) {
   }
 
   return (
-    <section aria-label="Featured offers" className="relative mx-auto w-full max-w-7xl bg-white px-3 pb-10 pt-5 sm:px-6 sm:pb-14 lg:px-8">
-      <div
-        ref={sliderRef}
-        className="scrollbar-hide flex cursor-grab snap-x snap-mandatory gap-2.5 overflow-x-auto overflow-y-hidden scroll-smooth touch-pan-y active:cursor-grabbing sm:gap-4 lg:gap-5"
+    <section aria-label="Featured offers" className="mx-auto w-full max-w-7xl bg-white px-3 pb-10 pt-5 sm:px-6 sm:pb-14 lg:px-8">
+      <div className="relative">
+        <div
+          ref={sliderRef}
+          className="scrollbar-hide flex cursor-grab snap-x snap-mandatory gap-2.5 overflow-x-auto overflow-y-hidden scroll-smooth touch-pan-y active:cursor-grabbing sm:gap-4 lg:gap-5"
         onPointerDown={(event) => {
           const slider = sliderRef.current;
           if (!slider) return;
@@ -46,24 +47,25 @@ export function PromoBannerSection({ banners }: { banners: PromoBanner[] }) {
           event.stopPropagation();
           dragState.current.moved = false;
         }}
-      >
-        {visibleBanners.map((banner) => (
-          <div key={banner.id} className="w-[calc((100%_-_0.625rem)/2)] shrink-0 snap-start sm:w-[calc((100%_-_1rem)/2)] lg:w-[calc((100%_-_1.25rem)/2)]">
-            <PromoBannerCard banner={banner} />
-          </div>
-        ))}
-      </div>
+        >
+          {visibleBanners.map((banner) => (
+            <div key={banner.id} className="w-[calc((100%_-_0.625rem)/2)] shrink-0 snap-start sm:w-[calc((100%_-_1rem)/2)] lg:w-[calc((100%_-_1.25rem)/2)]">
+              <PromoBannerCard banner={banner} />
+            </div>
+          ))}
+        </div>
 
-      {visibleBanners.length > 2 ? (
-        <>
-          <button type="button" onClick={() => scroll(-1)} aria-label="Previous banners" className="absolute left-4 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-black/10 bg-white/95 text-black shadow-md transition hover:scale-105 hover:text-[#f7194f] sm:left-7 sm:h-11 sm:w-11">
-            <ChevronLeft aria-hidden="true" className="h-5 w-5 sm:h-6 sm:w-6" />
-          </button>
-          <button type="button" onClick={() => scroll(1)} aria-label="Next banners" className="absolute right-4 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-black/10 bg-white/95 text-black shadow-md transition hover:scale-105 hover:text-[#f7194f] sm:right-7 sm:h-11 sm:w-11">
-            <ChevronRight aria-hidden="true" className="h-5 w-5 sm:h-6 sm:w-6" />
-          </button>
-        </>
-      ) : null}
+        {visibleBanners.length > 2 ? (
+          <>
+            <button type="button" onClick={() => scroll(-1)} aria-label="Previous banners" className="absolute left-1 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-black/10 bg-white/95 text-black shadow-md transition hover:scale-105 hover:text-[#f7194f] sm:left-2 sm:h-11 sm:w-11">
+              <ChevronLeft aria-hidden="true" className="h-5 w-5 sm:h-6 sm:w-6" />
+            </button>
+            <button type="button" onClick={() => scroll(1)} aria-label="Next banners" className="absolute right-1 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-black/10 bg-white/95 text-black shadow-md transition hover:scale-105 hover:text-[#f7194f] sm:right-2 sm:h-11 sm:w-11">
+              <ChevronRight aria-hidden="true" className="h-5 w-5 sm:h-6 sm:w-6" />
+            </button>
+          </>
+        ) : null}
+      </div>
     </section>
   );
 }
