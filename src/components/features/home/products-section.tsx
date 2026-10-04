@@ -142,20 +142,17 @@ export function CategoriesSection({ categories }: { categories: Category[] }) {
              <Link
                key={`${category.id}-${idx}`}
                href={`/category/${encodeURIComponent(category.slug)}`}
-              className="category-card group relative h-[16rem] w-[12rem] flex-shrink-0 overflow-hidden rounded-[20px] bg-[#fffdf8] text-white sm:h-[18rem] sm:w-[13.5rem]"
+              className="category-card group relative h-[14rem] w-[10.5rem] flex-shrink-0 overflow-hidden rounded-[18px] bg-[#fffdf8] text-white sm:h-[16rem] sm:w-[12rem]"
              >
               <div className="absolute inset-0">
                 <Image
                   src={category.image || FALLBACK_IMAGE}
                   alt={category.name}
                   fill
-                  sizes="(max-width: 640px) 192px, 216px"
-                  className="object-contain transition-transform duration-700 ease-out"
+                  sizes="(max-width: 640px) 168px, 192px"
+                  className="object-contain transition-transform duration-1000 ease-out group-hover:scale-[1.06]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/65" />
-              </div>
-              <div className="absolute left-4 top-4 flex h-11 w-11 items-center justify-center rounded-full bg-[#d84967] text-lg font-semibold text-white shadow-lg" aria-hidden="true">
-                {category.name.trim().slice(0, 1).toUpperCase()}
               </div>
               <span className="absolute bottom-5 left-5 right-14 line-clamp-2 text-left text-base font-extrabold uppercase leading-tight text-white sm:text-lg">{category.name}</span>
               <span className="absolute bottom-4 right-4 flex h-9 w-9 items-center justify-center rounded-full bg-[#d84967] text-lg text-white" aria-hidden="true">→</span>
@@ -286,9 +283,9 @@ function CollectionSlider({ collections }: { collections: Collection[] }) {
           <Link
             key={`${collection.id}-${i}-${currentSlide}`}
             href="/products"
-            className="group w-full max-w-[220px] overflow-hidden rounded-xl border border-[#C6A24A]/20 bg-white sm:max-w-[240px]"
+            className="group w-full max-w-[300px] overflow-hidden rounded-xl border border-[#C6A24A]/20 bg-white sm:max-w-[340px]"
           >
-            <div className="relative aspect-square">
+            <div className="relative aspect-[40/37]">
               <Image
                 src={collection.image || FALLBACK_IMAGE}
                 alt={collection.title}

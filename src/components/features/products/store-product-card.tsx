@@ -63,24 +63,6 @@ function normalizeImageUrl(value: unknown): string | null {
   return null;
 }
 
-function getProductMeta(title: string, tag?: string) {
-  const normalizedTag = tag?.trim();
-  if (normalizedTag && normalizedTag.length > 0) {
-    return `${normalizedTag} • 100 ml`;
-  }
-
-  const lowerTitle = title.toLowerCase();
-  if (lowerTitle.includes("eau de parfum") || lowerTitle.includes("perfume")) {
-    return "Eau de Parfum • 100 ml";
-  }
-
-  if (lowerTitle.includes("serum") || lowerTitle.includes("oil")) {
-    return "Luxury Care • 100 ml";
-  }
-
-  return "Premium Beauty • 100 ml";
-}
-
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 function getDefaultReviewStats(seedText: string): ReviewStats {
@@ -179,7 +161,6 @@ export function StoreProductCard({
       : defaultReviewStats;
 
   const productPath = `/products/${handle}`;
-  const productMeta = getProductMeta(title, tag);
   const whatsappUrl = `https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "923171707418"}?text=${encodeURIComponent(
     `Hi, I want to order this product:\n\nProduct: ${title}\nPrice: ${formatPrice(price.amount)}\nLink: ${productPath}`,
   )}`;
@@ -242,68 +223,60 @@ export function StoreProductCard({
   };
 
   return (
-    <article className="group flex w-full max-w-[280px] flex-col overflow-hidden rounded-[14px] border border-[#d9c9a8] bg-white shadow-[inset_0_0_0_1px_rgba(132,96,42,0.08),0_2px_8px_rgba(36,29,17,0.08)]">
-      <div className="relative aspect-[3/4] overflow-hidden rounded-[16px] bg-[#fffdf8]">
-        <div className="absolute left-2 top-2 z-20 flex min-w-0 items-start gap-2 rounded-[12px] bg-white/95 px-2 py-1.5">
-          <div>
-            <div className="font-serif text-sm font-bold leading-none tracking-[-0.035em] text-[#85420b] sm:text-base">
-              {formatPrice(price.amount)}
-            </div>
-            {discount !== null && compareAtPrice ? (
-              <div className="mt-1 text-[0.6rem] font-medium text-[#77716e] line-through sm:text-[0.65rem]">
-                {formatPrice(compareAtPrice.amount)}
-              </div>
-            ) : null}
-          </div>
-        </div>
-
+    <article className="group flex aspect-[3/4] w-full max-w-[336px] flex-col overflow-hidden rounded-[14px] border border-[#d9c9a8] bg-white shadow-[inset_0_0_0_1px_rgba(132,96,42,0.08),0_3px_12px_rgba(36,29,17,0.09)] transition-[border-color,box-shadow,transform] duration-500 ease-out hover:-translate-y-1 hover:border-[#c6a24a]/70 hover:shadow-[inset_0_0_0_1px_rgba(132,96,42,0.08),0_12px_28px_rgba(36,29,17,0.14)]">
+      <div className="group/image relative min-h-0 flex-1 overflow-hidden rounded-[14px] bg-[#fffdf8]">
         {discount !== null ? (
-          <div className="absolute right-2 top-2 z-20 rounded-[12px] bg-[#f7194f] px-2 py-1.5 text-[0.65rem] font-bold text-white sm:px-2.5 sm:text-xs">
-            -{discount}% OFF
+          <div className="absolute right-2.5 top-2.5 z-20 flex h-12 w-12 flex-col items-center justify-center rounded-full bg-[#f7194f] text-center text-white shadow-[0_4px_12px_rgba(247,25,79,0.32)] sm:h-14 sm:w-14">
+            <span className="text-sm font-extrabold leading-none tracking-[-0.04em] sm:text-base">
+              -{discount}%
+            </span>
+            <span className="mt-0.5 text-[0.45rem] font-bold uppercase leading-none tracking-[0.12em] sm:text-[0.5rem]">
+              Off
+            </span>
           </div>
         ) : null}
 
-        <div className="absolute right-2 top-1/2 z-30 flex -translate-y-1/2 flex-col gap-2 sm:right-2.5 sm:opacity-0 sm:transition-opacity sm:duration-200 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100">
+        <div className="absolute right-2.5 top-[4.25rem] z-30 flex flex-col gap-2.5 sm:right-3 sm:top-[4.75rem] sm:opacity-0 sm:transition-opacity sm:duration-500 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100">
           <button
             type="button"
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/80 bg-white text-[#14b85a] shadow-[0_3px_10px_rgba(0,0,0,0.2)] transition duration-200 hover:scale-110 hover:bg-[#14b85a] hover:text-white hover:shadow-[0_5px_14px_rgba(20,184,90,0.4)]"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#bfe5cc] bg-gradient-to-br from-[#f2fff6] via-[#d9f5e2] to-[#b9e8c8] text-[#14883f] shadow-[0_4px_12px_rgba(20,136,63,0.2)] transition duration-200 hover:scale-110 hover:from-[#74d99a] hover:via-[#35b86b] hover:to-[#087a35] hover:text-white hover:shadow-[0_6px_16px_rgba(8,122,53,0.45)]"
             aria-label={`Order ${title} on WhatsApp`}
             onClick={() => {
               window.open(whatsappUrl, "_blank", "noopener,noreferrer");
               trackContact("WhatsApp product order");
             }}
           >
-            <FaWhatsapp className="h-4 w-4" />
+            <FaWhatsapp className="h-5 w-5" />
           </button>
           <button
             type="button"
             onClick={handleAddToCart}
             disabled={loading || !effectiveVariantId}
             aria-label={loading ? `Adding ${title} to cart` : `Add ${title} to cart`}
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/80 bg-white text-black shadow-[0_3px_10px_rgba(0,0,0,0.2)] transition duration-200 hover:scale-110 hover:bg-black hover:text-white hover:shadow-[0_5px_14px_rgba(0,0,0,0.35)] disabled:cursor-not-allowed disabled:opacity-60"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#ead8b5] bg-gradient-to-br from-[#fff8ed] via-[#f7e8c8] to-[#e9c985] text-[#75491e] shadow-[0_4px_12px_rgba(111,75,28,0.22)] transition duration-300 hover:scale-110 hover:from-[#f4d9a0] hover:via-[#e7bd70] hover:to-[#d9a84e] hover:text-[#542d10] hover:shadow-[0_6px_16px_rgba(185,137,59,0.4)] disabled:cursor-not-allowed disabled:opacity-60"
           >
-            <ShoppingCart aria-hidden="true" className="h-4 w-4" />
+            <ShoppingCart aria-hidden="true" className="h-5 w-5" />
           </button>
           <button
             type="button"
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/80 bg-white text-[#f7194f] shadow-[0_3px_10px_rgba(0,0,0,0.2)] transition duration-200 hover:scale-110 hover:bg-[#f7194f] hover:text-white hover:shadow-[0_5px_14px_rgba(247,25,79,0.4)]"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#f5c5d0] bg-gradient-to-br from-[#fff2f5] via-[#f9dce4] to-[#f0b9c9] text-[#a62c50] shadow-[0_4px_12px_rgba(166,44,80,0.2)] transition duration-300 hover:scale-110 hover:from-[#efb5c5] hover:via-[#df8fa6] hover:to-[#c96380] hover:text-white hover:shadow-[0_6px_16px_rgba(201,99,128,0.42)]"
             aria-label={`Save ${title}`}
           >
-            <Heart aria-hidden="true" className="h-4 w-4" />
+            <Heart aria-hidden="true" className="h-5 w-5" />
           </button>
         </div>
 
         <Link
           href={productPath}
           aria-label={`View ${title}`}
-          className="group/image absolute inset-0 z-10 block"
+          className="absolute inset-0 z-10 block"
         >
           <Image
             src={firstImage}
             alt={title}
             fill
             sizes="(max-width: 640px) 85vw, 260px"
-            className="object-cover transition-transform duration-500 ease-out group-hover/image:scale-[1.02]"
+            className={`object-contain transition-[opacity,transform] duration-1000 ease-out group-hover/image:scale-[1.06] ${hoverImage ? "group-hover/image:opacity-0" : ""}`}
             onError={() =>
               setFailedImages((current) =>
                 current.includes(firstImage) ? current : [...current, firstImage],
@@ -316,7 +289,7 @@ export function StoreProductCard({
               alt={`${title} alternate view`}
               fill
               sizes="(max-width: 640px) 85vw, 260px"
-              className="object-cover opacity-0 transition-transform duration-500 ease-out group-hover/image:scale-[1.02] group-hover/image:opacity-100"
+              className="object-contain opacity-0 transition-[opacity,transform] duration-1000 ease-out group-hover/image:scale-[1.06] group-hover/image:opacity-100"
               onError={() =>
                 setFailedImages((current) =>
                   current.includes(hoverImage) ? current : [...current, hoverImage],
@@ -355,8 +328,15 @@ export function StoreProductCard({
             </span>
           </div>
 
-          <div className="mt-1.5 truncate text-[0.65rem] font-medium text-[#85878c] sm:text-xs">
-            {productMeta}
+          <div className="mt-1.5 flex items-baseline gap-2 whitespace-nowrap">
+            <span className="font-serif text-sm font-bold tracking-[-0.025em] text-[#85420b] sm:text-base">
+              {formatPrice(price.amount)}
+            </span>
+            {discount !== null && compareAtPrice ? (
+              <span className="truncate text-[0.6rem] font-medium text-[#85878c] line-through sm:text-[0.65rem]">
+                {formatPrice(compareAtPrice.amount)}
+              </span>
+            ) : null}
           </div>
         </div>
 

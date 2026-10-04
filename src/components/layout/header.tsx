@@ -93,8 +93,6 @@ export function Header() {
 
   const isActive = (href: string) => pathname.startsWith(href);
   const legalPageActive = legalMenuItems.some((item) => pathname === item.href);
-  const mainCategories = shopCategories.slice(0, 4);
-
   useEffect(() => {
     function closeMoreMenu(event: MouseEvent) {
       if (!desktopMoreRef.current?.contains(event.target as Node)) {
@@ -406,20 +404,49 @@ export function Header() {
         </div>
 
         {/* ───────── nav links ───────── */}
-        <div className="hidden min-w-0 flex-1 items-center justify-center gap-2 xl:flex 2xl:gap-4">
-          <Link href="/products" className={`shrink-0 text-[13px] font-semibold transition-colors hover:text-[#f97316] ${isActive("/products") ? "text-[#f97316]" : "text-black"}`}>
-            Shop
+        <div className="hidden min-w-0 flex-1 items-center justify-center gap-5 xl:flex 2xl:gap-7">
+          <Link
+            href="/"
+            className={`shrink-0 text-[15px] font-semibold transition-colors hover:text-[#f97316] ${pathname === "/" ? "text-[#f97316]" : "text-black"}`}
+          >
+            Home
           </Link>
-          {mainCategories.map((item) => (
+
+          <div className="group/shop relative shrink-0">
             <Link
-              key={item.id}
-              href={`/category/${item.slug}`}
-              title={item.name}
-              className={`max-w-[64px] truncate text-xs font-medium transition-colors hover:text-[#f97316] 2xl:max-w-[90px] 2xl:text-[13px] ${isActive(`/category/${item.slug}`) ? "text-[#f97316]" : "text-black"}`}
+              href="/products"
+              className={`flex items-center gap-1.5 text-[15px] font-semibold transition-colors hover:text-[#f97316] ${isActive("/products") || isActive("/category") ? "text-[#f97316]" : "text-black"}`}
             >
-              {item.name}
+              Shop
+              <ChevronDown aria-hidden="true" className="h-4 w-4 transition-transform duration-300 group-hover/shop:rotate-180 group-focus-within/shop:rotate-180" />
             </Link>
-          ))}
+
+            <div className="pointer-events-none absolute left-1/2 top-full z-50 w-[440px] -translate-x-1/2 pt-4 opacity-0 transition-all duration-300 group-hover/shop:pointer-events-auto group-hover/shop:opacity-100 group-focus-within/shop:pointer-events-auto group-focus-within/shop:opacity-100">
+              <div className="rounded-2xl border border-black/10 bg-white p-3 shadow-[0_16px_40px_rgba(0,0,0,0.14)]">
+                <div className="mb-2 flex items-center justify-between px-2 pt-1">
+                  <span className="text-xs font-bold uppercase tracking-[0.16em] text-black/55">Shop categories</span>
+                  <Link href="/products" className="text-xs font-bold text-[#f97316] hover:text-[#ea580c]">
+                    View all products
+                  </Link>
+                </div>
+                <div className="grid grid-cols-2 gap-1">
+                  {shopCategories.slice(0, 8).map((item) => (
+                    <Link
+                      key={item.id}
+                      href={`/category/${item.slug}`}
+                      className={`flex min-w-0 items-center gap-3 rounded-xl px-2 py-2.5 text-sm font-semibold transition-colors hover:bg-[#fff7ed] hover:text-[#f97316] ${isActive(`/category/${item.slug}`) ? "bg-[#fff7ed] text-[#f97316]" : "text-black"}`}
+                    >
+                      <span className="relative h-10 w-10 shrink-0 overflow-hidden rounded-lg border border-black/10 bg-[#fffdf8]">
+                        <Image src={item.image || logoSrc} alt="" fill sizes="40px" className="object-cover" />
+                      </span>
+                      <span className="truncate">{item.name}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div ref={desktopMoreRef} className="relative shrink-0" onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setDesktopMoreOpen(false); }}>
             <button
               type="button"
@@ -428,7 +455,7 @@ export function Header() {
               aria-controls="desktop-more-menu"
               onClick={() => setDesktopMoreOpen((open) => !open)}
               onMouseEnter={() => setDesktopMoreOpen(true)}
-              className={`flex items-center gap-1 text-xs font-medium transition-colors hover:text-[#f97316] 2xl:text-[13px] ${desktopMoreOpen ? "text-[#f97316]" : "text-black"}`}
+              className={`flex items-center gap-1.5 text-[15px] font-semibold transition-colors hover:text-[#f97316] ${desktopMoreOpen ? "text-[#f97316]" : "text-black"}`}
             >
               More <ChevronDown aria-hidden="true" className={`h-3.5 w-3.5 transition-transform ${desktopMoreOpen ? "rotate-180" : ""}`} />
             </button>
