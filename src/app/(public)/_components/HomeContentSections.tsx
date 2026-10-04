@@ -7,11 +7,8 @@ import type { PublicVideo } from "@/lib/video-utils";
 import { CertificationsSlider, type CertificateLogo } from "@/components/features/certifications/certifications-slider";
 import { PromoBannerSection } from "@/components/features/home/promo-banner-section";
 import type { PromoBanner } from "@/components/features/home/promo-banner-types";
-import {
-  PinkSaltWellnessSection,
-  PhilosophySection,
-  TrustStrip,
-} from "@/components/features/home/homepage-static-sections";
+import { PinkSaltWellnessSection, TrustStrip } from "@/components/features/home/homepage-static-sections";
+import { HomepageReelsSection } from "@/components/features/home/homepage-reels-section";
 
 type HomeContentSectionsProps = {
   categories: Array<{ id: string; name: string; slug: string; description: string | null; image: string | null; parentId?: string | null; order?: number }>;
@@ -43,6 +40,7 @@ type HomeContentSectionsProps = {
     content?: string | null;
   }>;
   homeVideos: PublicVideo[];
+  homepageReels: PublicVideo[];
   certificates: CertificateLogo[];
 };
 
@@ -53,6 +51,7 @@ export function HomeContentSections({
   collections,
   featuredBlogs,
   homeVideos,
+  homepageReels,
   certificates,
 }: HomeContentSectionsProps) {
   return (
@@ -69,7 +68,7 @@ export function HomeContentSections({
         singleAtATime
       />
       <CollectionsSection collections={collections} />
-      <PhilosophySection />
+      <HomepageReelsSection reels={homepageReels} />
       <PinkSaltWellnessSection />
       <CertificationsSlider certificates={certificates} />
       <FeaturedBlogSection articles={featuredBlogs} />

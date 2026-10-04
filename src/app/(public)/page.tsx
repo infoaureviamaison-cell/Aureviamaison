@@ -49,7 +49,7 @@ export const metadata = createSeoMetadata({
 });
 
 export default async function Page() {
-   const [categories, featuredCollections, featuredBlogs, homeVideos, certificates, promoBannerSection] = await Promise.all([
+   const [categories, featuredCollections, featuredBlogs, homeVideos, homepageReels, certificates, promoBannerSection] = await Promise.all([
      safeHomeQuery(
        "categories",
        () => prisma.category.findMany({
@@ -99,6 +99,15 @@ export default async function Page() {
         where: { active: true, placement: "HOMEPAGE" },
         orderBy: [{ featured: "desc" }, { displayOrder: "asc" }, { createdAt: "desc" }],
         take: 8,
+      }),
+      [],
+    ),
+    safeHomeQuery(
+      "homepage reels",
+      () => prisma.video.findMany({
+        where: { active: true, placement: "HOMEPAGE_REELS", platform: "TIKTOK" },
+        orderBy: [{ displayOrder: "asc" }, { createdAt: "desc" }],
+        take: 24,
       }),
       [],
     ),
@@ -193,6 +202,7 @@ return (
             collections={homeCollections}
             featuredBlogs={featuredBlogs}
             homeVideos={homeVideos.map(serializeVideo)}
+            homepageReels={homepageReels.map(serializeVideo)}
             certificates={certificates}
           />
       </div>

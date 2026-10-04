@@ -2,7 +2,7 @@ import { z } from "zod";
 import type { Video } from "@prisma/client";
 
 export const VIDEO_PLATFORMS = ["YOUTUBE", "TIKTOK", "FACEBOOK", "INSTAGRAM"] as const;
-export const VIDEO_PLACEMENTS = ["HOMEPAGE", "ABOUT", "VIDEOS_PAGE"] as const;
+export const VIDEO_PLACEMENTS = ["HOMEPAGE", "HOMEPAGE_REELS", "ABOUT", "VIDEOS_PAGE"] as const;
 export const VIDEO_FORMATS = ["LANDSCAPE", "VERTICAL"] as const;
 
 export type VideoPlatformValue = (typeof VIDEO_PLATFORMS)[number];
@@ -24,7 +24,8 @@ export const VIDEO_PLATFORM_LABELS: Record<VideoPlatformValue, string> = {
 };
 
 export const VIDEO_PLACEMENT_LABELS: Record<VideoPlacementValue, string> = {
-  HOMEPAGE: "Homepage",
+  HOMEPAGE: "Homepage (featured video)",
+  HOMEPAGE_REELS: "Homepage reels row",
   ABOUT: "About Page",
   VIDEOS_PAGE: "Videos Page",
 };
@@ -158,13 +159,19 @@ export async function prepareVideoData(input: unknown) {
   const platform = detectVideoPlatform(validated.videoUrl);
   if (!platform) throw new VideoUrlError("Unsupported video URL. Use a YouTube, TikTok, Facebook, or Instagram URL.");
 
+  if (validated.placement === "HOMEPAGE_REELS" && platform !== "TIKTOK") {
+    throw new VideoUrlError("Homepage reels must use a TikTok video URL.");
+  }
+
   const resolvedUrl = platform === "TIKTOK" ? await resolveTikTokUrl(validated.videoUrl) : validated.videoUrl;
   const embedUrl = buildVideoEmbedUrl(platform, resolvedUrl);
   if (!embedUrl) throw new VideoUrlError(`This ${VIDEO_PLATFORM_LABELS[platform]} URL is invalid or cannot be embedded.`);
 
   const buttonUrl = validated.buttonUrl ? safeUrl(validated.buttonUrl)?.toString() ?? null : null;
+  const format = validated.placement === "HOMEPAGE_REELS" ? "VERTICAL" : validated.format;
   return {
     ...validated,
+    format,
     platform,
     description: validated.description || null,
     thumbnail: validated.thumbnail || null,

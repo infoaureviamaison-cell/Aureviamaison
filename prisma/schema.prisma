@@ -367,6 +367,7 @@ enum VideoPlatform {
 
 enum VideoPlacement {
   HOMEPAGE
+  HOMEPAGE_REELS
   ABOUT
   VIDEOS_PAGE
 }

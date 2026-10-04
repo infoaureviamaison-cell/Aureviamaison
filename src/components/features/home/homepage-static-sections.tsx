@@ -100,17 +100,6 @@ export function OurProcessSection() {
   );
 }
 
-export function PhilosophySection() {
-  return (
-    <section className="bg-white px-6 py-6 lg:px-8 lg:py-8">
-      <div className="mx-auto max-w-5xl rounded-3xl border border-[#eac4d0] bg-gradient-to-br from-[#fff5f8] via-[#fce8ee] to-[#f5dce5] px-6 py-7 text-center shadow-sm sm:px-10">
-        <SectionHeading eyebrow="Glow with intention" title="Our beauty philosophy" />
-        <p className="mx-auto mt-4 max-w-3xl text-base leading-7 text-gray-700 sm:text-lg">We believe beauty is personal, modern, and confidence-driven. Our approach centers on elevated essentials that look refined, feel comfortable, and support the routines people actually live by — every day, everywhere.</p>
-      </div>
-    </section>
-  );
-}
-
 export function IsThisYouSection() {
   const items = [
     "You want premium skincare and makeup that feel as good as they look.",

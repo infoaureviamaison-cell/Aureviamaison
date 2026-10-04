@@ -103,6 +103,15 @@ export function VideoForm({ mode, videoId, initialValues }: VideoFormProps) {
                 <option key={placement} value={placement}>{VIDEO_PLACEMENT_LABELS[placement]}</option>
               ))}
             </select>
+            {values.placement === "HOMEPAGE_REELS" ? (
+              <p className="text-xs leading-5 text-gray-500">
+                Homepage reels use TikTok URLs only and appear as video-only cards in the horizontal reels row. You can also manage them under{" "}
+                <Link href="/admin/homepage/reels" className="font-semibold text-[#EA580C] underline">
+                  Homepage reels
+                </Link>
+                .
+              </p>
+            ) : null}
           </label>
 
           <label className="space-y-1.5 md:col-span-2">

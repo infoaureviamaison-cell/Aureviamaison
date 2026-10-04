@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FiStar, FiAward, FiFileText, FiImage } from "react-icons/fi";
+import { FiStar, FiAward, FiFileText, FiImage, FiVideo } from "react-icons/fi";
 
 const sections = [
   {
@@ -21,6 +21,12 @@ const sections = [
     description: "Manage homepage offer banners, artwork, discounts and CTA links",
     href: "/admin/homepage/banners",
     icon: FiImage,
+  },
+  {
+    name: "Homepage Reels",
+    description: "Add TikTok videos for the homepage reels row (video only on the storefront)",
+    href: "/admin/homepage/reels",
+    icon: FiVideo,
   },
   {
     name: "Reviews",

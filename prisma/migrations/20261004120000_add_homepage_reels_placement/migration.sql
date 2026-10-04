@@ -1,0 +1,1 @@
+ALTER TYPE "VideoPlacement" ADD VALUE 'HOMEPAGE_REELS';
