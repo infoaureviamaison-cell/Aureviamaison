@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FiStar, FiAward, FiFileText } from "react-icons/fi";
+import { FiStar, FiAward, FiFileText, FiImage } from "react-icons/fi";
 
 const sections = [
   {
@@ -15,6 +15,12 @@ const sections = [
     description: "Manage the Essence section content with 2 cards",
     href: "/admin/homepage",
     icon: FiFileText,
+  },
+  {
+    name: "Promotional Banners",
+    description: "Manage homepage offer banners, artwork, discounts and CTA links",
+    href: "/admin/homepage/banners",
+    icon: FiImage,
   },
   {
     name: "Reviews",

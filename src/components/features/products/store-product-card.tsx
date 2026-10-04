@@ -226,17 +226,17 @@ export function StoreProductCard({
     <article className="group flex aspect-[3/4] w-full max-w-[336px] flex-col overflow-hidden rounded-[14px] border border-[#d9c9a8] bg-white shadow-[inset_0_0_0_1px_rgba(132,96,42,0.08),0_3px_12px_rgba(36,29,17,0.09)] transition-[border-color,box-shadow,transform] duration-500 ease-out hover:-translate-y-1 hover:border-[#c6a24a]/70 hover:shadow-[inset_0_0_0_1px_rgba(132,96,42,0.08),0_12px_28px_rgba(36,29,17,0.14)]">
       <div className="group/image relative min-h-0 flex-1 overflow-hidden rounded-[14px] bg-[#fffdf8]">
         {discount !== null ? (
-          <div className="absolute right-2.5 top-2.5 z-20 flex h-12 w-12 flex-col items-center justify-center rounded-full bg-[#f7194f] text-center text-white shadow-[0_4px_12px_rgba(247,25,79,0.32)] sm:h-14 sm:w-14">
-            <span className="text-sm font-extrabold leading-none tracking-[-0.04em] sm:text-base">
+          <div className="absolute left-2.5 top-2.5 z-20 flex h-11 w-11 flex-col items-center justify-center rounded-full bg-[#f7194f] text-center text-white shadow-[0_4px_12px_rgba(247,25,79,0.32)] sm:h-12 sm:w-12">
+            <span className="text-[0.8rem] font-extrabold leading-none tracking-[-0.04em] sm:text-sm">
               -{discount}%
             </span>
-            <span className="mt-0.5 text-[0.45rem] font-bold uppercase leading-none tracking-[0.12em] sm:text-[0.5rem]">
+            <span className="mt-0.5 text-[0.4rem] font-bold uppercase leading-none tracking-[0.12em] sm:text-[0.45rem]">
               Off
             </span>
           </div>
         ) : null}
 
-        <div className="absolute right-2.5 top-[4.25rem] z-30 flex flex-col gap-2.5 sm:right-3 sm:top-[4.75rem] sm:opacity-0 sm:transition-opacity sm:duration-500 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100">
+        <div className="absolute right-2.5 top-1/2 z-30 flex -translate-y-1/2 flex-col gap-2.5 sm:right-3 sm:opacity-0 sm:transition-opacity sm:duration-500 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100">
           <button
             type="button"
             className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#bfe5cc] bg-gradient-to-br from-[#f2fff6] via-[#d9f5e2] to-[#b9e8c8] text-[#14883f] shadow-[0_4px_12px_rgba(20,136,63,0.2)] transition duration-200 hover:scale-110 hover:from-[#74d99a] hover:via-[#35b86b] hover:to-[#087a35] hover:text-white hover:shadow-[0_6px_16px_rgba(8,122,53,0.45)]"

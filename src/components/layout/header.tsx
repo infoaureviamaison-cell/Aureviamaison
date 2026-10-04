@@ -11,6 +11,7 @@ import {
 } from "@esmate/shadcn/components/ui/sheet";
 import {
   ChevronDown,
+  ChevronRight,
   Download,
   Menu,
   Phone,
@@ -93,6 +94,7 @@ export function Header() {
 
   const isActive = (href: string) => pathname.startsWith(href);
   const legalPageActive = legalMenuItems.some((item) => pathname === item.href);
+  const mainCategories = shopCategories.slice(0, 4);
   useEffect(() => {
     function closeMoreMenu(event: MouseEvent) {
       if (!desktopMoreRef.current?.contains(event.target as Node)) {
@@ -404,7 +406,7 @@ export function Header() {
         </div>
 
         {/* ───────── nav links ───────── */}
-        <div className="hidden min-w-0 flex-1 items-center justify-center gap-5 xl:flex 2xl:gap-7">
+        <div className="hidden min-w-0 flex-1 items-center justify-center gap-3 xl:flex 2xl:gap-5">
           <Link
             href="/"
             className={`shrink-0 text-[15px] font-semibold transition-colors hover:text-[#f97316] ${pathname === "/" ? "text-[#f97316]" : "text-black"}`}
@@ -447,6 +449,17 @@ export function Header() {
             </div>
           </div>
 
+          {mainCategories.map((item) => (
+            <Link
+              key={item.id}
+              href={`/category/${item.slug}`}
+              title={item.name}
+              className={`max-w-[82px] truncate text-sm font-semibold transition-colors hover:text-[#f97316] 2xl:max-w-[110px] 2xl:text-[15px] ${isActive(`/category/${item.slug}`) ? "text-[#f97316]" : "text-black"}`}
+            >
+              {item.name}
+            </Link>
+          ))}
+
           <div ref={desktopMoreRef} className="relative shrink-0" onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setDesktopMoreOpen(false); }}>
             <button
               type="button"
@@ -466,12 +479,37 @@ export function Header() {
                     ...mainMenuItems.filter((item) => !["Home", "Products", "Skincare", "Fragrance"].includes(item.text)),
                     { text: "Wholesale", href: "/wholesale" },
                     { text: "Videos", href: "/videos" },
-                    ...legalMenuItems,
                   ].map((item) => (
-                    <Link key={item.href} href={item.href} role="menuitem" onClick={() => setDesktopMoreOpen(false)} className={`block rounded-md px-3 py-2 text-xs transition-colors hover:bg-black/5 hover:text-[#f97316] ${isActive(item.href) ? "font-semibold text-[#f97316]" : "text-black"}`}>
+                    <Link key={item.href} href={item.href} role="menuitem" onClick={() => setDesktopMoreOpen(false)} className={`block rounded-md px-3 py-2 text-sm transition-colors hover:bg-black/5 hover:text-[#f97316] ${isActive(item.href) ? "font-semibold text-[#f97316]" : "text-black"}`}>
                       {item.text}
                     </Link>
                   ))}
+                  <div className="group/legal relative">
+                    <button
+                      type="button"
+                      role="menuitem"
+                      aria-haspopup="menu"
+                      className={`flex w-full items-center justify-between rounded-md px-3 py-2 text-left text-sm transition-colors hover:bg-black/5 hover:text-[#f97316] ${legalPageActive ? "font-semibold text-[#f97316]" : "text-black"}`}
+                    >
+                      Legal Pages
+                      <ChevronRight aria-hidden="true" className="h-4 w-4" />
+                    </button>
+                    <div className="pointer-events-none absolute right-full top-0 z-50 w-56 pr-2 opacity-0 transition-opacity duration-200 group-hover/legal:pointer-events-auto group-hover/legal:opacity-100 group-focus-within/legal:pointer-events-auto group-focus-within/legal:opacity-100">
+                      <div role="menu" className="rounded-lg border border-black/10 bg-white p-2 shadow-[0_12px_30px_rgba(0,0,0,0.12)]">
+                        {legalMenuItems.map((item) => (
+                          <Link
+                            key={item.href}
+                            href={item.href}
+                            role="menuitem"
+                            onClick={() => setDesktopMoreOpen(false)}
+                            className={`block rounded-md px-3 py-2 text-sm transition-colors hover:bg-black/5 hover:text-[#f97316] ${pathname === item.href ? "font-semibold text-[#f97316]" : "text-black"}`}
+                          >
+                            {item.text}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
                   {!isInstalled ? <button type="button" onClick={() => { void installApp(); setDesktopMoreOpen(false); }} className="mt-1 flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-xs text-black hover:bg-black/5"><Download className="h-3.5 w-3.5" />Install App</button> : null}
                 </div>
               </div>

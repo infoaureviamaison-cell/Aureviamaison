@@ -5,6 +5,8 @@ import { CustomerVoicesSection } from "@/components/features/home/customer-voice
 import { FeaturedVideoSection } from "@/components/features/videos/featured-video-section";
 import type { PublicVideo } from "@/lib/video-utils";
 import { CertificationsSlider, type CertificateLogo } from "@/components/features/certifications/certifications-slider";
+import { PromoBannerSection } from "@/components/features/home/promo-banner-section";
+import type { PromoBanner } from "@/components/features/home/promo-banner-types";
 import {
   HomepageFaqSection,
   IsThisYouSection,
@@ -16,6 +18,7 @@ import {
 
 type HomeContentSectionsProps = {
   categories: Array<{ id: string; name: string; slug: string; description: string | null; image: string | null; parentId?: string | null; order?: number }>;
+  promoBanners: PromoBanner[];
   products: Array<{
     id: string;
     handle: string;
@@ -48,6 +51,7 @@ type HomeContentSectionsProps = {
 
 export function HomeContentSections({
   categories,
+  promoBanners,
   products,
   collections,
   featuredBlogs,
@@ -58,6 +62,7 @@ export function HomeContentSections({
     <>
       <TrustStrip />
       <CategoriesSection categories={categories} />
+      <PromoBannerSection banners={promoBanners} />
       <ProductsSection categories={categories} products={products} collections={collections} />
       <WhyChooseUsSection />
       <OurProcessSection />

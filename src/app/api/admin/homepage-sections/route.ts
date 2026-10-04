@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { z } from "zod";
 import { requireAdmin } from "@/lib/admin-auth";
+import { revalidatePath } from "next/cache";
 
 const homepageSectionSchema = z.object({
   sectionKey: z.string().min(1),
@@ -18,7 +19,7 @@ export async function GET(request: Request) {
     await requireAdmin();
     const { searchParams } = new URL(request.url);
     const key = searchParams.get("key");
-    const where: any = {};
+    const where: { sectionKey?: string } = {};
     if (key) where.sectionKey = key;
     const sections = await prisma.homepageSection.findMany({
       where,
@@ -40,6 +41,7 @@ export async function POST(request: Request) {
       update: validated,
       create: validated,
     });
+    revalidatePath("/");
     return NextResponse.json({ section });
   } catch (error: unknown) {
     if (error instanceof z.ZodError) {
