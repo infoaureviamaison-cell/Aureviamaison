@@ -3,7 +3,6 @@ import { serializeVideo } from "@/lib/video-utils";
 import { HomeHeroSection } from "./_components/HomeHeroSection";
 import { HomeContentSections } from "./_components/HomeContentSections";
 import { createSeoMetadata } from "@/lib/seo";
-import { homepageFaqItems } from "@/components/features/home/homepage-static-sections";
 import { DEFAULT_PROMO_BANNERS, parsePromoBanners } from "@/components/features/home/promo-banner-types";
 
 export const revalidate = 300;
@@ -164,18 +163,6 @@ const allProducts = Array.from(
 
 const homepageJsonLd = [
   websiteJsonLd,
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: homepageFaqItems.map((item) => ({
-      "@type": "Question",
-      name: item.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: item.schemaAnswer,
-      },
-    })),
-  },
   {
     "@context": "https://schema.org",
     "@type": "ItemList",

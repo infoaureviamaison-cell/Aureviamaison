@@ -8,9 +8,6 @@ import { CertificationsSlider, type CertificateLogo } from "@/components/feature
 import { PromoBannerSection } from "@/components/features/home/promo-banner-section";
 import type { PromoBanner } from "@/components/features/home/promo-banner-types";
 import {
-  HomepageFaqSection,
-  IsThisYouSection,
-  OurProcessSection,
   PinkSaltWellnessSection,
   PhilosophySection,
   TrustStrip,
@@ -65,7 +62,6 @@ export function HomeContentSections({
       <PromoBannerSection banners={promoBanners} />
       <ProductsSection categories={categories} products={products} collections={collections} />
       <WhyChooseUsSection />
-      <OurProcessSection />
       <FeaturedVideoSection
         videos={homeVideos}
         heading="See the latest from Auerviamaison"
@@ -74,12 +70,10 @@ export function HomeContentSections({
       />
       <CollectionsSection collections={collections} />
       <PhilosophySection />
-      <IsThisYouSection />
       <PinkSaltWellnessSection />
-      <HomepageFaqSection />
-      <CustomerVoicesSection />
       <CertificationsSlider certificates={certificates} />
       <FeaturedBlogSection articles={featuredBlogs} />
+      <CustomerVoicesSection />
     </>
   );
 }

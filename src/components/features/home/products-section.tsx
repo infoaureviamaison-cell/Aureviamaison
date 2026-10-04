@@ -202,21 +202,17 @@ function FeaturedProductRow({
 
   return (
     <section>
-      <div className="mx-auto mb-6 flex max-w-3xl flex-col items-center px-4 text-center sm:mb-8">
-        <h3 className="font-serif text-2xl font-extrabold text-gray-950 sm:text-3xl lg:text-4xl">
+      <div className="mb-3 flex items-center gap-3 sm:mb-4 sm:gap-5">
+        <h3 className="shrink-0 font-serif text-xl font-extrabold leading-none text-gray-950 sm:text-2xl">
           {category.name}
         </h3>
-        {category.description && (
-          <p className="mt-2 line-clamp-3 text-sm leading-6 text-gray-600 sm:mt-3 sm:text-base">
-            {category.description}
-          </p>
-        )}
+        <span aria-hidden="true" className="h-px min-w-4 flex-1 bg-gradient-to-r from-[#d84967]/55 via-[#d6b89f]/45 to-transparent" />
         <Link
           href={`/category/${encodeURIComponent(category.slug)}`}
-          className="group mt-4 inline-flex items-center gap-1.5 rounded-full bg-[#ea580c] px-5 py-2.5 text-xs font-bold uppercase tracking-wide text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-[#c2410c] hover:shadow-md sm:text-sm"
+          className="group inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#f8e6df] px-3.5 py-2 text-[0.65rem] font-bold uppercase tracking-wide text-[#b84650] transition hover:bg-[#d84967] hover:text-white sm:px-4 sm:text-xs"
         >
-          Shop Now
-          <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          View all
+          <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </Link>
       </div>
       <div
@@ -235,7 +231,7 @@ function FeaturedProductRow({
             isAutoScrollPaused.current = false;
           }
         }}
-        className="scrollbar-hide flex gap-4 overflow-x-auto py-2 sm:gap-6"
+        className="scrollbar-hide flex gap-4 overflow-x-auto py-1 sm:gap-6"
       >
         {products.map((product) => (
           <div
@@ -256,10 +252,11 @@ function CollectionSlider({ collections }: { collections: Collection[] }) {
   const itemsPerPage = 3;
 
   const currentCollections = collections || [];
-  const totalSlides = Math.ceil(currentCollections.length / itemsPerPage);
-  const displayCollections = currentCollections.slice(
-    currentSlide * itemsPerPage,
-    (currentSlide + 1) * itemsPerPage
+  const totalSlides = currentCollections.length > itemsPerPage ? currentCollections.length : 1;
+  const visibleCount = Math.min(itemsPerPage, currentCollections.length);
+  const displayCollections = Array.from(
+    { length: visibleCount },
+    (_, offset) => currentCollections[(currentSlide + offset) % currentCollections.length],
   );
 
   useEffect(() => {
@@ -279,9 +276,9 @@ function CollectionSlider({ collections }: { collections: Collection[] }) {
       <div
         className="grid grid-cols-1 justify-items-center gap-5 sm:grid-cols-3 sm:justify-items-center transition-opacity duration-1000 ease-in-out"
       >
-        {displayCollections.map((collection, i) => (
+        {displayCollections.map((collection) => (
           <Link
-            key={`${collection.id}-${i}-${currentSlide}`}
+            key={collection.id}
             href="/products"
             className="group w-full max-w-[300px] overflow-hidden rounded-xl border border-[#C6A24A]/20 bg-white sm:max-w-[340px]"
           >
@@ -391,8 +388,8 @@ export function ProductsSection({ categories, products, collections }: { categor
   return (
     <>
       {featuredRows.length > 0 && (
-        <section className="bg-white mx-auto w-full max-w-7xl px-6 lg:px-8 py-16">
-          <div className="space-y-12">
+        <section className="mx-auto w-full max-w-7xl bg-white px-6 py-10 lg:px-8 lg:py-12">
+          <div className="space-y-7 sm:space-y-9">
             {featuredRows.map((row) => (
               <FeaturedProductRow
                 key={row.category.id}
