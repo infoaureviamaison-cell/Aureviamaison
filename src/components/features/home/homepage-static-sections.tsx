@@ -103,7 +103,7 @@ export function OurProcessSection() {
 export function PhilosophySection() {
   return (
     <section className="bg-white px-6 py-6 lg:px-8 lg:py-8">
-      <div className="mx-auto max-w-5xl rounded-3xl border border-[#EA580C]/20 bg-[#fffaf5] px-6 py-7 text-center shadow-sm sm:px-10">
+      <div className="mx-auto max-w-5xl rounded-3xl border border-[#eac4d0] bg-gradient-to-br from-[#fff5f8] via-[#fce8ee] to-[#f5dce5] px-6 py-7 text-center shadow-sm sm:px-10">
         <SectionHeading eyebrow="Glow with intention" title="Our beauty philosophy" />
         <p className="mx-auto mt-4 max-w-3xl text-base leading-7 text-gray-700 sm:text-lg">We believe beauty is personal, modern, and confidence-driven. Our approach centers on elevated essentials that look refined, feel comfortable, and support the routines people actually live by — every day, everywhere.</p>
       </div>
@@ -138,27 +138,27 @@ export function IsThisYouSection() {
 export function PinkSaltWellnessSection() {
   return (
     <section className="bg-white px-6 py-6 lg:px-8 lg:py-8">
-      <div className="mx-auto grid max-w-7xl items-center gap-7 overflow-hidden rounded-3xl border border-[#EA580C]/20 bg-[#fffaf5] p-6 shadow-sm md:grid-cols-2 md:p-8">
+      <div className="mx-auto grid max-w-7xl items-center gap-5 overflow-hidden rounded-3xl border border-[#e4d0a1] bg-gradient-to-br from-[#fffbef] via-[#fbf0d4] to-[#f3e2b8] p-5 shadow-sm md:grid-cols-2 md:p-6">
         <div>
           <span className="inline-flex rounded-full bg-[#fff1ea] px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#EA580C]">
             Everyday confidence
           </span>
-          <h2 className="mt-5 font-serif text-3xl font-extrabold text-gray-900 sm:text-4xl">
+          <h2 className="mt-3 font-serif text-2xl font-extrabold text-gray-900 sm:text-3xl">
             Beauty essentials designed for real life
           </h2>
-          <p className="mt-5 leading-7 text-gray-700">
-            A modern beauty routine should feel easy, polished, and personal. From luminous skincare to everyday luxury accessories, every item is chosen to help you look refreshed, feel organized, and move through the day with confidence.
+          <p className="mt-3 text-sm leading-6 text-gray-700">
+            Beauty made easy, polished, and personal. Discover skincare, fragrance, and accessories chosen for everyday confidence.
           </p>
-          <ul className="mt-6 space-y-3 text-sm leading-6 text-gray-700">
+          <ul className="mt-4 space-y-2 text-sm leading-5 text-gray-700">
             <li className="flex gap-3"><CheckCircle2 aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-[#EA580C]" />Skincare that supports a fresh, healthy-looking glow.</li>
             <li className="flex gap-3"><CheckCircle2 aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-[#EA580C]" />Makeup and fragrance choices that feel elevated and wearable.</li>
             <li className="flex gap-3"><CheckCircle2 aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-[#EA580C]" />Accessories and watches that complete a polished personal style.</li>
           </ul>
-          <p className="mt-6 rounded-2xl bg-white p-4 text-sm leading-6 text-gray-600">
-            Your routine is personal — and so is your styling. We focus on pieces that help you feel beautiful, put together, and ready for every moment.
+          <p className="mt-4 rounded-xl bg-white/80 px-3 py-2 text-sm leading-5 text-gray-600">
+            Your routine. Your style. Essentials that feel like you.
           </p>
         </div>
-        <div className="relative aspect-[3/2] overflow-hidden rounded-3xl">
+        <div className="relative aspect-[2/1] max-h-[300px] overflow-hidden rounded-2xl">
           <Image
             src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1200&q=80"
             alt="Beauty products and skincare essentials arranged for a premium routine"

@@ -26,8 +26,8 @@ export function CustomerVoicesSection() {
           description="Sample review layouts shown for demonstration. These are not verified customer testimonials."
         />
         <div className="mt-6 grid gap-5 md:grid-cols-3">
-          {sampleReviews.map((review) => (
-            <article key={review.audience} className="rounded-3xl border border-[#C6A24A]/20 bg-white p-7 shadow-sm">
+          {sampleReviews.map((review, index) => (
+            <article key={review.audience} className={`rounded-3xl border bg-gradient-to-br p-7 shadow-sm ${index % 2 === 0 ? "border-[#eac4d0] from-[#fff5f8] via-[#fce8ee] to-[#f5dce5]" : "border-[#e4d0a1] from-[#fffbef] via-[#fbf0d4] to-[#f3e2b8]"}`}>
               <MessageSquareQuote aria-hidden="true" className="h-7 w-7 text-[#C6A24A]" />
               <p className="mt-5 text-sm leading-7 text-gray-700">&ldquo;{review.quote}&rdquo;</p>
               <p className="mt-5 text-xs font-bold uppercase tracking-wider text-[#ea580c]">{review.audience}</p>

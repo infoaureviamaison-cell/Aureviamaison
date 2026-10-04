@@ -120,7 +120,7 @@ export function CategoriesSection({ categories }: { categories: Category[] }) {
   };
 
   return (
-    <section className="storefront-categories relative z-20 mt-6 bg-white lg:mx-auto lg:max-w-7xl">
+    <section className="storefront-categories relative z-20 mt-9 bg-white lg:mx-auto lg:max-w-7xl">
          
       <div
         ref={categoriesViewportRef}

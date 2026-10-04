@@ -199,6 +199,8 @@
   }
 }
 
+.storefront-categories:hover .category-marquee-track,
+.storefront-categories:focus-within .category-marquee-track,
 .storefront-categories > div.is-dragging .category-marquee-track {
   animation-play-state: paused;
 }
