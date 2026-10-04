@@ -33,8 +33,6 @@ export default function BlogSection({ articles: initialArticles }: BlogSectionPr
   const [showLeftArrow, setShowLeftArrow] = useState(false)
   const [showRightArrow, setShowRightArrow] = useState(true)
 
-  if (!articles.length) return null
-
   const checkScrollPosition = useCallback(() => {
     const scrollEl = scrollRef.current
     if (!scrollEl) return
@@ -91,24 +89,31 @@ export default function BlogSection({ articles: initialArticles }: BlogSectionPr
     return () => window.clearInterval(timer)
   }, [isPaused, articles.length])
 
+  if (!articles.length) return null
+
   return (
-    <section className="py-8 sm:py-12">
+    <section className="py-6 sm:py-8">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Header - matching about page styling */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <span className="inline-flex rounded-full bg-[#ffedd5] px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#ea580c]">
-            Latest Articles
-          </span>
-          <h2 className="font-serif text-3xl font-extrabold text-gray-900 sm:text-4xl lg:text-5xl">
-            Latest Articles
-          </h2>
-          <p className="text-gray-600 text-base sm:text-lg">
-            Helpful reads and insights about Himalayan salt, Shilajit, herbal products, and natural wellness.
-          </p>
+        <div className="mb-8 flex items-end justify-between gap-4">
+          <div className="min-w-0">
+            <span className="inline-flex rounded-full bg-[#ffedd5] px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#ea580c]">
+              Latest Articles
+            </span>
+            <h2 className="mt-3 font-serif text-3xl font-extrabold text-gray-900 sm:text-4xl lg:text-5xl">
+              Latest Articles
+            </h2>
+            <p className="mt-2 hidden max-w-2xl text-base text-gray-600 sm:block sm:text-lg">
+              Helpful reads and insights about Himalayan salt, Shilajit, herbal products, and natural wellness.
+            </p>
+          </div>
+          <Link href="/blogs" className="group mb-2 inline-flex shrink-0 items-center gap-2 self-center rounded-full bg-[#f8e6df] px-4 py-2.5 text-xs font-bold text-[#b84650] transition hover:bg-[#d84967] hover:text-white sm:mb-4 sm:px-5 sm:text-sm">
+            View all posts
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+          </Link>
         </div>
 
         {/* Blog grid or horizontal scrollable carousel */}
-        <div className="relative mt-12">
+        <div className="relative mt-8">
           <div
             ref={scrollRef}
             className={articles.length > 4
@@ -213,15 +218,6 @@ export default function BlogSection({ articles: initialArticles }: BlogSectionPr
           )}
         </div>
 
-        {/* CTA */}
-        <div className="mt-12 flex justify-center">
-          <Link
-            href="/blogs"
-            className="inline-flex items-center gap-2 text-base font-medium text-primary hover:underline"
-          >
-            View all posts <ArrowRight className="h-4.5 w-4.5" />
-          </Link>
-        </div>
       </div>
     </section>
   )

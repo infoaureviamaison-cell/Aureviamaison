@@ -102,10 +102,10 @@ export function OurProcessSection() {
 
 export function PhilosophySection() {
   return (
-    <section className="bg-white px-6 py-14 lg:px-8 lg:py-20">
-      <div className="mx-auto max-w-5xl rounded-3xl border border-[#EA580C]/20 bg-[#fffaf5] px-6 py-10 text-center shadow-sm sm:px-10">
+    <section className="bg-white px-6 py-6 lg:px-8 lg:py-8">
+      <div className="mx-auto max-w-5xl rounded-3xl border border-[#EA580C]/20 bg-[#fffaf5] px-6 py-7 text-center shadow-sm sm:px-10">
         <SectionHeading eyebrow="Glow with intention" title="Our beauty philosophy" />
-        <p className="mx-auto mt-6 max-w-3xl text-base leading-8 text-gray-700 sm:text-lg">We believe beauty is personal, modern, and confidence-driven. Our approach centers on elevated essentials that look refined, feel comfortable, and support the routines people actually live by — every day, everywhere.</p>
+        <p className="mx-auto mt-4 max-w-3xl text-base leading-7 text-gray-700 sm:text-lg">We believe beauty is personal, modern, and confidence-driven. Our approach centers on elevated essentials that look refined, feel comfortable, and support the routines people actually live by — every day, everywhere.</p>
       </div>
     </section>
   );
@@ -137,8 +137,8 @@ export function IsThisYouSection() {
 
 export function PinkSaltWellnessSection() {
   return (
-    <section className="bg-white px-6 py-14 lg:px-8 lg:py-20">
-      <div className="mx-auto grid max-w-7xl items-center gap-10 overflow-hidden rounded-3xl border border-[#EA580C]/20 bg-[#fffaf5] p-6 shadow-sm md:grid-cols-2 md:p-10">
+    <section className="bg-white px-6 py-6 lg:px-8 lg:py-8">
+      <div className="mx-auto grid max-w-7xl items-center gap-7 overflow-hidden rounded-3xl border border-[#EA580C]/20 bg-[#fffaf5] p-6 shadow-sm md:grid-cols-2 md:p-8">
         <div>
           <span className="inline-flex rounded-full bg-[#fff1ea] px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#EA580C]">
             Everyday confidence

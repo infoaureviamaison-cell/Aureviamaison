@@ -14,11 +14,11 @@ export function PromoBannerSection({ banners }: { banners: PromoBanner[] }) {
   function scroll(direction: -1 | 1) {
     const slider = sliderRef.current;
     if (!slider) return;
-    slider.scrollBy({ left: direction * slider.clientWidth * 0.52, behavior: "smooth" });
+    slider.scrollBy({ left: direction * slider.clientWidth, behavior: "smooth" });
   }
 
   return (
-    <section aria-label="Featured offers" className="mx-auto w-full max-w-7xl bg-white px-3 pb-10 pt-5 sm:px-6 sm:pb-14 lg:px-8">
+    <section aria-label="Featured offers" className="mx-auto w-full max-w-7xl bg-white px-3 pb-4 pt-10 sm:px-6 sm:pb-6 sm:pt-12 lg:px-8">
       <div className="relative">
         <div
           ref={sliderRef}
@@ -49,7 +49,7 @@ export function PromoBannerSection({ banners }: { banners: PromoBanner[] }) {
         }}
         >
           {visibleBanners.map((banner) => (
-            <div key={banner.id} className="w-[calc((100%_-_0.625rem)/2)] shrink-0 snap-start sm:w-[calc((100%_-_1rem)/2)] lg:w-[calc((100%_-_1.25rem)/2)]">
+            <div key={banner.id} className="w-full shrink-0 snap-start">
               <PromoBannerCard banner={banner} />
             </div>
           ))}

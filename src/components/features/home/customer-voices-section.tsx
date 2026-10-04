@@ -18,14 +18,14 @@ const sampleReviews = [
 
 export function CustomerVoicesSection() {
   return (
-    <section className="bg-gray-100 px-6 py-10 lg:px-4 lg:py-14">
+    <section className="bg-gray-100 px-6 py-7 lg:px-4 lg:py-9">
       <div className="mx-auto max-w-7xl">
         <SectionHeading
           eyebrow="Customer Voices"
           title="What Buyers May Value"
           description="Sample review layouts shown for demonstration. These are not verified customer testimonials."
         />
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
+        <div className="mt-6 grid gap-5 md:grid-cols-3">
           {sampleReviews.map((review) => (
             <article key={review.audience} className="rounded-3xl border border-[#C6A24A]/20 bg-white p-7 shadow-sm">
               <MessageSquareQuote aria-hidden="true" className="h-7 w-7 text-[#C6A24A]" />
@@ -34,7 +34,7 @@ export function CustomerVoicesSection() {
             </article>
           ))}
         </div>
-        <p className="mt-6 text-center text-xs text-gray-500">
+        <p className="mt-4 text-center text-xs text-gray-500">
           Demo content only — replace with approved reviews before presenting this section as customer feedback.
         </p>
       </div>

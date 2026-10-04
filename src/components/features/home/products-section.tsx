@@ -412,8 +412,8 @@ export function ProductsSection({ categories, products, collections }: { categor
 
 export function CollectionsSection({ collections }: { collections: Collection[] }) {
   return (
-    <section className="mx-auto w-full max-w-7xl bg-gray-50 px-6 py-16 lg:px-8">
-      <div className="mx-auto mb-16 max-w-3xl space-y-4 text-center">
+    <section className="mx-auto w-full max-w-7xl bg-gray-50 px-6 py-10 lg:px-8 lg:py-12">
+      <div className="mx-auto mb-8 max-w-3xl space-y-3 text-center">
         <span className="inline-flex rounded-full bg-[#ffedd5] px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#ea580c]">
           Collections
         </span>

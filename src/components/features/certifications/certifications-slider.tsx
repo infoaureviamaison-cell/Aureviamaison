@@ -14,8 +14,8 @@ export function CertificationsSlider({ certificates }: { certificates: Certifica
   const repeatedLogos = [...logos, ...logos];
 
   return (
-    <section className="overflow-hidden bg-[#fcf5e8] py-12 sm:py-14" aria-labelledby="verified-organizations-title">
-      <div className="mx-auto mb-8 max-w-7xl px-5 text-center">
+    <section className="overflow-hidden bg-[#fcf5e8] py-8 sm:py-10" aria-labelledby="verified-organizations-title">
+      <div className="mx-auto mb-5 max-w-7xl px-5 text-center">
         <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#9a6911]">Trusted credentials</p>
         <h2 id="verified-organizations-title" className="mt-2 font-serif text-2xl font-extrabold text-[#1a1308] sm:text-3xl">Verified By Organizations</h2>
         <p className="mx-auto mt-2 max-w-2xl text-sm leading-6 text-[#5A5E55]">Explore the independent organizations and credentials that support our commitment to quality and authenticity.</p>
