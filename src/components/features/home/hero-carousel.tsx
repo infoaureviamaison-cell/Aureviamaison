@@ -52,7 +52,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
     <section
       aria-label="Featured collections"
       aria-roledescription="carousel"
-      className="relative h-[min(440px,calc(100svh-88px))] w-full overflow-hidden bg-[#fffdf8]"
+      className="relative h-[min(350px,calc(100svh-88px))] w-full overflow-hidden bg-[#fffdf8] sm:h-[min(440px,calc(100svh-88px))]"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onFocusCapture={() => setIsPaused(true)}
@@ -119,7 +119,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                   </div>
                 )}
 
-                <h1 className="max-w-162.5 font-serif text-[2.75rem] font-semibold leading-[0.98] text-[#101014] sm:text-6xl lg:text-7xl">
+                <h1 className="max-w-162.5 font-serif text-[1.75rem] font-semibold leading-[0.98] text-[#101014] sm:text-[2.75rem] sm:text-6xl lg:text-7xl">
                   <span>{slide.title}</span>
                   {slide.titleHighlight && (
                     <span
@@ -134,21 +134,21 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                 </h1>
 
                 {slide.description && (
-                  <p className="mt-4 max-w-127.5 text-[15px] font-normal leading-6 text-[#414047] sm:mt-4 sm:text-lg sm:leading-[1.55]">
+                  <p className="mt-3 max-w-127.5 text-[13px] font-normal leading-5 text-[#414047] sm:mt-4 sm:text-[15px] sm:text-lg sm:leading-6 sm:leading-[1.55]">
                     {slide.description}
                   </p>
                 )}
 
                 {(slide.ctaPrimaryLabel || slide.ctaSecondaryLabel) && (
-                  <div className="mt-6 flex flex-wrap items-center gap-3 sm:mt-7">
+                  <div className="mt-4 flex flex-wrap items-center gap-2 sm:mt-6 sm:gap-3 sm:mt-7">
                     {slide.ctaPrimaryLabel && (
                       <Link
                         href={slide.ctaPrimaryHref || "#"}
                         tabIndex={isActive ? 0 : -1}
-                        className="group inline-flex min-h-12 items-center justify-center gap-3 whitespace-nowrap rounded-full bg-[#d34c65] px-8 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#bd3f58] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#d34c65]/30 sm:min-h-13 sm:min-w-52 sm:text-base"
+                        className="group inline-flex min-h-10 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-[#d34c65] px-5 text-xs font-semibold text-white transition-colors duration-200 hover:bg-[#bd3f58] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#d34c65]/30 sm:min-h-12 sm:px-8 sm:text-sm sm:min-h-13 sm:min-w-52 sm:text-base"
                       >
                         {slide.ctaPrimaryLabel}
-                        <ArrowRight aria-hidden="true" className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+                        <ArrowRight aria-hidden="true" className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1 sm:h-4 sm:w-4" />
                       </Link>
                     )}
 
@@ -156,7 +156,7 @@ export default function HeroCarousel({ slides }: HeroCarouselProps) {
                       <Link
                         href={slide.ctaSecondaryHref || "#"}
                         tabIndex={isActive ? 0 : -1}
-                        className="inline-flex min-h-12 items-center justify-center whitespace-nowrap rounded-full border border-[#c85868]/50 bg-white/80 px-6 text-sm font-semibold text-[#a83f55] transition-colors duration-200 hover:bg-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#d34c65]/25 sm:min-h-13 sm:px-7 sm:text-base"
+                        className="inline-flex min-h-10 items-center justify-center whitespace-nowrap rounded-full border border-[#c85868]/50 bg-white/80 px-4 text-xs font-semibold text-[#a83f55] transition-colors duration-200 hover:bg-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#d34c65]/25 sm:min-h-12 sm:px-6 sm:text-sm sm:min-h-13 sm:px-7 sm:text-base"
                       >
                         {slide.ctaSecondaryLabel}
                       </Link>

@@ -42,7 +42,7 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
       <a href="#main-content" className="sr-only z-[100] rounded bg-white px-4 py-2 text-black focus:not-sr-only focus:fixed focus:left-4 focus:top-4">Skip to main content</a>
       <JsonLd data={businessSchemas} />
       <Header />
-      <main id="main-content" tabIndex={-1} className="flex-grow bg-white pb-16 outline-none md:pb-0">{children}</main>
+      <main id="main-content" tabIndex={-1} className="flex-grow bg-white pb-16 outline-none md:pb-0 safe-area-bottom">{children}</main>
       <Footer />
       <MobileBottomNav />
       <ChatIntegrations />

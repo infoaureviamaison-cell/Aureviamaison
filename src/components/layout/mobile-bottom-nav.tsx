@@ -1,39 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Grid3X3, Phone } from "@esmate/shadcn/pkgs/lucide-react";
+import { Home, Grid3X3, Heart, UserRound } from "@esmate/shadcn/pkgs/lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
-import { BsChatDots } from "react-icons/bs";
 import { contact as trackContact } from "@/lib/pixel";
+import { useWishlist } from "@/lib/wishlist";
 
 const PHONE_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "923001234567";
 
 export function MobileBottomNav() {
   const pathname = usePathname();
-  const [selectedAction, setSelectedAction] = useState<"chat" | "call" | "whatsapp" | null>(null);
+  const { count: wishlistCount } = useWishlist();
+  const [selectedAction, setSelectedAction] = useState<"whatsapp" | null>(null);
   const [whatsappMessage, setWhatsappMessage] = useState("");
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
-  useEffect(() => {
-    const handleChatClosed = () => setSelectedAction((current) => current === "chat" ? null : current);
-    window.addEventListener("mobile-chat-closed", handleChatClosed);
-    return () => window.removeEventListener("mobile-chat-closed", handleChatClosed);
-  }, []);
-
-  const toggleChat = () => {
-    const willOpen = selectedAction !== "chat";
-    setSelectedAction(willOpen ? "chat" : null);
-    window.dispatchEvent(new CustomEvent(willOpen ? "open-mobile-chat" : "close-mobile-chat"));
-  };
-
-  const toggleAction = (action: "call" | "whatsapp") => {
-    if (selectedAction === "chat") {
-      window.dispatchEvent(new CustomEvent("close-mobile-chat"));
-    }
+  const toggleAction = (action: "whatsapp") => {
     setSelectedAction((current) => current === action ? null : action);
   };
 
@@ -45,6 +31,14 @@ export function MobileBottomNav() {
     setSelectedAction(null);
   };
 
+  const openWishlistDrawer = () => {
+    window.dispatchEvent(new CustomEvent("open-wishlist-drawer"));
+  };
+
+  const openProfileDrawer = () => {
+    window.dispatchEvent(new CustomEvent("open-profile-drawer"));
+  };
+
   const homeActive = selectedAction === null && isActive("/");
   const productsActive = selectedAction === null &&
     (isActive("/products") || isActive("/category") || isActive("/collections"));
@@ -53,25 +47,10 @@ export function MobileBottomNav() {
     "relative flex h-11 w-11 items-center justify-center rounded-full transition-all duration-300";
   const activeItemClass =
     "-translate-y-3.5 bg-[#f97316] text-white ring-[6px] ring-black shadow-none";
-  const inactiveItemClass = "text-black/60 hover:text-[#f97316]";
+  const inactiveItemClass = "text-white/70 hover:text-[#f97316]";
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 px-1 md:hidden">
-      {selectedAction === "call" && (
-        <div className="absolute bottom-[4.25rem] left-1/2 w-[min(20rem,calc(100vw-1.5rem))] -translate-x-1/2 rounded-2xl border border-[#EA580C]/20 bg-white p-4 text-center shadow-2xl">
-          <p className="font-semibold text-gray-950">Call Auerviamaison?</p>
-          <p className="mt-1 text-xs text-gray-500">Your phone app will open to call +{PHONE_NUMBER}.</p>
-          <div className="mt-3 grid grid-cols-2 gap-2">
-            <button type="button" onClick={() => setSelectedAction(null)} className="rounded-xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700">
-              Not now
-            </button>
-            <a href={`tel:+${PHONE_NUMBER}`} onClick={() => setSelectedAction(null)} className="rounded-xl bg-[#ea580c] px-4 py-2 text-sm font-bold text-white">
-              Call now
-            </a>
-          </div>
-        </div>
-      )}
-
+    <nav className="fixed bottom-0 left-0 right-0 z-50 px-1 md:hidden safe-area-bottom">
       {selectedAction === "whatsapp" && (
         <div className="absolute bottom-[4.25rem] left-1/2 w-[min(22rem,calc(100vw-1.5rem))] -translate-x-1/2 rounded-2xl border border-[#EA580C]/20 bg-white p-4 shadow-2xl">
           <label htmlFor="mobile-whatsapp-message" className="text-sm font-semibold text-gray-950">
@@ -97,17 +76,20 @@ export function MobileBottomNav() {
         </div>
       )}
 
-      <div className="rounded-t-[1.5rem] border border-b-0 border-white/10 bg-[#1a1308] shadow-[0_-8px_24px_rgba(0,0,0,0.18)]">
+      <div className="rounded-t-[1.5rem] border border-b-0 border-white/10 bg-[#1a1308] shadow-[0_-8px_24px_rgba(0,0,0,0.18)] pb-[env(safe-area-inset-bottom)]">
         <div className="flex h-14 items-center justify-between px-0.5 pt-0.5">
-          {/* AI Chat */}
-          <button
-            onClick={toggleChat}
-            aria-label="Open AI chat"
-            aria-pressed={selectedAction === "chat"}
-            className={`${navItemClass} ${selectedAction === "chat" ? activeItemClass : inactiveItemClass}`}
+          {/* Home */}
+          <Link
+            href="/"
+            aria-label="Home"
+            aria-current={homeActive ? "page" : undefined}
+            onClick={() => setSelectedAction(null)}
+            className={`${navItemClass} ${
+              homeActive ? activeItemClass : inactiveItemClass
+            }`}
           >
-            <BsChatDots className="h-5 w-5" />
-          </button>
+            <Home className="h-5 w-5" />
+          </Link>
 
           {/* Products */}
           <Link
@@ -122,28 +104,27 @@ export function MobileBottomNav() {
             <Grid3X3 className="h-5 w-5" />
           </Link>
 
-          {/* Home */}
-          <Link
-            href="/"
-            aria-label="Home"
-            aria-current={homeActive ? "page" : undefined}
-            onClick={() => setSelectedAction(null)}
-            className={`${navItemClass} ${
-              homeActive ? activeItemClass : inactiveItemClass
-            }`}
-          >
-            <Home className="h-5 w-5" />
-          </Link>
-
-          {/* Phone */}
+          {/* Wishlist */}
           <button
-            type="button"
-            aria-label="Call us"
-            aria-pressed={selectedAction === "call"}
-            onClick={() => toggleAction("call")}
-            className={`${navItemClass} ${selectedAction === "call" ? activeItemClass : inactiveItemClass}`}
+            aria-label="Wishlist"
+            onClick={openWishlistDrawer}
+            className={`${navItemClass} ${inactiveItemClass}`}
           >
-            <Phone className="h-5 w-5" />
+            <Heart className="h-5 w-5" />
+            {wishlistCount > 0 && (
+              <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#f97316] text-[10px] font-bold text-white">
+                {wishlistCount > 9 ? "9+" : wishlistCount}
+              </span>
+            )}
+          </button>
+
+          {/* Profile */}
+          <button
+            aria-label="Profile"
+            onClick={openProfileDrawer}
+            className={`${navItemClass} ${inactiveItemClass}`}
+          >
+            <UserRound className="h-5 w-5" />
           </button>
 
           {/* WhatsApp */}

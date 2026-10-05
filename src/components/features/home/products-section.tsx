@@ -50,13 +50,13 @@ function ProductGrid({ products, title, bgColor = "white" }: { products: Product
   const bgClass = bgColor === "gray-50" ? "bg-gray-50" : "bg-white";
 
   return (
-    <section className={`mx-auto w-full max-w-7xl px-6 lg:px-8 py-16 ${bgClass}`}>
-      <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-        <h2 className="font-serif text-3xl font-extrabold text-gray-900 sm:text-4xl lg:text-5xl">
+    <section className={`mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-16 ${bgClass}`}>
+      <div className="text-center max-w-3xl mx-auto mb-10 space-y-4 sm:mb-12 sm:mb-16">
+        <h2 className="font-serif text-2xl font-extrabold text-gray-900 sm:text-3xl sm:text-4xl lg:text-5xl">
           {title}
         </h2>
       </div>
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 lg:grid-cols-4 sm:gap-4 sm:gap-6">
         {products.map((product) => {
           const productImageUrls = Array.isArray(product.images)
             ? product.images.filter((x): x is string => typeof x === "string")
@@ -120,11 +120,11 @@ export function CategoriesSection({ categories }: { categories: Category[] }) {
   };
 
   return (
-    <section className="storefront-categories relative z-20 mt-9 bg-white lg:mx-auto lg:max-w-7xl">
-         
+    <section className="storefront-categories relative z-20 mt-6 bg-white lg:mx-auto lg:max-w-7xl sm:mt-9">
+
       <div
         ref={categoriesViewportRef}
-        className="relative flex gap-8 overflow-x-auto overflow-y-hidden scrollbar-hide cursor-grab"
+        className="relative flex gap-6 overflow-x-auto overflow-y-hidden scrollbar-hide cursor-grab sm:gap-8"
         onPointerDown={handleCategoryPointerDown}
         onPointerMove={handleCategoryPointerMove}
         onPointerUp={handleCategoryPointerUp}
@@ -137,12 +137,12 @@ export function CategoriesSection({ categories }: { categories: Category[] }) {
           }
         }}
       >
-        <div className="category-marquee-track scrollbar-hide gap-8 px-2 sm:gap-9 sm:px-3 lg:gap-10 lg:px-4">
+        <div className="category-marquee-track scrollbar-hide gap-6 px-2 sm:gap-8 sm:px-3 lg:gap-10 lg:px-4">
            {[...mainCategories, ...mainCategories].map((category, idx) => (
              <Link
                key={`${category.id}-${idx}`}
                href={`/category/${encodeURIComponent(category.slug)}`}
-              className="category-card group relative h-[14rem] w-[10.5rem] flex-shrink-0 overflow-hidden rounded-[18px] bg-[#fffdf8] text-white sm:h-[16rem] sm:w-[12rem]"
+              className="category-card group relative h-[12rem] w-[9rem] flex-shrink-0 overflow-hidden rounded-[18px] bg-[#fffdf8] text-white sm:h-[14rem] sm:w-[10.5rem] md:h-[16rem] md:w-[12rem]"
              >
               <div className="absolute inset-0">
                 <Image
@@ -154,8 +154,8 @@ export function CategoriesSection({ categories }: { categories: Category[] }) {
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/65" />
               </div>
-              <span className="absolute bottom-5 left-5 right-14 line-clamp-2 text-left text-base font-extrabold uppercase leading-tight text-white sm:text-lg">{category.name}</span>
-              <span className="absolute bottom-4 right-4 flex h-9 w-9 items-center justify-center rounded-full bg-[#d84967] text-lg text-white" aria-hidden="true">→</span>
+              <span className="absolute bottom-4 left-4 right-12 line-clamp-2 text-left text-sm font-extrabold uppercase leading-tight text-white sm:bottom-5 sm:left-5 sm:right-14 sm:text-base sm:text-lg">{category.name}</span>
+              <span className="absolute bottom-3 right-3 flex h-8 w-8 items-center justify-center rounded-full bg-[#d84967] text-base text-white sm:bottom-4 sm:right-4 sm:h-9 sm:w-9 sm:text-lg" aria-hidden="true">→</span>
               </Link>
             ))}
           </div>
@@ -203,16 +203,16 @@ function FeaturedProductRow({
   return (
     <section>
       <div className="mb-3 flex items-center gap-3 sm:mb-4 sm:gap-5">
-        <h3 className="shrink-0 font-serif text-xl font-extrabold leading-none text-gray-950 sm:text-2xl">
+        <h3 className="shrink-0 font-serif text-lg font-extrabold leading-none text-gray-950 sm:text-xl sm:text-2xl">
           {category.name}
         </h3>
         <span aria-hidden="true" className="h-px min-w-4 flex-1 bg-gradient-to-r from-[#d84967]/55 via-[#d6b89f]/45 to-transparent" />
         <Link
           href={`/category/${encodeURIComponent(category.slug)}`}
-          className="group inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#f8e6df] px-3.5 py-2 text-[0.65rem] font-bold uppercase tracking-wide text-[#b84650] transition hover:bg-[#d84967] hover:text-white sm:px-4 sm:text-xs"
+          className="group inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#f8e6df] px-3 py-1.5 text-[0.6rem] font-bold uppercase tracking-wide text-[#b84650] transition hover:bg-[#d84967] hover:text-white sm:px-3.5 sm:py-2 sm:text-[0.65rem] sm:text-xs"
         >
           View all
-          <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          <ArrowUpRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 sm:h-3.5 sm:w-3.5" />
         </Link>
       </div>
       <div
@@ -231,13 +231,13 @@ function FeaturedProductRow({
             isAutoScrollPaused.current = false;
           }
         }}
-        className="scrollbar-hide flex gap-4 overflow-x-auto py-1 sm:gap-6"
+        className="scrollbar-hide flex gap-3 overflow-x-auto py-1 sm:gap-4 sm:gap-6"
       >
         {products.map((product) => (
           <div
             key={product.handle}
             data-product-card
-            className="w-[14rem] shrink-0 sm:w-[15rem] lg:w-[16rem]"
+            className="w-[12rem] shrink-0 sm:w-[14rem] lg:w-[16rem]"
           >
             {productCard(product)}
           </div>
@@ -388,8 +388,8 @@ export function ProductsSection({ categories, products, collections }: { categor
   return (
     <>
       {featuredRows.length > 0 && (
-        <section className="mx-auto w-full max-w-7xl bg-white px-6 py-10 lg:px-8 lg:py-12">
-          <div className="space-y-7 sm:space-y-9">
+        <section className="mx-auto w-full max-w-7xl bg-white px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12">
+          <div className="space-y-6 sm:space-y-7 sm:space-y-9">
             {featuredRows.map((row) => (
               <FeaturedProductRow
                 key={row.category.id}
@@ -412,12 +412,12 @@ export function ProductsSection({ categories, products, collections }: { categor
 
 export function CollectionsSection({ collections }: { collections: Collection[] }) {
   return (
-    <section className="mx-auto w-full max-w-7xl bg-gray-50 px-6 py-10 lg:px-8 lg:py-12">
-      <div className="mx-auto mb-8 max-w-3xl space-y-3 text-center">
-        <span className="inline-flex rounded-full bg-[#ffedd5] px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#ea580c]">
+    <section className="mx-auto w-full max-w-7xl bg-gray-50 px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12">
+      <div className="mx-auto mb-6 max-w-3xl space-y-3 text-center sm:mb-8">
+        <span className="inline-flex rounded-full bg-[#ffedd5] px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#ea580c] sm:px-4 sm:py-1.5 sm:text-xs">
           Collections
         </span>
-        <h2 className="font-serif text-3xl font-extrabold text-gray-900 sm:text-4xl lg:text-5xl">
+        <h2 className="font-serif text-2xl font-extrabold text-gray-900 sm:text-3xl sm:text-4xl lg:text-5xl">
           Curated Collections
         </h2>
       </div>

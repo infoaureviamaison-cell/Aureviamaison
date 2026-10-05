@@ -27,9 +27,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { CartDrawer } from "@/components/features/cart/cart-drawer";
+import { WishlistDrawer } from "@/components/features/wishlist/wishlist-drawer";
+import { ProfileDrawer } from "@/components/features/profile/profile-drawer";
 import { searchProducts } from "@/components/search/actions";
 import { search as trackSearch } from "@/lib/pixel";
 import { usePWAInstall } from "@/hooks/use-pwa-install";
+import { useWishlist } from "@/lib/wishlist";
 
 const mainMenuItems = [
   { text: "Home", href: "/" },
@@ -73,6 +76,7 @@ async function getShopCategories() {
 export function Header() {
   const pathname = usePathname();
   const { totalQuantity } = useCart();
+  const { count: wishlistCount } = useWishlist();
   const { installApp, isInstalled } = usePWAInstall();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileLegalOpen, setMobileLegalOpen] = useState(false);
@@ -84,12 +88,27 @@ export function Header() {
   const [searchLoading, setSearchLoading] = useState(false);
   const lastTrackedQuery = useRef("");
   const [cartOpen, setCartOpen] = useState(false);
+  const [wishlistOpen, setWishlistOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
   const [shopCategories, setShopCategories] = useState<
     { id: string; name: string; slug: string; image: string | null }[]
   >([]);
 
   useEffect(() => {
     getShopCategories().then(setShopCategories);
+  }, []);
+
+  useEffect(() => {
+    const handleOpenWishlist = () => setWishlistOpen(true);
+    const handleOpenProfile = () => setProfileOpen(true);
+
+    window.addEventListener("open-wishlist-drawer", handleOpenWishlist);
+    window.addEventListener("open-profile-drawer", handleOpenProfile);
+
+    return () => {
+      window.removeEventListener("open-wishlist-drawer", handleOpenWishlist);
+      window.removeEventListener("open-profile-drawer", handleOpenProfile);
+    };
   }, []);
 
   const isActive = (href: string) => pathname.startsWith(href);
@@ -178,7 +197,7 @@ export function Header() {
       </div>
 
       {/* ───────── main nav ───────── */}
-      <nav className="flex min-h-16 w-full items-center gap-2 px-2 sm:px-4 lg:min-h-20 lg:gap-3 lg:px-5 xl:gap-4 xl:px-6">
+      <nav className="flex min-h-14 w-full items-center gap-2 px-2 sm:min-h-16 sm:px-4 lg:min-h-20 lg:gap-3 lg:px-5 xl:gap-4 xl:px-6">
         <div className="xl:hidden">
           <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
             <SheetTrigger asChild>
@@ -359,8 +378,8 @@ export function Header() {
         </div>
 
         {/* ───────── logo — kept tight to the left edge ───────── */}
-        <Link href="/" className="flex min-w-0 shrink-0 items-center gap-1.5 sm:gap-2">
-          <div className="relative h-10 w-10 sm:h-12 sm:w-12 lg:h-14 lg:w-14">
+        <Link href="/" className="flex min-w-0 shrink-0 items-center gap-1 sm:gap-1.5 sm:gap-2">
+          <div className="relative h-8 w-8 sm:h-10 sm:w-10 lg:h-14 lg:w-14">
             <Image
               src="/logo/icon.png"
               alt=""
@@ -369,7 +388,7 @@ export function Header() {
               priority
             />
           </div>
-          <div className="relative h-8 w-[102px] min-[400px]:w-[118px] sm:h-10 sm:w-[140px] lg:h-12 lg:w-[156px]">
+          <div className="relative h-6 w-[80px] min-[400px]:w-[90px] sm:h-8 sm:w-[102px] min-[400px]:sm:w-[118px] sm:h-10 sm:w-[140px] lg:h-12 lg:w-[156px]">
             <Image
               src="/logo/logotext.png"
               alt="Auerviamaison"
@@ -381,24 +400,39 @@ export function Header() {
         </Link>
 
         <div className="ml-auto flex shrink-0 items-center gap-1 sm:gap-2 xl:hidden">
+          <button
+            aria-label="Wishlist"
+            className="relative flex h-9 w-9 items-center justify-center text-black hover:text-[#f97316] sm:h-10 sm:w-10"
+            onClick={() => setWishlistOpen(true)}
+          >
+            <Heart className="h-4 w-4 sm:h-5 sm:w-5"/>
+            {wishlistCount ? <Badge className="absolute -right-1 -top-1 h-4 min-w-4 rounded-full bg-[#f97316] p-0 text-[10px] text-white sm:h-5 sm:min-w-5 sm:text-xs">{wishlistCount > 99 ? "99+" : wishlistCount}</Badge> : null}
+          </button>
+          <button
+            aria-label="Profile"
+            className="flex h-9 w-9 items-center justify-center text-black hover:text-[#f97316] sm:h-10 sm:w-10"
+            onClick={() => setProfileOpen(true)}
+          >
+            <UserRound className="h-4 w-4 sm:h-5 sm:w-5"/>
+          </button>
           <Button
             variant="ghost"
             size="icon"
-            className="h-10 w-10 text-black hover:text-[#f97316]"
+            className="h-9 w-9 text-black hover:text-[#f97316] sm:h-10 sm:w-10"
             onClick={() => setSearchOpen(true)}
           >
-            <Search className="h-5 w-5" />
+            <Search className="h-4 w-4 sm:h-5 sm:w-5" />
           </Button>
 
           <Button
             variant="ghost"
             size="icon"
-            className="relative h-10 w-10 text-[#1a1308] hover:text-[#b57910]"
+            className="relative h-9 w-9 text-[#1a1308] hover:text-[#b57910] sm:h-10 sm:w-10"
             onClick={() => setCartOpen(true)}
           >
-            <ShoppingCart className="h-5 w-5" />
+            <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5" />
             {!!totalQuantity && (
-              <Badge className="absolute -right-1 -top-1 h-5 min-w-5 rounded-full border-2 border-white bg-[#b57910] p-0 text-xs text-white">
+              <Badge className="absolute -right-1 -top-1 h-4 min-w-4 rounded-full border-2 border-white bg-[#b57910] p-0 text-[10px] text-white sm:h-5 sm:min-w-5 sm:text-xs">
                 {totalQuantity > 99 ? "99+" : totalQuantity}
               </Badge>
             )}
@@ -581,10 +615,23 @@ export function Header() {
             )}
           </div>
 
-          <Button variant="ghost" size="icon" aria-label="Wishlist" className="h-8 w-8 text-black hover:text-[#f97316] 2xl:h-9 2xl:w-9">
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label="Wishlist"
+            className="relative h-8 w-8 text-black hover:text-[#f97316] 2xl:h-9 2xl:w-9"
+            onClick={() => setWishlistOpen(true)}
+          >
             <Heart className="h-[18px] w-[18px]" />
+            {wishlistCount ? <Badge className="absolute -right-1 -top-1 h-5 min-w-5 rounded-full bg-[#f97316] p-0 text-xs text-white">{wishlistCount > 99 ? "99+" : wishlistCount}</Badge> : null}
           </Button>
-          <Button variant="ghost" size="icon" aria-label="Profile" className="h-8 w-8 text-black hover:text-[#f97316] 2xl:h-9 2xl:w-9">
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label="Profile"
+            className="h-8 w-8 text-black hover:text-[#f97316] 2xl:h-9 2xl:w-9"
+            onClick={() => setProfileOpen(true)}
+          >
             <UserRound className="h-[18px] w-[18px]" />
           </Button>
           <Button
@@ -692,6 +739,8 @@ export function Header() {
       )}
 
       <CartDrawer open={cartOpen} onOpenChange={setCartOpen} />
+      <WishlistDrawer open={wishlistOpen} onOpenChange={setWishlistOpen} />
+      <ProfileDrawer open={profileOpen} onOpenChange={setProfileOpen} />
     </header>
   );
 }

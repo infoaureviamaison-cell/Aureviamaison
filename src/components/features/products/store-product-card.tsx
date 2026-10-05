@@ -5,6 +5,7 @@ import Link from "next/link";
 import { FaWhatsapp } from "react-icons/fa";
 import { ArrowRight, Heart, ShoppingCart } from "@esmate/shadcn/pkgs/lucide-react";
 import { useCart } from "@/lib/commerce";
+import { useWishlist } from "@/lib/wishlist";
 import { toast } from "sonner";
 import { useState, useEffect, useMemo } from "react";
 import {
@@ -128,6 +129,7 @@ export function StoreProductCard({
   const [failedImages, setFailedImages] = useState<string[]>([]);
   const [reviewStats, setReviewStats] = useState<ReviewStats | null>(null);
   const { linesAdd } = useCart();
+  const wishlist = useWishlist();
 
   const normalizedFeaturedImage = normalizeImageUrl(featuredImageUrl);
   const normalizedProductImages = useMemo(
@@ -147,6 +149,7 @@ export function StoreProductCard({
   const hoverImage = productImages[1] || null;
 
   const effectiveVariantId = variantId || productId;
+  const effectiveProductId = productId || variantId || handle;
 
   const discount = compareAtPrice
     ? discountPercent(compareAtPrice.amount, price.amount)
@@ -226,43 +229,47 @@ export function StoreProductCard({
     <article className="group flex aspect-[3/4] w-full max-w-[336px] flex-col overflow-hidden rounded-[14px] border border-[#d9c9a8] bg-white shadow-[inset_0_0_0_1px_rgba(132,96,42,0.08),0_3px_12px_rgba(36,29,17,0.09)] transition-[border-color,box-shadow,transform] duration-500 ease-out hover:-translate-y-1 hover:border-[#c6a24a]/70 hover:shadow-[inset_0_0_0_1px_rgba(132,96,42,0.08),0_12px_28px_rgba(36,29,17,0.14)]">
       <div className="group/image relative min-h-0 flex-1 overflow-hidden rounded-[14px] bg-[#fffdf8]">
         {discount !== null ? (
-          <div className="absolute left-2.5 top-2.5 z-20 flex h-11 w-11 flex-col items-center justify-center rounded-full bg-[#f7194f] text-center text-white shadow-[0_4px_12px_rgba(247,25,79,0.32)] sm:h-12 sm:w-12">
-            <span className="text-[0.8rem] font-extrabold leading-none tracking-[-0.04em] sm:text-sm">
+          <div className="absolute left-2 top-2 z-20 flex h-9 w-9 flex-col items-center justify-center rounded-full bg-[#f7194f] text-center text-white shadow-[0_4px_12px_rgba(247,25,79,0.32)] sm:left-2.5 sm:top-2.5 sm:h-11 sm:w-11">
+            <span className="text-[0.7rem] font-extrabold leading-none tracking-[-0.04em] sm:text-[0.8rem]">
               -{discount}%
             </span>
-            <span className="mt-0.5 text-[0.4rem] font-bold uppercase leading-none tracking-[0.12em] sm:text-[0.45rem]">
+            <span className="mt-0.5 text-[0.35rem] font-bold uppercase leading-none tracking-[0.12em] sm:text-[0.4rem]">
               Off
             </span>
           </div>
         ) : null}
 
-        <div className="absolute right-2.5 top-1/2 z-30 flex -translate-y-1/2 flex-col gap-2.5 sm:right-3 sm:opacity-0 sm:transition-opacity sm:duration-500 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100">
+        <div className="absolute right-2 top-1/2 z-30 flex -translate-y-1/2 flex-col gap-2 sm:right-2.5 sm:gap-2.5 sm:opacity-0 sm:transition-opacity sm:duration-500 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100">
           <button
             type="button"
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#bfe5cc] bg-gradient-to-br from-[#f2fff6] via-[#d9f5e2] to-[#b9e8c8] text-[#14883f] shadow-[0_4px_12px_rgba(20,136,63,0.2)] transition duration-200 hover:scale-110 hover:from-[#74d99a] hover:via-[#35b86b] hover:to-[#087a35] hover:text-white hover:shadow-[0_6px_16px_rgba(8,122,53,0.45)]"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#bfe5cc] bg-gradient-to-br from-[#f2fff6] via-[#d9f5e2] to-[#b9e8c8] text-[#14883f] shadow-[0_4px_12px_rgba(20,136,63,0.2)] transition duration-200 hover:scale-110 hover:from-[#74d99a] hover:via-[#35b86b] hover:to-[#087a35] hover:text-white hover:shadow-[0_6px_16px_rgba(8,122,53,0.45)] sm:h-11 sm:w-11"
             aria-label={`Order ${title} on WhatsApp`}
             onClick={() => {
               window.open(whatsappUrl, "_blank", "noopener,noreferrer");
               trackContact("WhatsApp product order");
             }}
           >
-            <FaWhatsapp className="h-5 w-5" />
+            <FaWhatsapp className="h-4 w-4 sm:h-5 sm:w-5" />
           </button>
           <button
             type="button"
             onClick={handleAddToCart}
             disabled={loading || !effectiveVariantId}
             aria-label={loading ? `Adding ${title} to cart` : `Add ${title} to cart`}
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#ead8b5] bg-gradient-to-br from-[#fff8ed] via-[#f7e8c8] to-[#e9c985] text-[#75491e] shadow-[0_4px_12px_rgba(111,75,28,0.22)] transition duration-300 hover:scale-110 hover:from-[#f4d9a0] hover:via-[#e7bd70] hover:to-[#d9a84e] hover:text-[#542d10] hover:shadow-[0_6px_16px_rgba(185,137,59,0.4)] disabled:cursor-not-allowed disabled:opacity-60"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#ead8b5] bg-gradient-to-br from-[#fff8ed] via-[#f7e8c8] to-[#e9c985] text-[#75491e] shadow-[0_4px_12px_rgba(111,75,28,0.22)] transition duration-300 hover:scale-110 hover:from-[#f4d9a0] hover:via-[#e7bd70] hover:to-[#d9a84e] hover:text-[#542d10] hover:shadow-[0_6px_16px_rgba(185,137,59,0.4)] disabled:cursor-not-allowed disabled:opacity-60 sm:h-11 sm:w-11"
           >
-            <ShoppingCart aria-hidden="true" className="h-5 w-5" />
+            <ShoppingCart aria-hidden="true" className="h-4 w-4 sm:h-5 sm:w-5" />
           </button>
           <button
             type="button"
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#f5c5d0] bg-gradient-to-br from-[#fff2f5] via-[#f9dce4] to-[#f0b9c9] text-[#a62c50] shadow-[0_4px_12px_rgba(166,44,80,0.2)] transition duration-300 hover:scale-110 hover:from-[#efb5c5] hover:via-[#df8fa6] hover:to-[#c96380] hover:text-white hover:shadow-[0_6px_16px_rgba(201,99,128,0.42)]"
+            onClick={async () => {
+              const added = await wishlist.toggle({ productId: effectiveProductId, handle, title, price: Number(price.amount), image: normalizedFeaturedImage });
+              toast.success(added ? "Added to wishlist" : "Removed from wishlist", { description: title });
+            }}
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#f5c5d0] bg-gradient-to-br from-[#fff2f5] via-[#f9dce4] to-[#f0b9c9] text-[#a62c50] shadow-[0_4px_12px_rgba(166,44,80,0.2)] transition duration-300 hover:scale-110 hover:from-[#efb5c5] hover:via-[#df8fa6] hover:to-[#c96380] hover:text-white hover:shadow-[0_6px_16px_rgba(201,99,128,0.42)] sm:h-11 sm:w-11"
             aria-label={`Save ${title}`}
           >
-            <Heart aria-hidden="true" className="h-5 w-5" />
+            <Heart aria-hidden="true" className={`h-4 w-4 sm:h-5 sm:w-5 ${wishlist.has(effectiveProductId) ? "fill-current" : ""}`} />
           </button>
         </div>
 
@@ -300,16 +307,16 @@ export function StoreProductCard({
         </Link>
       </div>
 
-      <div className="flex items-start justify-between gap-2 px-3 pb-3 pt-2.5 sm:px-4 sm:pb-4 sm:pt-3">
+      <div className="flex items-start justify-between gap-2 px-2.5 pb-2.5 pt-2 sm:px-3 sm:pb-3 sm:pt-2.5">
         <div className="min-w-0 flex-1">
           <Link href={productPath} className="group/title block">
-            <h3 className="truncate font-serif text-sm font-bold leading-tight tracking-[-0.025em] text-[#10131a] transition-colors group-hover/title:text-[#d34c65] sm:text-base">
+            <h3 className="truncate font-serif text-xs font-bold leading-tight tracking-[-0.025em] text-[#10131a] transition-colors group-hover/title:text-[#d34c65] sm:text-sm">
               {title}
             </h3>
           </Link>
 
           <div className="mt-1 flex flex-nowrap items-center gap-x-1 whitespace-nowrap">
-            <div className="flex shrink-0 items-center gap-0 text-xs leading-none sm:text-sm">
+            <div className="flex shrink-0 items-center gap-0 text-[10px] leading-none sm:text-xs">
               {Array.from({ length: 5 }).map((_, index) => (
                 <span
                   key={index}
@@ -320,20 +327,20 @@ export function StoreProductCard({
                 </span>
               ))}
             </div>
-            <span className="shrink-0 text-[0.65rem] font-semibold text-[#0f0f0f] sm:text-xs">
+            <span className="shrink-0 text-[0.55rem] font-semibold text-[#0f0f0f] sm:text-[0.65rem]">
               {visibleReviewStats.averageRating.toFixed(1)}
             </span>
-            <span className="truncate text-[0.58rem] font-medium text-[#85878c] sm:text-[0.65rem]">
+            <span className="truncate text-[0.5rem] font-medium text-[#85878c] sm:text-[0.58rem]">
               ({visibleReviewStats.totalReviews} reviews)
             </span>
           </div>
 
           <div className="mt-1.5 flex items-baseline gap-2 whitespace-nowrap">
-            <span className="font-serif text-sm font-bold tracking-[-0.025em] text-[#85420b] sm:text-base">
+            <span className="font-serif text-xs font-bold tracking-[-0.025em] text-[#85420b] sm:text-sm">
               {formatPrice(price.amount)}
             </span>
             {discount !== null && compareAtPrice ? (
-              <span className="truncate text-[0.6rem] font-medium text-[#85878c] line-through sm:text-[0.65rem]">
+              <span className="truncate text-[0.5rem] font-medium text-[#85878c] line-through sm:text-[0.6rem]">
                 {formatPrice(compareAtPrice.amount)}
               </span>
             ) : null}
@@ -343,9 +350,9 @@ export function StoreProductCard({
         <Link
           href={productPath}
           aria-label={`View ${title}`}
-          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#ffe1e4] text-[#f7194f] transition-transform hover:scale-105 sm:h-8 sm:w-8"
+          className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#ffe1e4] text-[#f7194f] transition-transform hover:scale-105 sm:h-7 sm:w-7"
         >
-          <ArrowRight aria-hidden="true" className="h-3.5 w-3.5 stroke-[3]" />
+          <ArrowRight aria-hidden="true" className="h-3 w-3 stroke-[3] sm:h-3.5 sm:w-3.5" />
         </Link>
       </div>
     </article>

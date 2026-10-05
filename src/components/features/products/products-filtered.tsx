@@ -43,7 +43,7 @@ export function ProductsFiltered({
         </div>
       </form>
       <p className="text-sm text-[#5A5E55]">{total} product{total === 1 ? "" : "s"} found</p>
-      {products.length ? <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">{products.map((product) => {
+      {products.length ? <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 xl:grid-cols-4 sm:gap-6">{products.map((product) => {
         const images = Array.isArray(product.images) ? product.images.filter((item): item is string => typeof item === "string") : [];
         const tags = Array.isArray(product.tags) ? product.tags.filter((item): item is string => typeof item === "string") : [];
         return <StoreProductCard key={product.handle} handle={product.handle} title={product.title} featuredImageUrl={product.featuredImage || images[0] || FALLBACK_IMAGE} imageUrls={images} price={{ amount: product.price.toFixed(2), currencyCode: "PKR" }} compareAtPrice={product.compareAtPrice ? { amount: product.compareAtPrice.toFixed(2), currencyCode: "PKR" } : null} tag={tags[0]} productId={product.id} />;
