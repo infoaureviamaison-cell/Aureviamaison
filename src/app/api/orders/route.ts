@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { z } from "zod";
 import { calculateOrderPricing } from "@/lib/order-pricing";
 import { effectiveUnitPrice } from "@/lib/product-pricing";
+import { customerFromCookie, hashCustomerToken, newCustomerToken, setCustomerCookie } from "@/lib/customer-auth";
 
 const orderCreateSchema = z.object({
   customerName: z.string().min(1),
@@ -46,6 +47,8 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     const input = orderCreateSchema.parse(body);
+    const currentCustomer = await customerFromCookie();
+    const customerToken = currentCustomer ? null : newCustomerToken();
 
     const ids = Array.from(new Set(input.items.map((i) => i.productId)));
 
@@ -124,7 +127,7 @@ export async function POST(request: Request) {
 
     const orderNumber = generateOrderNumber();
 
-    const order = await prisma.$transaction(async (tx) => {
+    const result = await prisma.$transaction(async (tx) => {
       for (const item of enrichedItems) {
         const result = "variationId" in item
           ? await tx.productVariation.updateMany({ where: { id: item.variationId, stock: { gte: item.quantity } }, data: { stock: { decrement: item.quantity } } })
@@ -134,8 +137,12 @@ export async function POST(request: Request) {
         }
       }
 
-      return tx.order.create({
+      const customer = currentCustomer
+        ? await tx.customer.update({ where: { id: currentCustomer.id }, data: { name: input.customerName, email: input.customerEmail.toLowerCase(), phone: input.customerPhone, address: input.customerAddress, cartSnapshot: enrichedItems, lastActiveAt: new Date() } })
+        : await tx.customer.create({ data: { accessTokenHash: hashCustomerToken(customerToken!), name: input.customerName, email: input.customerEmail.toLowerCase(), phone: input.customerPhone, address: input.customerAddress, cartSnapshot: enrichedItems } });
+      const order = await tx.order.create({
         data: {
+          customerId: customer.id,
           orderNumber,
           customerName: input.customerName,
           customerEmail: input.customerEmail,
@@ -155,9 +162,12 @@ export async function POST(request: Request) {
           notes: input.notes,
         },
       });
+      await tx.customerActivity.create({ data: { customerId: customer.id, type: currentCustomer ? "order_placed" : "profile_created_checkout", description: currentCustomer ? `Placed order ${orderNumber}` : `Profile automatically created during checkout for order ${orderNumber}`, metadata: { orderId: order.id, orderNumber, total } } });
+      return { order, customer };
     });
 
-    return NextResponse.json({ order }, { status: 201 });
+    const response = NextResponse.json({ order: result.order, customerCreated: !currentCustomer }, { status: 201 });
+    return customerToken ? setCustomerCookie(response, customerToken) : response;
   } catch (error: unknown) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(

@@ -21,6 +21,9 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     if (!existing) return NextResponse.json({ error: "Order not found" }, { status: 404 });
     const shouldEmail = input.orderStatus === "confirmed" && !existing.confirmationEmailSentAt;
     const order = await prisma.order.update({ where: { id }, data: input });
+    if (order.customerId && (input.orderStatus || input.paymentStatus)) {
+      await prisma.customerActivity.create({ data: { customerId: order.customerId, type: "order_status_changed", description: `Order ${order.orderNumber} updated${input.orderStatus ? ` to ${input.orderStatus}` : ""}${input.paymentStatus ? `; payment ${input.paymentStatus}` : ""}`, metadata: { orderId: order.id, orderStatus: input.orderStatus, paymentStatus: input.paymentStatus } } });
+    }
     let emailWarning: string | undefined;
     if (shouldEmail) {
       try {

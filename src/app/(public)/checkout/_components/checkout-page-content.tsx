@@ -50,6 +50,13 @@ export function CheckoutPageContent() {
     if (prepaidTotal > JAZZCASH_LIMIT && paymentMethod === "jazzcash") setPaymentMethod("bank_transfer");
   }, [codTotal, prepaidTotal, paymentMethod]);
 
+  useEffect(() => {
+    fetch("/api/customer/profile", { cache: "no-store" }).then((response) => response.json()).then(({ customer }) => {
+      if (!customer) return;
+      setDetails((current) => ({ ...current, customerName: customer.name || "", customerEmail: customer.email || "", customerPhone: customer.phone || "", line1: customer.address?.line1 || "", line2: customer.address?.line2 || "", city: customer.address?.city || "", state: customer.address?.state || "", pincode: customer.address?.pincode || "" }));
+    }).catch(() => undefined);
+  }, []);
+
   const whatsappMessage = encodeURIComponent(`Hi Auerviamaison, I need help with my checkout. Total: Rs. ${pricing.total.toLocaleString()}. Name: ${details.customerName || "Not entered"}. Phone: ${details.customerPhone || "Not entered"}.`);
 
   async function placeOrder(event: React.FormEvent) {
@@ -70,6 +77,7 @@ export function CheckoutPageContent() {
       const data = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(data.error || "Failed to place order");
       purchase({ ...cartEventParameters, value: data.order.total ?? pricing.total, order_id: data.order.orderNumber });
+      window.dispatchEvent(new Event("aurevia-profile-saved"));
       cart.clear(); router.push(`/checkout/success?orderNumber=${encodeURIComponent(data.order.orderNumber)}`);
     } catch (caught) { setError(caught instanceof Error ? caught.message : "Failed to place order"); } finally { setSubmitting(false); }
   }

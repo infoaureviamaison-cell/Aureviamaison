@@ -57,6 +57,7 @@ model Product {
   variations             ProductVariation[]
   createdAt              DateTime           @default(now())
   updatedAt              DateTime           @updatedAt
+  wishlistItems          WishlistItem[]
 
   @@index([displayOrder])
   @@index([status, displayOrder])
@@ -188,6 +189,59 @@ model Order {
   trackingUrl             String?
   createdAt               DateTime  @default(now())
   updatedAt               DateTime  @updatedAt
+  customerId              String?
+  customer                Customer? @relation(fields: [customerId], references: [id], onDelete: SetNull)
+
+  @@index([customerId])
+  @@index([customerEmail])
+  @@index([orderStatus])
+}
+
+model Customer {
+  id              String             @id @default(cuid())
+  accessTokenHash String             @unique
+  name            String
+  email           String?
+  phone           String?
+  address         Json?
+  dateOfBirth     DateTime?
+  notes           String?
+  cartSnapshot    Json               @default("[]")
+  lastActiveAt    DateTime            @default(now())
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+  orders          Order[]
+  wishlistItems   WishlistItem[]
+  activities      CustomerActivity[]
+
+  @@index([name])
+  @@index([email])
+  @@index([phone])
+  @@index([lastActiveAt])
+}
+
+model WishlistItem {
+  id         String   @id @default(cuid())
+  customerId String
+  productId  String
+  createdAt  DateTime @default(now())
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([customerId, productId])
+  @@index([productId])
+}
+
+model CustomerActivity {
+  id         String   @id @default(cuid())
+  customerId String
+  type       String
+  description String
+  metadata   Json?
+  createdAt  DateTime @default(now())
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@index([customerId, createdAt])
 }
 
 model Inquiry {

@@ -19,6 +19,7 @@ import {
   FiX,
   FiHome,
   FiVideo,
+  FiUsers,
 } from "react-icons/fi";
 
 interface AdminNavContextType {
@@ -44,6 +45,7 @@ const navItems = [
   { href: "/admin/categories", icon: FiFolder, label: "Categories" },
   { href: "/admin/collections", icon: FiShoppingBag, label: "Collections" },
   { href: "/admin/orders", icon: FiShoppingBag, label: "Orders" },
+  { href: "/admin/customers", icon: FiUsers, label: "Customers" },
   { href: "/admin/inquiries", icon: FiMessageSquare, label: "Inquiries" },
   { href: "/admin/blog", icon: FiFileText, label: "Blog" },
   { href: "/admin/legal-pages", icon: FiFileText, label: "Legal Pages" },
@@ -192,6 +194,7 @@ export function AdminMobileHeader({ admin }: { admin: AdminIdentity }) {
     if (pathname?.startsWith("/admin/categories")) return "Categories";
     if (pathname?.startsWith("/admin/collections")) return "Collections";
     if (pathname?.startsWith("/admin/orders")) return "Orders";
+    if (pathname?.startsWith("/admin/customers")) return "Customers";
     if (pathname?.startsWith("/admin/inquiries")) return "Inquiries";
     if (pathname?.startsWith("/admin/blog")) return "Blog";
     if (pathname?.startsWith("/admin/legal-pages")) return "Legal Pages";

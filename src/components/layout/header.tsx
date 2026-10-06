@@ -357,7 +357,8 @@ export function Header() {
                     </Button>
 
                     <button
-                      className="relative text-black transition-colors hover:text-[#f97316]"
+                      aria-label="Cart"
+                      className="relative flex h-10 w-10 items-center justify-center rounded-full bg-[#fdf2f8] text-[#db2777] transition-colors hover:bg-[#db2777] hover:text-white"
                       onClick={() => {
                         setMobileMenuOpen(false);
                         setCartOpen(true);
@@ -365,7 +366,7 @@ export function Header() {
                     >
                       <ShoppingCart className="h-6 w-6" />
                       {!!totalQuantity && (
-                        <Badge className="absolute -right-2 -top-2 h-5 min-w-5 rounded-full bg-[#f97316] p-0 text-xs text-white">
+                        <Badge className="absolute -right-1 -top-1 h-5 min-w-5 rounded-full border-2 border-white bg-[#db2777] p-0 text-xs text-white">
                           {totalQuantity}
                         </Badge>
                       )}
@@ -402,15 +403,15 @@ export function Header() {
         <div className="ml-auto flex shrink-0 items-center gap-1 sm:gap-2 xl:hidden">
           <button
             aria-label="Wishlist"
-            className="relative flex h-9 w-9 items-center justify-center rounded-full bg-[#f5f5f5] text-black hover:bg-[#f97316] hover:text-white sm:h-10 sm:w-10"
+            className="relative flex h-9 w-9 items-center justify-center rounded-full bg-[#fdf2f8] text-[#db2777] transition-colors hover:bg-[#db2777] hover:text-white sm:h-10 sm:w-10"
             onClick={() => setWishlistOpen(true)}
           >
             <Heart className="h-4 w-4 sm:h-5 sm:w-5"/>
-            {wishlistCount ? <Badge className="absolute -right-1 -top-1 h-4 min-w-4 rounded-full bg-[#f97316] p-0 text-[10px] text-white sm:h-5 sm:min-w-5 sm:text-xs">{wishlistCount > 99 ? "99+" : wishlistCount}</Badge> : null}
+            {wishlistCount ? <Badge className="absolute -right-1 -top-1 h-4 min-w-4 rounded-full border-2 border-white bg-[#db2777] p-0 text-[10px] text-white sm:h-5 sm:min-w-5 sm:text-xs">{wishlistCount > 99 ? "99+" : wishlistCount}</Badge> : null}
           </button>
           <button
             aria-label="Profile"
-            className="flex h-9 w-9 items-center justify-center rounded-full bg-[#f5f5f5] text-black hover:bg-[#f97316] hover:text-white sm:h-10 sm:w-10"
+            className="flex h-9 w-9 items-center justify-center rounded-full bg-[#fdf2f8] text-[#db2777] transition-colors hover:bg-[#db2777] hover:text-white sm:h-10 sm:w-10"
             onClick={() => setProfileOpen(true)}
           >
             <UserRound className="h-4 w-4 sm:h-5 sm:w-5"/>
@@ -418,7 +419,7 @@ export function Header() {
           <Button
             variant="ghost"
             size="icon"
-            className="h-9 w-9 rounded-full bg-[#f5f5f5] text-black hover:bg-[#f97316] hover:text-white sm:h-10 sm:w-10"
+            className="h-9 w-9 rounded-full bg-[#f5f5f5] text-black hover:bg-[#f97316] hover:text-white transition-colors sm:h-10 sm:w-10"
             onClick={() => setSearchOpen(true)}
           >
             <Search className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -427,12 +428,13 @@ export function Header() {
           <Button
             variant="ghost"
             size="icon"
-            className="relative h-9 w-9 rounded-full bg-[#f5f5f5] text-black hover:bg-[#b57910] hover:text-white sm:h-10 sm:w-10"
+            aria-label="Cart"
+            className="relative h-9 w-9 rounded-full bg-[#fdf2f8] text-[#db2777] transition-colors hover:bg-[#db2777] hover:text-white sm:h-10 sm:w-10"
             onClick={() => setCartOpen(true)}
           >
             <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5" />
             {!!totalQuantity && (
-              <Badge className="absolute -right-1 -top-1 h-4 min-w-4 rounded-full border-2 border-white bg-[#b57910] p-0 text-[10px] text-white sm:h-5 sm:min-w-5 sm:text-xs">
+              <Badge className="absolute -right-1 -top-1 h-4 min-w-4 rounded-full border-2 border-white bg-[#db2777] p-0 text-[10px] text-white sm:h-5 sm:min-w-5 sm:text-xs">
                 {totalQuantity > 99 ? "99+" : totalQuantity}
               </Badge>
             )}
@@ -619,17 +621,17 @@ export function Header() {
             variant="ghost"
             size="icon"
             aria-label="Wishlist"
-            className="relative h-8 w-8 rounded-full bg-[#f5f5f5] text-black hover:bg-[#f97316] hover:text-white 2xl:h-9 2xl:w-9"
+            className="relative h-8 w-8 rounded-full bg-[#fdf2f8] text-[#db2777] transition-colors hover:bg-[#db2777] hover:text-white 2xl:h-9 2xl:w-9"
             onClick={() => setWishlistOpen(true)}
           >
             <Heart className="h-[18px] w-[18px]" />
-            {wishlistCount ? <Badge className="absolute -right-1 -top-1 h-5 min-w-5 rounded-full bg-[#f97316] p-0 text-xs text-white">{wishlistCount > 99 ? "99+" : wishlistCount}</Badge> : null}
+            {wishlistCount ? <Badge className="absolute -right-1 -top-1 h-5 min-w-5 rounded-full border-2 border-white bg-[#db2777] p-0 text-xs text-white">{wishlistCount > 99 ? "99+" : wishlistCount}</Badge> : null}
           </Button>
           <Button
             variant="ghost"
             size="icon"
             aria-label="Profile"
-            className="h-8 w-8 rounded-full bg-[#f5f5f5] text-black hover:bg-[#f97316] hover:text-white 2xl:h-9 2xl:w-9"
+            className="h-8 w-8 rounded-full bg-[#fdf2f8] text-[#db2777] transition-colors hover:bg-[#db2777] hover:text-white 2xl:h-9 2xl:w-9"
             onClick={() => setProfileOpen(true)}
           >
             <UserRound className="h-[18px] w-[18px]" />
@@ -637,12 +639,13 @@ export function Header() {
           <Button
             variant="ghost"
             size="icon"
-            className="relative h-8 w-8 rounded-full bg-[#f5f5f5] text-black hover:bg-[#b57910] hover:text-white 2xl:h-9 2xl:w-9"
+            aria-label="Cart"
+            className="relative h-8 w-8 rounded-full bg-[#fdf2f8] text-[#db2777] transition-colors hover:bg-[#db2777] hover:text-white 2xl:h-9 2xl:w-9"
             onClick={() => setCartOpen(true)}
           >
             <ShoppingCart className="h-[18px] w-[18px]" />
             {!!totalQuantity && (
-              <Badge className="absolute -right-1 -top-1 h-5 min-w-5 rounded-full border-2 border-white bg-[#b57910] p-0 text-xs text-white">
+              <Badge className="absolute -right-1 -top-1 h-5 min-w-5 rounded-full border-2 border-white bg-[#db2777] p-0 text-xs text-white">
                 {totalQuantity > 99 ? "99+" : totalQuantity}
               </Badge>
             )}

@@ -13,6 +13,7 @@ import {
   viewContent,
 } from "@/lib/pixel";
 import { useVariantSelector } from "@/hooks/use-variant-selector";
+import { useWishlist } from "@/lib/wishlist";
 import {
   calculateDiscountedUnitPrice,
   normalizeWholesaleDiscounts,
@@ -46,6 +47,7 @@ interface Props {
 export function ProductSingle({ data }: Props) {
   const router = useRouter();
   const { linesAdd } = useCart();
+  const wishlist = useWishlist();
   const [reviewStats, setReviewStats] = useState<ReviewStats | null>(null);
   const [currentImage, setCurrentImage] = useState(
     data.images.nodes[0] || null,
@@ -53,7 +55,7 @@ export function ProductSingle({ data }: Props) {
   const [quantity, setQuantity] = useState(1);
   const [url, setUrl] = useState("");
   const [buyLoading, setBuyLoading] = useState(false);
-  const [wishlisted, setWishlisted] = useState(false);
+  const wishlisted = wishlist.has(data.id);
   const selectedPackagingSize = data.packagingSizes[0] || "";
   const wholesaleDiscounts = useMemo(
     () => normalizeWholesaleDiscounts(data.wholesaleDiscounts),
@@ -378,13 +380,9 @@ export function ProductSingle({ data }: Props) {
     }
   };
 
-  const toggleWishlist = () => {
-    setWishlisted((current) => !current);
-    toast.success(!wishlisted ? "Added to wishlist" : "Removed from wishlist");
-
-    if (!wishlisted) {
-      // Wishlist state is intentionally not sent as a required commerce event.
-    }
+  const toggleWishlist = async () => {
+    const added = await wishlist.toggle({ productId: data.id, handle: data.handle, title: data.title, price: Number(displayPrice?.amount || 0), image: data.images.nodes[0]?.url || null });
+    toast.success(added ? "Added to wishlist" : "Removed from wishlist");
   };
 
   return (
