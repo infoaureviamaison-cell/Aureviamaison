@@ -402,7 +402,7 @@ export function Header() {
         <div className="ml-auto flex shrink-0 items-center gap-1 sm:gap-2 xl:hidden">
           <button
             aria-label="Wishlist"
-            className="relative flex h-9 w-9 items-center justify-center text-black hover:text-[#f97316] sm:h-10 sm:w-10"
+            className="relative flex h-9 w-9 items-center justify-center rounded-full bg-[#f5f5f5] text-black hover:bg-[#f97316] hover:text-white sm:h-10 sm:w-10"
             onClick={() => setWishlistOpen(true)}
           >
             <Heart className="h-4 w-4 sm:h-5 sm:w-5"/>
@@ -410,7 +410,7 @@ export function Header() {
           </button>
           <button
             aria-label="Profile"
-            className="flex h-9 w-9 items-center justify-center text-black hover:text-[#f97316] sm:h-10 sm:w-10"
+            className="flex h-9 w-9 items-center justify-center rounded-full bg-[#f5f5f5] text-black hover:bg-[#f97316] hover:text-white sm:h-10 sm:w-10"
             onClick={() => setProfileOpen(true)}
           >
             <UserRound className="h-4 w-4 sm:h-5 sm:w-5"/>
@@ -418,7 +418,7 @@ export function Header() {
           <Button
             variant="ghost"
             size="icon"
-            className="h-9 w-9 text-black hover:text-[#f97316] sm:h-10 sm:w-10"
+            className="h-9 w-9 rounded-full bg-[#f5f5f5] text-black hover:bg-[#f97316] hover:text-white sm:h-10 sm:w-10"
             onClick={() => setSearchOpen(true)}
           >
             <Search className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -427,7 +427,7 @@ export function Header() {
           <Button
             variant="ghost"
             size="icon"
-            className="relative h-9 w-9 text-[#1a1308] hover:text-[#b57910] sm:h-10 sm:w-10"
+            className="relative h-9 w-9 rounded-full bg-[#f5f5f5] text-black hover:bg-[#b57910] hover:text-white sm:h-10 sm:w-10"
             onClick={() => setCartOpen(true)}
           >
             <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -619,7 +619,7 @@ export function Header() {
             variant="ghost"
             size="icon"
             aria-label="Wishlist"
-            className="relative h-8 w-8 text-black hover:text-[#f97316] 2xl:h-9 2xl:w-9"
+            className="relative h-8 w-8 rounded-full bg-[#f5f5f5] text-black hover:bg-[#f97316] hover:text-white 2xl:h-9 2xl:w-9"
             onClick={() => setWishlistOpen(true)}
           >
             <Heart className="h-[18px] w-[18px]" />
@@ -629,7 +629,7 @@ export function Header() {
             variant="ghost"
             size="icon"
             aria-label="Profile"
-            className="h-8 w-8 text-black hover:text-[#f97316] 2xl:h-9 2xl:w-9"
+            className="h-8 w-8 rounded-full bg-[#f5f5f5] text-black hover:bg-[#f97316] hover:text-white 2xl:h-9 2xl:w-9"
             onClick={() => setProfileOpen(true)}
           >
             <UserRound className="h-[18px] w-[18px]" />
@@ -637,7 +637,7 @@ export function Header() {
           <Button
             variant="ghost"
             size="icon"
-            className="relative h-8 w-8 text-[#1a1308] hover:text-[#b57910] 2xl:h-9 2xl:w-9"
+            className="relative h-8 w-8 rounded-full bg-[#f5f5f5] text-black hover:bg-[#b57910] hover:text-white 2xl:h-9 2xl:w-9"
             onClick={() => setCartOpen(true)}
           >
             <ShoppingCart className="h-[18px] w-[18px]" />

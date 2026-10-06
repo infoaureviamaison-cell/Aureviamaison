@@ -47,7 +47,7 @@ export function MobileBottomNav() {
     "relative flex h-11 w-11 items-center justify-center rounded-full transition-all duration-300";
   const activeItemClass =
     "-translate-y-3.5 bg-[#f97316] text-white ring-[6px] ring-black shadow-none";
-  const inactiveItemClass = "text-white/70 hover:text-[#f97316]";
+  const inactiveItemClass = "text-white/70 hover:bg-white/10 hover:text-white";
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 px-1 md:hidden safe-area-bottom">
