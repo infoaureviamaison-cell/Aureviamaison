@@ -27,7 +27,7 @@ import { Badge } from "@esmate/shadcn/components/ui/badge";
 import { FaWhatsapp } from "react-icons/fa";
 import { Star } from "lucide-react";
 
-const WHATSAPP_NUMBER = "923171707418";
+const WHATSAPP_NUMBER = "923179517939";
 
 interface ReviewStats {
   averageRating: number;

@@ -237,7 +237,7 @@ function FeaturedProductRow({
           <div
             key={product.handle}
             data-product-card
-            className="w-[12rem] shrink-0 sm:w-[14rem] lg:w-[16rem]"
+            className="w-[calc((100vw-2.75rem)/2)] shrink-0 sm:w-[14rem] lg:w-[16rem]"
           >
             {productCard(product)}
           </div>

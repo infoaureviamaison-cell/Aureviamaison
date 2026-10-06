@@ -6,7 +6,7 @@
  */
 
 // Admin WhatsApp number (your business number)
-export const ADMIN_WHATSAPP_NUMBER = "923171707418";
+export const ADMIN_WHATSAPP_NUMBER = "923179517939";
 
 /**
  * Validate if a phone number is a valid WhatsApp number

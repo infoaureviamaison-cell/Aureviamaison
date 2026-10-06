@@ -13,7 +13,7 @@ const ChatPopup = dynamic(
   { ssr: false },
 );
 
-const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "923171707418";
+const WHATSAPP_NUMBER = "923179517939";
 const TAWK_ID = process.env.NEXT_PUBLIC_TAWK_ID;
 const TAWK_WIDGET_ID = process.env.NEXT_PUBLIC_TAWK_WIDGET_ID;
 

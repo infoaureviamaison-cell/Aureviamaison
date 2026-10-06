@@ -3,16 +3,14 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Grid3X3, Heart, UserRound } from "@esmate/shadcn/pkgs/lucide-react";
+import { Home, Grid3X3, MessageCircle, UserRound } from "@esmate/shadcn/pkgs/lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import { contact as trackContact } from "@/lib/pixel";
-import { useWishlist } from "@/lib/wishlist";
 
-const PHONE_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "923001234567";
+const PHONE_NUMBER = "923179517939";
 
 export function MobileBottomNav() {
   const pathname = usePathname();
-  const { count: wishlistCount } = useWishlist();
   const [selectedAction, setSelectedAction] = useState<"whatsapp" | null>(null);
   const [whatsappMessage, setWhatsappMessage] = useState("");
 
@@ -31,8 +29,9 @@ export function MobileBottomNav() {
     setSelectedAction(null);
   };
 
-  const openWishlistDrawer = () => {
-    window.dispatchEvent(new CustomEvent("open-wishlist-drawer"));
+  const openChatAgent = () => {
+    setSelectedAction(null);
+    window.dispatchEvent(new CustomEvent("open-mobile-chat"));
   };
 
   const openProfileDrawer = () => {
@@ -44,10 +43,10 @@ export function MobileBottomNav() {
     (isActive("/products") || isActive("/category") || isActive("/collections"));
 
   const navItemClass =
-    "relative flex h-11 w-11 items-center justify-center rounded-full transition-all duration-300";
+    "relative flex h-11 w-11 items-center justify-center rounded-full text-white transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white";
   const activeItemClass =
-    "-translate-y-3.5 bg-[#f97316] text-white ring-[6px] ring-black shadow-none";
-  const inactiveItemClass = "text-white/70 hover:bg-white/10 hover:text-white";
+    "-translate-y-3.5 bg-[#db2777] text-white ring-[5px] ring-white shadow-[0_6px_16px_rgba(219,39,119,0.35)]";
+  const inactiveItemClass = "bg-white/10 text-white hover:bg-white/20";
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 px-1 md:hidden safe-area-bottom">
@@ -77,19 +76,11 @@ export function MobileBottomNav() {
       )}
 
       <div className="rounded-t-[1.5rem] border border-b-0 border-white/10 bg-[#1a1308] shadow-[0_-8px_24px_rgba(0,0,0,0.18)] pb-[env(safe-area-inset-bottom)]">
-        <div className="flex h-14 items-center justify-between px-0.5 pt-0.5">
-          {/* Home */}
-          <Link
-            href="/"
-            aria-label="Home"
-            aria-current={homeActive ? "page" : undefined}
-            onClick={() => setSelectedAction(null)}
-            className={`${navItemClass} ${
-              homeActive ? activeItemClass : inactiveItemClass
-            }`}
-          >
-            <Home className="h-5 w-5" />
-          </Link>
+        <div className="grid h-14 grid-cols-5 place-items-center px-1 pt-0.5">
+          {/* AI chat agent */}
+          <button type="button" aria-label="Open chat agent" onClick={openChatAgent} className={`${navItemClass} ${inactiveItemClass}`}>
+            <MessageCircle className="h-5 w-5" />
+          </button>
 
           {/* Products */}
           <Link
@@ -104,19 +95,16 @@ export function MobileBottomNav() {
             <Grid3X3 className="h-5 w-5" />
           </Link>
 
-          {/* Wishlist */}
-          <button
-            aria-label="Wishlist"
-            onClick={openWishlistDrawer}
-            className={`${navItemClass} ${inactiveItemClass}`}
+          {/* Home — centered in the five-item navigation */}
+          <Link
+            href="/"
+            aria-label="Home"
+            aria-current={homeActive ? "page" : undefined}
+            onClick={() => setSelectedAction(null)}
+            className={`${navItemClass} ${homeActive ? activeItemClass : inactiveItemClass}`}
           >
-            <Heart className="h-5 w-5" />
-            {wishlistCount > 0 && (
-              <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#f97316] text-[10px] font-bold text-white">
-                {wishlistCount > 9 ? "9+" : wishlistCount}
-              </span>
-            )}
-          </button>
+            <Home className="h-5 w-5" />
+          </Link>
 
           {/* Profile */}
           <button

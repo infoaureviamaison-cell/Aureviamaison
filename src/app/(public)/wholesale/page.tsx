@@ -21,7 +21,7 @@ export default async function WholesalePage() {
   ]);
   const content = setting ? parseWholesalePage(setting.value) : defaultWholesalePage;
   const wholesaleProducts = products.filter((product) => product.wholesaleQuoteEnabled || normalizeWholesaleDiscounts(product.wholesaleDiscounts).length > 0);
-  const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "923171707418";
+  const whatsappNumber = "923179517939";
   const whatsappHref = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent("Assalamualaikum, I would like information about Auerviamaison wholesale beauty products and pricing.")}`;
 
   return <main className="overflow-x-hidden bg-gray-50 text-gray-900">

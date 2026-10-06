@@ -275,8 +275,7 @@ export function ProductSingle({ data }: Props) {
     displayPrice.amount,
     displayPrice.currencyCode,
   );
-  const whatsAppNumber =
-    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "923171707418";
+  const whatsAppNumber = "923179517939";
   const whatsAppHref = `https://wa.me/${whatsAppNumber}?text=${encodeURIComponent(
     buildWhatsAppOrderMessage({
       title: selectedTitle,

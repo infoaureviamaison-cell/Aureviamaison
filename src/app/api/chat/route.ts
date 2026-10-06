@@ -142,7 +142,7 @@ function buildOrderConfirmHtml(draft: {
     ${infoRow("Phone", draft.customerPhone || "—")}
     ${infoRow("Address", draft.customerAddress || "—")}
   </div>
-  <a href="https://wa.me/923171707418?text=Hi! I just placed an order for ${encodeURIComponent(draft.productTitle || "")} — Name: ${encodeURIComponent(draft.customerName || "")}, Phone: ${encodeURIComponent(draft.customerPhone || "")}" target="_blank"
+  <a href="https://wa.me/923179517939?text=Hi! I just placed an order for ${encodeURIComponent(draft.productTitle || "")} — Name: ${encodeURIComponent(draft.customerName || "")}, Phone: ${encodeURIComponent(draft.customerPhone || "")}" target="_blank"
     style="display:flex; align-items:center; justify-content:center; gap:8px; background:#25d366; color:${C.white}; border-radius:12px; padding:13px; font-size:14px; font-weight:700; text-decoration:none;">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.195.194 1.628.122.602-.1 1.64-.641 1.87-1.26.173-.423.233-.724.233-.989 0-.213-.01-.402-.01-.548z"/></svg>
     Confirm on WhatsApp
@@ -176,7 +176,7 @@ function buildProductCards(products: ProductRow[], intro = ""): string {
     ${tag ? `<span style="display:inline-block; background:${C.greenLight}; border-radius:999px; padding:3px 10px; font-size:11px; font-weight:600; color:${C.green}; width:fit-content;">${tag}</span>` : ""}
     ${p.description ? `<div style="font-size:12px; color:${C.muted}; line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">${p.description}</div>` : ""}
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:2px;">
-      <a href="https://wa.me/923171707418?text=Hi, I want to order ${encodeURIComponent(p.title)}" target="_blank"
+      <a href="https://wa.me/923179517939?text=Hi, I want to order ${encodeURIComponent(p.title)}" target="_blank"
         style="display:flex; align-items:center; justify-content:center; gap:5px; border:1.5px solid ${C.green}; border-radius:10px; padding:9px; font-size:12px; font-weight:600; color:${C.green}; text-decoration:none; background:${C.white};">
         WhatsApp
       </a>
@@ -247,7 +247,7 @@ KEY PRODUCTS:
 
 CONTACT INFORMATION (share when asked):
 - Address: Lahore, Pakistan | All Pakistan delivery available
-- Phone: +92 300 1234567
+- Phone: +92 317 9517939
 - Email: hello@auerviamaison.com
 - Founder: Auerviamaison Studio
 

@@ -164,7 +164,7 @@ export function StoreProductCard({
       : defaultReviewStats;
 
   const productPath = `/products/${handle}`;
-  const whatsappUrl = `https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "923171707418"}?text=${encodeURIComponent(
+  const whatsappUrl = `https://wa.me/923179517939?text=${encodeURIComponent(
     `Hi, I want to order this product:\n\nProduct: ${title}\nPrice: ${formatPrice(price.amount)}\nLink: ${productPath}`,
   )}`;
 
